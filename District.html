@@ -6,372 +6,620 @@
 <title>The District – Grand RP DE01</title>
 <style>
 :root{
---bg:#0a0d14;
---bg2:#101522;
---panel:#121826;
---panel2:#182033;
---line:rgba(255,255,255,0.08);
---text:#eef3ff;
---muted:#9eabc4;
---accent:#7c3aed;
---accent2:#22c55e;
---accent3:#38bdf8;
---danger:#ef4444;
+  --bg:#0a0d14;
+  --bg2:#101522;
+  --panel:#121826;
+  --panel2:#182033;
+  --line:rgba(255,255,255,0.08);
+  --text:#eef3ff;
+  --muted:#9eabc4;
+  --accent:#7c3aed;
+  --accent2:#22c55e;
+  --accent3:#38bdf8;
+  --danger:#ef4444;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{
-font-family:Inter,Arial,Helvetica,sans-serif;
-background:
-radial-gradient(circle at 20% 10%,rgba(124,58,237,0.20),transparent 30%),
-radial-gradient(circle at 80% 10%,rgba(56,189,248,0.15),transparent 30%),
-linear-gradient(180deg,#090c13,#0d1220 45%,#0a0d14);
-color:var(--text);
-overflow-x:hidden;
+  font-family:Inter,Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(124,58,237,0.20),transparent 30%),
+    radial-gradient(circle at 80% 10%,rgba(56,189,248,0.15),transparent 30%),
+    linear-gradient(180deg,#090c13,#0d1220 45%,#0a0d14);
+  color:var(--text);
+  overflow-x:hidden;
 }
 .hero{
-min-height:620px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:30px 20px;
-background:
-radial-gradient(circle at 20% 20%,rgba(124,58,237,0.25),transparent 40%),
-radial-gradient(circle at 80% 20%,rgba(56,189,248,0.2),transparent 40%),
-linear-gradient(180deg,#0a0d14,#111827);
+  min-height:680px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:36px 20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 18% 20%,rgba(124,58,237,0.26),transparent 40%),
+    radial-gradient(circle at 82% 18%,rgba(56,189,248,0.22),transparent 40%),
+    linear-gradient(180deg,#0a0d14,#111827);
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:linear-gradient(to bottom,rgba(255,255,255,.3),rgba(255,255,255,.04));
+  pointer-events:none;
+}
+.heroLogoWrap{
+  width:210px;
+  height:210px;
+  border-radius:36px;
+  padding:10px;
+  background:linear-gradient(135deg,rgba(124,58,237,.65),rgba(56,189,248,.65));
+  box-shadow:0 28px 70px rgba(0,0,0,.4), 0 0 80px rgba(124,58,237,.18);
+  margin-bottom:24px;
 }
 .hero img{
-width:160px;
-height:160px;
-object-fit:cover;
-border-radius:24px;
-margin-bottom:20px;
-border:2px solid rgba(255,255,255,0.08);
-box-shadow:0 18px 45px rgba(0,0,0,0.35);
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:28px;
+  display:block;
+  border:2px solid rgba(255,255,255,0.08);
+  background:#0f172a;
 }
 .hero h1{
-font-size:88px;
-letter-spacing:4px;
-margin-bottom:12px;
+  font-size:92px;
+  letter-spacing:4px;
+  margin-bottom:12px;
+  position:relative;
+  z-index:1;
 }
 .hero p{
-color:var(--muted);
-font-size:20px;
-max-width:900px;
-line-height:1.8;
+  color:var(--muted);
+  font-size:20px;
+  max-width:950px;
+  line-height:1.85;
+  position:relative;
+  z-index:1;
 }
+.heroStats{
+  width:min(1100px,100%);
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:18px;
+  margin-top:28px;
+  position:relative;
+  z-index:1;
+}
+.heroStat{
+  background:rgba(18,24,38,.82);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:18px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.16);
+}
+.heroStat span{display:block;color:var(--muted);font-size:13px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px}
+.heroStat strong{display:block;font-size:20px;margin-bottom:5px}
+.heroStat small{color:var(--muted);line-height:1.5;display:block}
 .hero-actions{
-display:flex;
-gap:14px;
-flex-wrap:wrap;
-justify-content:center;
-margin-top:24px;
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-top:24px;
+  position:relative;
+  z-index:1;
 }
-.hero-actions a,
-.hero-actions button{
-text-decoration:none;
-padding:14px 22px;
-border-radius:12px;
-font:inherit;
-font-weight:700;
-border:none;
-cursor:pointer;
+.hero-actions a,.hero-actions button{
+  text-decoration:none;
+  padding:14px 22px;
+  border-radius:12px;
+  font:inherit;
+  font-weight:700;
+  border:none;
+  cursor:pointer;
 }
 .hero-actions .primary{background:var(--accent);color:#fff}
 .hero-actions .secondary{background:#1f2937;color:#fff;border:1px solid var(--line)}
 .nav{
-display:flex;
-justify-content:center;
-gap:12px;
-padding:22px;
-flex-wrap:wrap;
-position:sticky;
-top:0;
-background:rgba(10,13,20,0.85);
-backdrop-filter:blur(10px);
-z-index:5;
-border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:22px;
+  flex-wrap:wrap;
+  position:sticky;
+  top:0;
+  background:rgba(10,13,20,0.85);
+  backdrop-filter:blur(10px);
+  z-index:5;
+  border-bottom:1px solid rgba(255,255,255,0.06);
 }
 .nav button{
-padding:14px 22px;
-background:var(--panel);
-border:1px solid var(--line);
-color:white;
-border-radius:30px;
-cursor:pointer;
-font-size:15px;
+  padding:14px 22px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:white;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:15px;
 }
 .nav button.active{background:var(--accent)}
 .section{
-display:none;
-max-width:1380px;
-margin:auto;
-padding:36px;
+  display:none;
+  max-width:1400px;
+  margin:auto;
+  padding:36px;
 }
 .section.active{display:block}
 .box{
-background:var(--panel);
-padding:34px;
-border-radius:16px;
-margin-bottom:24px;
-border:1px solid var(--line);
-box-shadow:0 14px 35px rgba(0,0,0,0.18);
+  background:var(--panel);
+  padding:34px;
+  border-radius:16px;
+  margin-bottom:24px;
+  border:1px solid var(--line);
+  box-shadow:0 14px 35px rgba(0,0,0,0.18);
 }
 .box h2{margin-bottom:12px;font-size:32px}
 .box p{color:var(--muted);line-height:1.8;font-size:17px}
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:22px;
-margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
+  margin-top:20px;
 }
 .card{
-background:var(--panel2);
-padding:24px;
-border-radius:14px;
-border:1px solid var(--line);
-text-align:center;
+  background:var(--panel2);
+  padding:24px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  text-align:center;
 }
 .card h3{margin-bottom:8px;font-size:22px}
 .card p{color:var(--muted);font-size:16px;line-height:1.7}
 .badge{
-display:inline-block;
-padding:8px 14px;
-border-radius:999px;
-font-size:14px;
-font-weight:700;
-margin-top:10px;
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:700;
+  margin-top:10px;
 }
 .badge.open{background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.25)}
 .badge.closed{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.25)}
 form{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:14px;
-margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:18px;
 }
 textarea{grid-column:span 2;min-height:150px}
 input,textarea,select{
-padding:14px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,0.08);
-background:#0e1420;
-color:white;
-font-size:15px;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:#0e1420;
+  color:white;
+  font-size:15px;
 }
 button.send{
-grid-column:span 2;
-background:var(--accent);
-border:none;
-padding:14px;
-color:white;
-font-size:16px;
-cursor:pointer;
-border-radius:10px;
-font-weight:700;
+  grid-column:span 2;
+  background:var(--accent);
+  border:none;
+  padding:14px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  border-radius:10px;
+  font-weight:700;
 }
 .discordButton{
-display:inline-flex;
-align-items:center;
-gap:12px;
-margin-top:16px;
-padding:14px 22px;
-border-radius:12px;
-background:#5865F2;
-color:white;
-text-decoration:none;
-font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  margin-top:16px;
+  padding:14px 22px;
+  border-radius:12px;
+  background:#5865F2;
+  color:white;
+  text-decoration:none;
+  font-weight:700;
 }
 .modPanel{
-background:linear-gradient(180deg,#151d2c,#101722);
-border:1px solid rgba(124,58,237,0.25);
+  background:linear-gradient(180deg,#151d2c,#101722);
+  border:1px solid rgba(124,58,237,0.25);
 }
-.modGrid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:16px;
-margin-top:18px;
+.adminHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
 }
-.modItem{
-background:#1a2333;
-padding:18px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,0.06);
+.adminToggle{
+  background:var(--accent3);
+  color:#08111b;
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
 }
-.modItem h4{margin-bottom:8px}
-.codeBox{
-margin-top:10px;
-padding:14px;
-border-radius:10px;
-background:#0e1420;
-border:1px solid rgba(255,255,255,0.06);
-font-family:monospace;
-font-size:14px;
-white-space:pre-wrap;
-word-break:break-word;
-color:#cbd5e1;
+.adminPanel{
+  display:none;
+  margin-top:18px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding-top:18px;
+}
+.adminPanel.active{display:block}
+.adminGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+.adminItem{
+  background:#1a2333;
+  padding:18px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.adminItem h4{margin-bottom:10px}
+.adminItem input,.adminItem select{
+  width:100%;
+  margin-top:8px;
+}
+.adminButtons{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+.adminButtons button{
+  border:none;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:700;
+}
+.saveBtn{background:var(--accent2);color:#08111b}
+.resetBtn{background:var(--danger);color:#fff}
+.note{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.7;
+  margin-top:12px;
 }
 .footer{text-align:center;padding:40px;color:var(--muted);font-size:16px}
+@media(max-width:1100px){
+  .heroStats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:900px){
-.hero{min-height:auto;padding:80px 20px}
-.hero h1{font-size:52px}
-.hero p{font-size:17px}
-.section{padding:20px}
-.box{padding:22px}
-form{grid-template-columns:1fr}
-textarea,button.send{grid-column:span 1}
+  .hero{min-height:auto;padding:80px 20px}
+  .hero h1{font-size:52px}
+  .hero p{font-size:17px}
+  .section{padding:20px}
+  .box{padding:22px}
+  form{grid-template-columns:1fr}
+  textarea,button.send{grid-column:span 1}
+}
+@media(max-width:600px){
+  .heroStats{grid-template-columns:1fr}
+  .heroLogoWrap{width:140px;height:140px}
 }
 </style>
 </head>
 <body>
 <div class="hero">
-<img src="familien_pb.jpg" alt="The District Logo">
-<h1>THE DISTRICT</h1>
-<p>Offizielle Familienseite auf Grand RP DE01. Organisation, Loyalität und Stärke. Hier finden Spieler alle wichtigen Infos über The District, die Leitung, den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.</p>
-<div class="hero-actions">
-<button class="primary" onclick="openSection('kontaktmenu', document.querySelector('[data-target=kontaktmenu]'))">Jetzt bewerben</button>
-<a class="secondary" href="#discord">Discord ansehen</a>
-</div>
+  <div class="heroLogoWrap">
+    <img id="heroLogo" src="familien_pb.jpg" alt="The District Logo">
+  </div>
+  <h1 id="heroTitle">THE DISTRICT</h1>
+  <p id="heroSubtitle">Offizielle Familienseite auf Grand RP DE01. Organisation, Loyalität und Stärke. Hier finden Spieler alle wichtigen Infos über The District, die Leitung, den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.</p>
+
+  <div class="heroStats">
+    <div class="heroStat"><span>Recruitment</span><strong id="statRecruitment">OPEN</strong><small>Bewerbungsphase aktuell geöffnet.</small></div>
+    <div class="heroStat"><span>Member gesamt</span><strong id="statMembers">24</strong><small>Gesamtgröße der Familie.</small></div>
+    <div class="heroStat"><span>Aktive Member</span><strong id="statActive">18</strong><small>Aktive Mitglieder im Staat.</small></div>
+    <div class="heroStat"><span>Leader</span><strong id="statLeader">Name des Leaders</strong><small>Familienleitung von The District.</small></div>
+  </div>
+
+  <div class="hero-actions">
+    <button class="primary" onclick="openSection('kontaktmenu', document.querySelector('[data-target=kontaktmenu]'))">Jetzt bewerben</button>
+    <a class="secondary" id="discordLinkButton" href="https://discord.gg/DEINLINK" target="_blank" rel="noopener noreferrer">Discord ansehen</a>
+  </div>
 </div>
 
 <div class="nav">
-<button class="active" data-target="home" onclick="openSection('home',this)">Start</button>
-<button data-target="about" onclick="openSection('about',this)">Über uns</button>
-<button data-target="leaders" onclick="openSection('leaders',this)">Leitung</button>
-<button data-target="members" onclick="openSection('members',this)">Mitglieder</button>
-<button data-target="status" onclick="openSection('status',this)">Status</button>
-<button data-target="kontaktmenu" onclick="openSection('kontaktmenu',this)">Kontakt & Bewerbung</button>
+  <button class="active" data-target="home" onclick="openSection('home',this)">Start</button>
+  <button data-target="about" onclick="openSection('about',this)">Über uns</button>
+  <button data-target="leaders" onclick="openSection('leaders',this)">Leitung</button>
+  <button data-target="members" onclick="openSection('members',this)">Mitglieder</button>
+  <button data-target="status" onclick="openSection('status',this)">Status</button>
+  <button data-target="kontaktmenu" onclick="openSection('kontaktmenu',this)">Kontakt & Bewerbung</button>
 </div>
 
 <div class="section active" id="home">
-<div class="box">
-<h2>Willkommen bei The District</h2>
-<p>The District ist eine organisierte Familie auf Grand RP DE01. Unsere Familie steht für Loyalität, Organisation, Zusammenhalt und starkes Roleplay. Wir bauen gemeinsam ein stabiles Netzwerk auf und wollen als Familie im Staat bekannt und respektiert sein.</p>
-</div>
-<div class="box">
-<h2>Was für Grand RP wichtig ist</h2>
-<div class="grid">
-<div class="card"><h3>Aktivität</h3><p>Aktive Mitglieder sorgen dafür, dass eure Familie im Staat präsent bleibt und bei Events, Konflikten und Alltags-RP sichtbar ist.</p></div>
-<div class="card"><h3>Struktur</h3><p>Klare Rangverteilung und Ansprechpartner helfen dabei, Ordnung und Professionalität in der Familie zu zeigen.</p></div>
-<div class="card"><h3>Recruitment</h3><p>Eine gepflegte Bewerbungsphase macht es einfacher, starke neue Member zu finden und eure Familie wachsen zu lassen.</p></div>
-<div class="card"><h3>Außenwirkung</h3><p>Eine starke Website, ein klarer Discord und ein seriöser Auftritt machen eure Familie interessanter für neue Bewerber.</p></div>
-</div>
-</div>
-<div class="box">
-<h2>Kurzübersicht</h2>
-<div class="grid">
-<div class="card"><h3>Leader</h3><p>Hier steht euer Familienleiter</p></div>
-<div class="card"><h3>Mitglieder</h3><p>Hier könnt ihr eure aktuelle Memberzahl jederzeit ändern</p></div>
-<div class="card"><h3>Recruitment</h3><p>Open / Closed frei anpassbar</p></div>
-<div class="card"><h3>Server</h3><p>Grand RP DE01</p></div>
-</div>
-</div>
+  <div class="box">
+    <h2>Willkommen bei The District</h2>
+    <p>The District ist eine organisierte Familie auf Grand RP DE01. Unsere Familie steht für Loyalität, Organisation, Zusammenhalt und starkes Roleplay. Wir bauen gemeinsam ein stabiles Netzwerk auf und wollen als Familie im Staat bekannt und respektiert sein.</p>
+  </div>
+  <div class="box">
+    <h2>Was für Grand RP wichtig ist</h2>
+    <div class="grid">
+      <div class="card"><h3>Aktivität</h3><p>Aktive Mitglieder sorgen dafür, dass eure Familie im Staat präsent bleibt und bei Events, Konflikten und Alltags-RP sichtbar ist.</p></div>
+      <div class="card"><h3>Struktur</h3><p>Klare Rangverteilung und Ansprechpartner helfen dabei, Ordnung und Professionalität in der Familie zu zeigen.</p></div>
+      <div class="card"><h3>Recruitment</h3><p>Eine gepflegte Bewerbungsphase macht es einfacher, starke neue Member zu finden und eure Familie wachsen zu lassen.</p></div>
+      <div class="card"><h3>Außenwirkung</h3><p>Eine starke Website, ein klarer Discord und ein seriöser Auftritt machen eure Familie interessanter für neue Bewerber.</p></div>
+    </div>
+  </div>
 </div>
 
 <div class="section" id="about">
-<div class="box">
-<h2>Über The District</h2>
-<p>The District wurde gegründet, um eine starke Gemeinschaft innerhalb von Grand RP DE01 aufzubauen. Unser Ziel ist es, gemeinsam erfolgreich zu sein, Spaß am Roleplay zu haben und eine der bekanntesten Familien auf dem Server zu werden. Wir legen großen Wert auf Loyalität, Respekt, Aktivität und klare Strukturen.</p>
-</div>
-<div class="box" id="discord">
-<h2>Discord & Kommunikation</h2>
-<p>Für eine Grand RP Familie ist ein aktiver Discord extrem wichtig. Dort können Events geplant, Member informiert und Bewerbungen schneller bearbeitet werden.</p>
-<a class="discordButton" href="https://discord.gg/DEINLINK" target="_blank" rel="noopener noreferrer">Discord beitreten</a>
-</div>
+  <div class="box">
+    <h2>Über The District</h2>
+    <p>The District wurde gegründet, um eine starke Gemeinschaft innerhalb von Grand RP DE01 aufzubauen. Unser Ziel ist es, gemeinsam erfolgreich zu sein, Spaß am Roleplay zu haben und eine der bekanntesten Familien auf dem Server zu werden. Wir legen großen Wert auf Loyalität, Respekt, Aktivität und klare Strukturen.</p>
+  </div>
+  <div class="box" id="discord">
+    <h2>Discord & Kommunikation</h2>
+    <p>Für eine Grand RP Familie ist ein aktiver Discord extrem wichtig. Dort können Events geplant, Member informiert und Bewerbungen schneller bearbeitet werden.</p>
+    <a class="discordButton" id="discordLinkSection" href="https://discord.gg/DEINLINK" target="_blank" rel="noopener noreferrer">Discord beitreten</a>
+  </div>
 </div>
 
 <div class="section" id="leaders">
-<div class="box">
-<h2>Leitung von The District</h2>
-<p>Hier könnt ihr direkt zeigen, wer die Familie führt und wer die wichtigsten Ansprechpartner sind.</p>
-<div class="grid">
-<div class="card"><h3>Leader</h3><p>Name des Leaders</p></div>
-<div class="card"><h3>Co-Leader</h3><p>Name des Co-Leaders</p></div>
-<div class="card"><h3>Recruitment Leitung</h3><p>Name der zuständigen Person</p></div>
-<div class="card"><h3>Kontaktperson</h3><p>Discord oder Ansprechpartner</p></div>
-</div>
-</div>
+  <div class="box">
+    <h2>Leitung von The District</h2>
+    <p>Hier könnt ihr direkt zeigen, wer die Familie führt und wer die wichtigsten Ansprechpartner sind.</p>
+    <div class="grid">
+      <div class="card"><h3>Leader</h3><p id="leaderNameCard">Name des Leaders</p></div>
+      <div class="card"><h3>Co-Leader</h3><p id="coLeaderNameCard">Name des Co-Leaders</p></div>
+      <div class="card"><h3>Recruitment Leitung</h3><p id="recruitNameCard">Name der zuständigen Person</p></div>
+      <div class="card"><h3>Kontaktperson</h3><p id="contactNameCard">Discord oder Ansprechpartner</p></div>
+    </div>
+  </div>
 </div>
 
 <div class="section" id="members">
-<div class="box">
-<h2>Familienstruktur</h2>
-<p>Hier könnt ihr eure Rangstruktur und gleichzeitig die aktuelle Größe der Familie präsentieren.</p>
-<div class="grid">
-<div class="card"><h3>Leader</h3><p>Familienleitung</p></div>
-<div class="card"><h3>Co-Leader</h3><p>Stellvertretung</p></div>
-<div class="card"><h3>Manager</h3><p>Organisation und Planung</p></div>
-<div class="card"><h3>Veteran</h3><p>Langjährige und vertrauensvolle Member</p></div>
-<div class="card"><h3>Member</h3><p>Vollwertiges Familienmitglied</p></div>
-<div class="card"><h3>Trial</h3><p>Neue Mitglieder in der Probezeit</p></div>
-</div>
-</div>
-<div class="box">
-<h2>Aktuelle Mitgliederzahl</h2>
-<div class="grid">
-<div class="card"><h3>Mitglieder gesamt</h3><p>z. B. 24 Member</p></div>
-<div class="card"><h3>Aktive Member</h3><p>z. B. 18 aktiv</p></div>
-<div class="card"><h3>Recruitment</h3><p>OPEN / CLOSED</p></div>
-<div class="card"><h3>Letztes Update</h3><p>Datum hier eintragen</p></div>
-</div>
-</div>
+  <div class="box">
+    <h2>Familienstruktur</h2>
+    <p>Hier könnt ihr eure Rangstruktur und gleichzeitig die aktuelle Größe der Familie präsentieren.</p>
+    <div class="grid">
+      <div class="card"><h3>Leader</h3><p>Familienleitung</p></div>
+      <div class="card"><h3>Co-Leader</h3><p>Stellvertretung</p></div>
+      <div class="card"><h3>Manager</h3><p>Organisation und Planung</p></div>
+      <div class="card"><h3>Veteran</h3><p>Langjährige und vertrauensvolle Member</p></div>
+      <div class="card"><h3>Member</h3><p>Vollwertiges Familienmitglied</p></div>
+      <div class="card"><h3>Trial</h3><p>Neue Mitglieder in der Probezeit</p></div>
+    </div>
+  </div>
+  <div class="box">
+    <h2>Aktuelle Mitgliederzahl</h2>
+    <div class="grid">
+      <div class="card"><h3>Mitglieder gesamt</h3><p id="membersTotalCard">24 Member</p></div>
+      <div class="card"><h3>Aktive Member</h3><p id="membersActiveCard">18 aktiv</p></div>
+      <div class="card"><h3>Recruitment</h3><p id="membersRecruitCard">OPEN</p></div>
+      <div class="card"><h3>Letztes Update</h3><p id="lastUpdateCard">Datum hier eintragen</p></div>
+    </div>
+  </div>
 </div>
 
 <div class="section" id="status">
-<div class="box">
-<h2>Status & Updates</h2>
-<p>Dieser Bereich ist dafür gedacht, dass ihr schnell selbst Dinge ändern könnt, zum Beispiel Mitgliederzahl, Recruitment-Status oder wichtige Hinweise.</p>
-<div class="grid">
-<div class="card"><h3>Familienstatus</h3><p>Aktiv / Im Aufbau / Voll besetzt</p></div>
-<div class="card"><h3>Recruitment Status</h3><p>Hier tragt ihr OPEN oder CLOSED ein</p><span class="badge open">OPEN</span></div>
-<div class="card"><h3>Mitgliederzahl</h3><p>Hier eure aktuelle Zahl eintragen</p></div>
-<div class="card"><h3>Update Hinweis</h3><p>Zum Beispiel: Neue Member gesucht oder aktuell nur Fragen offen.</p></div>
-</div>
-</div>
-<div class="box modPanel">
-<h2>Moderator / Admin Bereich zum schnellen Ändern</h2>
-<p>Wenn du die Website später aktualisieren willst, musst du nur diese Stellen im HTML ändern. So kannst du als Leiter oder Moderator schnell Recruitment oder Memberzahl anpassen.</p>
-<div class="modGrid">
-<div class="modItem"><h4>Recruitment ändern</h4><div class="codeBox">OPEN
-oder
-CLOSED</div></div>
-<div class="modItem"><h4>Mitgliederzahl ändern</h4><div class="codeBox">z. B. 24 Member</div></div>
-<div class="modItem"><h4>Aktive Member ändern</h4><div class="codeBox">z. B. 18 aktiv</div></div>
-<div class="modItem"><h4>Discord Link ändern</h4><div class="codeBox">https://discord.gg/DEINLINK</div></div>
-</div>
-</div>
+  <div class="box">
+    <div class="adminHeader">
+      <div>
+        <h2>Status & Updates</h2>
+        <p>Hier sieht man den aktuellen Familienstatus. Zusätzlich gibt es einen Admin-Bereich, in dem du direkt über die Website Werte ändern kannst.</p>
+      </div>
+      <button class="adminToggle" onclick="toggleAdminPanel()">Admin bearbeiten</button>
+    </div>
+
+    <div class="grid">
+      <div class="card"><h3>Familienstatus</h3><p id="familyStatusCard">Aktiv / Im Aufbau / Voll besetzt</p></div>
+      <div class="card"><h3>Recruitment Status</h3><p id="recruitmentTextCard">OPEN</p><span class="badge open" id="recruitBadge">OPEN</span></div>
+      <div class="card"><h3>Mitgliederzahl</h3><p id="membersNumberCard">24 Member</p></div>
+      <div class="card"><h3>Update Hinweis</h3><p id="updateHintCard">Zum Beispiel: Neue Member gesucht oder aktuell nur Fragen offen.</p></div>
+    </div>
+
+    <div class="adminPanel" id="adminPanel">
+      <div class="adminGrid">
+        <div class="adminItem">
+          <h4>Leader</h4>
+          <input id="adminLeader" type="text" placeholder="Leader Name">
+        </div>
+        <div class="adminItem">
+          <h4>Co-Leader</h4>
+          <input id="adminCoLeader" type="text" placeholder="Co-Leader Name">
+        </div>
+        <div class="adminItem">
+          <h4>Recruitment Leitung</h4>
+          <input id="adminRecruitLead" type="text" placeholder="Recruitment Leitung">
+        </div>
+        <div class="adminItem">
+          <h4>Kontaktperson</h4>
+          <input id="adminContact" type="text" placeholder="Kontaktperson / Discord">
+        </div>
+        <div class="adminItem">
+          <h4>Mitglieder gesamt</h4>
+          <input id="adminMembers" type="number" placeholder="z. B. 24">
+        </div>
+        <div class="adminItem">
+          <h4>Aktive Member</h4>
+          <input id="adminActive" type="number" placeholder="z. B. 18">
+        </div>
+        <div class="adminItem">
+          <h4>Recruitment Status</h4>
+          <select id="adminRecruitment">
+            <option value="OPEN">OPEN</option>
+            <option value="CLOSED">CLOSED</option>
+          </select>
+        </div>
+        <div class="adminItem">
+          <h4>Familienstatus</h4>
+          <input id="adminFamilyStatus" type="text" placeholder="z. B. Aktiv">
+        </div>
+        <div class="adminItem">
+          <h4>Update Hinweis</h4>
+          <input id="adminHint" type="text" placeholder="z. B. Neue Member gesucht">
+        </div>
+        <div class="adminItem">
+          <h4>Letztes Update</h4>
+          <input id="adminLastUpdate" type="text" placeholder="z. B. 10.03.2026">
+        </div>
+        <div class="adminItem">
+          <h4>Discord Link</h4>
+          <input id="adminDiscord" type="text" placeholder="https://discord.gg/DEINLINK">
+        </div>
+        <div class="adminItem">
+          <h4>Logo/Bild Pfad</h4>
+          <input id="adminLogo" type="text" placeholder="familien_pb.jpg">
+        </div>
+      </div>
+
+      <div class="adminButtons">
+        <button class="saveBtn" onclick="saveSiteData()">Änderungen speichern</button>
+        <button class="resetBtn" onclick="resetSiteData()">Zurücksetzen</button>
+      </div>
+      <div class="note">Wichtig: Diese Änderungen werden per localStorage im aktuellen Browser gespeichert. Das heißt: Du kannst die Seite direkt über die Website anpassen, aber die Änderungen sind nur auf dem Gerät/Browser sichtbar, auf dem du sie gespeichert hast. Für echte globale Updates für alle Besucher bräuchtest du ein Backend oder eine Datenbank wie Firebase oder Supabase.</div>
+    </div>
+  </div>
 </div>
 
 <div class="section" id="kontaktmenu">
-<div class="box">
-<h2>Kontakt, Bewerbung oder Frage</h2>
-<p>Hier kann man direkt auswählen, ob es sich um eine Bewerbung, eine Frage oder eine allgemeine Kontaktanfrage handelt. Alles geht an denselben Formspree-Endpoint, damit bei euch nichts verloren geht.</p>
-<form action="https://formspree.io/f/xjgagqrg" method="POST">
-<input type="text" name="name" placeholder="Dein Name" required>
-<input type="text" name="ingame" placeholder="Ingame Name">
-<input type="email" name="email" placeholder="Deine Email">
-<select name="anfrageart" required>
-<option value="">Bitte auswählen</option>
-<option value="Bewerbung">Bewerbung</option>
-<option value="Frage">Frage</option>
-<option value="Kontaktanfrage">Kontaktanfrage</option>
-</select>
-<textarea name="message" placeholder="Deine Nachricht oder Bewerbung..."></textarea>
-<button class="send" type="submit">Absenden</button>
-</form>
-</div>
+  <div class="box">
+    <h2>Kontakt, Bewerbung oder Frage</h2>
+    <p>Hier kann man direkt auswählen, ob es sich um eine Bewerbung, eine Frage oder eine allgemeine Kontaktanfrage handelt. Alles geht an denselben Formspree-Endpoint, damit bei euch nichts verloren geht.</p>
+    <form action="https://formspree.io/f/xjgagqrg" method="POST">
+      <input type="text" name="name" placeholder="Dein Name" required>
+      <input type="text" name="ingame" placeholder="Ingame Name">
+      <input type="email" name="email" placeholder="Deine Email">
+      <select name="anfrageart" required>
+        <option value="">Bitte auswählen</option>
+        <option value="Bewerbung">Bewerbung</option>
+        <option value="Frage">Frage</option>
+        <option value="Kontaktanfrage">Kontaktanfrage</option>
+      </select>
+      <textarea name="message" placeholder="Deine Nachricht oder Bewerbung..."></textarea>
+      <button class="send" type="submit">Absenden</button>
+    </form>
+  </div>
 </div>
 
 <div class="footer">The District – Grand RP DE01</div>
 
 <script>
+const defaultData = {
+  title: 'THE DISTRICT',
+  subtitle: 'Offizielle Familienseite auf Grand RP DE01. Organisation, Loyalität und Stärke. Hier finden Spieler alle wichtigen Infos über The District, die Leitung, den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.',
+  logo: 'familien_pb.jpg',
+  recruitment: 'OPEN',
+  members: '24',
+  active: '18',
+  leader: 'Name des Leaders',
+  coLeader: 'Name des Co-Leaders',
+  recruitLead: 'Name der zuständigen Person',
+  contact: 'Discord oder Ansprechpartner',
+  familyStatus: 'Aktiv / Im Aufbau / Voll besetzt',
+  hint: 'Zum Beispiel: Neue Member gesucht oder aktuell nur Fragen offen.',
+  lastUpdate: 'Datum hier eintragen',
+  discord: 'https://discord.gg/DEINLINK'
+};
+
+function getSiteData(){
+  const stored = localStorage.getItem('district_site_data');
+  return stored ? JSON.parse(stored) : defaultData;
+}
+
+function setBadge(status){
+  const badge = document.getElementById('recruitBadge');
+  badge.textContent = status;
+  badge.className = 'badge ' + (status === 'OPEN' ? 'open' : 'closed');
+}
+
+function renderSite(){
+  const data = getSiteData();
+  document.getElementById('heroTitle').textContent = data.title;
+  document.getElementById('heroSubtitle').textContent = data.subtitle;
+  document.getElementById('heroLogo').src = data.logo;
+  document.getElementById('statRecruitment').textContent = data.recruitment;
+  document.getElementById('statMembers').textContent = data.members;
+  document.getElementById('statActive').textContent = data.active;
+  document.getElementById('statLeader').textContent = data.leader;
+  document.getElementById('leaderNameCard').textContent = data.leader;
+  document.getElementById('coLeaderNameCard').textContent = data.coLeader;
+  document.getElementById('recruitNameCard').textContent = data.recruitLead;
+  document.getElementById('contactNameCard').textContent = data.contact;
+  document.getElementById('membersTotalCard').textContent = data.members + ' Member';
+  document.getElementById('membersActiveCard').textContent = data.active + ' aktiv';
+  document.getElementById('membersRecruitCard').textContent = data.recruitment;
+  document.getElementById('lastUpdateCard').textContent = data.lastUpdate;
+  document.getElementById('familyStatusCard').textContent = data.familyStatus;
+  document.getElementById('recruitmentTextCard').textContent = data.recruitment;
+  document.getElementById('membersNumberCard').textContent = data.members + ' Member';
+  document.getElementById('updateHintCard').textContent = data.hint;
+  document.getElementById('discordLinkButton').href = data.discord;
+  document.getElementById('discordLinkSection').href = data.discord;
+  setBadge(data.recruitment);
+
+  document.getElementById('adminLeader').value = data.leader;
+  document.getElementById('adminCoLeader').value = data.coLeader;
+  document.getElementById('adminRecruitLead').value = data.recruitLead;
+  document.getElementById('adminContact').value = data.contact;
+  document.getElementById('adminMembers').value = data.members;
+  document.getElementById('adminActive').value = data.active;
+  document.getElementById('adminRecruitment').value = data.recruitment;
+  document.getElementById('adminFamilyStatus').value = data.familyStatus;
+  document.getElementById('adminHint').value = data.hint;
+  document.getElementById('adminLastUpdate').value = data.lastUpdate;
+  document.getElementById('adminDiscord').value = data.discord;
+  document.getElementById('adminLogo').value = data.logo;
+}
+
+function saveSiteData(){
+  const data = {
+    ...getSiteData(),
+    leader: document.getElementById('adminLeader').value || defaultData.leader,
+    coLeader: document.getElementById('adminCoLeader').value || defaultData.coLeader,
+    recruitLead: document.getElementById('adminRecruitLead').value || defaultData.recruitLead,
+    contact: document.getElementById('adminContact').value || defaultData.contact,
+    members: document.getElementById('adminMembers').value || defaultData.members,
+    active: document.getElementById('adminActive').value || defaultData.active,
+    recruitment: document.getElementById('adminRecruitment').value || defaultData.recruitment,
+    familyStatus: document.getElementById('adminFamilyStatus').value || defaultData.familyStatus,
+    hint: document.getElementById('adminHint').value || defaultData.hint,
+    lastUpdate: document.getElementById('adminLastUpdate').value || defaultData.lastUpdate,
+    discord: document.getElementById('adminDiscord').value || defaultData.discord,
+    logo: document.getElementById('adminLogo').value || defaultData.logo
+  };
+  localStorage.setItem('district_site_data', JSON.stringify(data));
+  renderSite();
+  alert('Änderungen wurden in diesem Browser gespeichert.');
+}
+
+function resetSiteData(){
+  localStorage.removeItem('district_site_data');
+  renderSite();
+  alert('Lokale Änderungen wurden zurückgesetzt.');
+}
+
+function toggleAdminPanel(){
+  document.getElementById('adminPanel').classList.toggle('active');
+}
+
 function openSection(id,btn){
  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
  document.getElementById(id).classList.add('active');
  if(btn){ btn.classList.add('active'); }
 }
+
+renderSite();
 </script>
 </body>
 </html>
