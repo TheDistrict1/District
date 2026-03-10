@@ -889,21 +889,38 @@
       setValue('adminLogo', data.logo);
     }
 
-    async function loadDiscordOnline() {
-      try {
-        const res = await fetch(`https://discord.com/api/guilds/${DISCORD_GUILD_ID}/widget.json`);
-        const data = await res.json();
-        const online = typeof data.presence_count === 'number' ? data.presence_count : '-';
-        setText('statActive', online);
-        setText('membersActiveCard', `${online} aktiv`);
-        setText('dashActive', online);
-      } catch (err) {
-        console.log('Discord Widget Fehler:', err.message);
-        setText('statActive', '-');
-        setText('membersActiveCard', '- aktiv');
-        setText('dashActive', '-');
-      }
-    }
+async function loadDiscordOnline() {
+
+  try {
+
+    const res = await fetch(
+      "https://discord.com/api/v9/invites/tY7Ea34QuY?with_counts=true"
+    );
+
+    const data = await res.json();
+
+    const online = data.approximate_presence_count ?? "-";
+    const total = data.approximate_member_count ?? "-";
+
+    setText('statActive', online);
+    setText('membersActiveCard', online + " aktiv");
+    setText('dashActive', online);
+
+    setText('statMembers', total);
+    setText('membersTotalCard', total + " Member");
+    setText('membersNumberCard', total + " Member");
+
+  } catch (err) {
+
+    console.log("Discord API Fehler:", err);
+
+    setText('statActive', "-");
+    setText('membersActiveCard', "- aktiv");
+    setText('dashActive', "-");
+
+  }
+
+}
 
     async function loadSiteData(showMessage = false) {
       try {
