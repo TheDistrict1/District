@@ -644,7 +644,7 @@
     <div class="topbar">
       <div class="topbar-left">
         <div class="pill">Grand RP DE01</div>
-        <div class="pill" id="authStatePill">Nicht eingeloggt</div>
+        <div class="pill" id="authStatePill">Besucher online: <span id="visitorCount">1</span></div>
       </div>
       <div class="topbar-right">
         <button class="admin-toggle" id="dashboardButton" style="display:none;" onclick="openSection('admin', document.querySelector('[data-target=admin]')); showDashboard();">Dashboard öffnen</button>
@@ -1099,6 +1099,24 @@
     window.openDashboardTab = openDashboardTab;
     window.showDashboard = showDashboard;
     window.fillAdminEmail = fillAdminEmail;
+
+    // einfacher Website-Besucherzähler
+    const visitorRef = doc(db, 'district', 'visitors');
+
+    async function increaseVisitors() {
+      try {
+        const snap = await getDoc(visitorRef);
+        let count = 0;
+        if (snap.exists()) count = snap.data().count || 0;
+        count++;
+        await setDoc(visitorRef, { count: count }, { merge: true });
+        document.getElementById('visitorCount').textContent = count;
+      } catch (e) {
+        console.log('Visitor counter error', e);
+      }
+    }
+
+    increaseVisitors();
 
     loadSiteData();
   </script>
