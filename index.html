@@ -63,8 +63,7 @@
       inset: -30%;
       z-index: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle, rgba(214,162,74,.04), transparent 55%);
+      background: radial-gradient(circle, rgba(214,162,74,.04), transparent 55%);
       animation: ambientRotate 30s linear infinite;
       opacity: .8;
     }
@@ -94,7 +93,7 @@
     }
 
     .hero {
-      min-height: 800px;
+      min-height: 820px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -234,12 +233,51 @@
       line-height: 1.9;
     }
 
+    .live-strip {
+      width: min(1200px, 100%);
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .live-item {
+      background: rgba(10,10,10,.74);
+      border: 1px solid rgba(214,162,74,.14);
+      border-radius: 16px;
+      padding: 16px 18px;
+      text-align: left;
+      box-shadow: 0 12px 28px rgba(0,0,0,.20);
+      transition: var(--transition);
+    }
+
+    .live-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(214,162,74,.24);
+      box-shadow: var(--glow);
+    }
+
+    .live-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .live-item strong {
+      display: block;
+      color: #fff3dd;
+      font-size: 19px;
+    }
+
     .hero-stats {
       width: min(1200px, 100%);
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
-      margin-top: 30px;
+      margin-top: 22px;
     }
 
     .hero-stat {
@@ -310,7 +348,8 @@
     .dashboard-tabs button,
     .admin-actions button,
     .topbar button,
-    .discord-button {
+    .discord-button,
+    .slider-nav button {
       transition: var(--transition);
     }
 
@@ -552,6 +591,135 @@
       color: #ccbda3;
       font-size: 16px;
       line-height: 1.7;
+    }
+
+    .feature-card {
+      text-align: left;
+    }
+
+    .feature-card .mini-label {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      border: 1px solid rgba(214,162,74,.15);
+      background: rgba(214,162,74,.08);
+      color: var(--accent2);
+    }
+
+    .slider-wrap {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .slider {
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid rgba(214,162,74,.10);
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform .45s ease;
+    }
+
+    .slide {
+      min-width: 100%;
+      background: linear-gradient(135deg, rgba(25,25,25,.98), rgba(12,12,12,.98));
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(214,162,74,.08), transparent 35%);
+      pointer-events: none;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(214,162,74,.10);
+      border: 1px solid rgba(214,162,74,.18);
+      color: var(--accent2);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      margin-bottom: 16px;
+    }
+
+    .slide h3 {
+      font-size: 30px;
+      margin-bottom: 12px;
+      color: #fff2da;
+    }
+
+    .slide p {
+      max-width: 900px;
+      color: #d0c0a7;
+      line-height: 1.9;
+    }
+
+    .slider-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .slider-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .slider-nav button {
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(214,162,74,.14);
+      background: rgba(255,255,255,.03);
+      color: #f6ecdc;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .slider-nav button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(214,162,74,.24);
+      box-shadow: var(--glow);
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(214,162,74,.12);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(214,162,74,.28);
+      transform: scale(1.12);
     }
 
     .badge {
@@ -847,7 +1015,7 @@
     }
 
     @media (max-width: 1100px) {
-      .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-stats, .live-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hero h1 { font-size: 64px; }
     }
 
@@ -866,10 +1034,12 @@
       .admin-grid { grid-template-columns: 1fr; }
       .hero-actions { width: 100%; }
       .hero-actions a, .hero-actions button { width: 100%; }
+      .slide { padding: 24px; }
+      .slide h3 { font-size: 24px; }
     }
 
     @media (max-width: 600px) {
-      .hero-stats { grid-template-columns: 1fr; }
+      .hero-stats, .live-strip { grid-template-columns: 1fr; }
       .logo-wrap { width: 124px; height: 124px; border-radius: 20px; }
       .logo-wrap img { border-radius: 14px; }
       .page { width: calc(100% - 10px); }
@@ -902,6 +1072,25 @@
           Hier finden Spieler alle wichtigen Infos über The District, die Leitung,
           den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.
         </p>
+
+        <div class="live-strip">
+          <div class="live-item">
+            <span>Server</span>
+            <strong id="liveServer">Grand RP DE01</strong>
+          </div>
+          <div class="live-item">
+            <span>Discord Link</span>
+            <strong id="liveDiscordLabel">Aktiv verbunden</strong>
+          </div>
+          <div class="live-item">
+            <span>Familienstatus</span>
+            <strong id="liveFamilyStatus">Aktiv</strong>
+          </div>
+          <div class="live-item">
+            <span>Letztes Update</span>
+            <strong id="liveLastUpdate">10.03.2026</strong>
+          </div>
+        </div>
 
         <div class="hero-stats">
           <div class="hero-stat">
@@ -969,6 +1158,47 @@
       </div>
 
       <div class="box reveal">
+        <h2 id="newsSectionTitle">Aktuelle Family News</h2>
+
+        <div class="slider-wrap">
+          <div class="slider">
+            <div class="slides" id="slides">
+              <div class="slide">
+                <div class="slide-tag" id="news1Tag">Update</div>
+                <h3 id="news1Title">Recruitment geöffnet</h3>
+                <p id="news1Text">Unsere Familie sucht wieder aktive und loyale Member für Grand RP DE01. Bewerbungen sind ab sofort geöffnet.</p>
+              </div>
+
+              <div class="slide">
+                <div class="slide-tag" id="news2Tag">Discord</div>
+                <h3 id="news2Title">Discord wird ausgebaut</h3>
+                <p id="news2Text">Neue Channels, bessere Organisation und schnellere Kommunikation sorgen dafür, dass alle Member immer auf dem neuesten Stand bleiben.</p>
+              </div>
+
+              <div class="slide">
+                <div class="slide-tag" id="news3Tag">Family</div>
+                <h3 id="news3Title">Interne Struktur verbessert</h3>
+                <p id="news3Text">Unsere Familie setzt auf klare Zuständigkeiten, starke Leitung und saubere Abläufe, damit wir im Staat professionell auftreten.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="slider-nav">
+            <div class="slider-buttons">
+              <button type="button" onclick="prevSlide()">← Zurück</button>
+              <button type="button" onclick="nextSlide()">Weiter →</button>
+            </div>
+
+            <div class="slider-dots">
+              <div class="dot active" onclick="goToSlide(0)"></div>
+              <div class="dot" onclick="goToSlide(1)"></div>
+              <div class="dot" onclick="goToSlide(2)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box reveal">
         <h2 id="homeCardsTitle">Was für Grand RP wichtig ist</h2>
         <div class="grid">
           <div class="card reveal">
@@ -986,6 +1216,32 @@
           <div class="card reveal">
             <h3 id="homeCard4Title">Außenwirkung</h3>
             <p id="homeCard4Text">Eine starke Website, ein klarer Discord und ein seriöser Auftritt machen eure Familie interessanter für neue Bewerber.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="box reveal">
+        <h2 id="featuresTitle">Was The District ausmacht</h2>
+        <div class="grid">
+          <div class="card feature-card reveal">
+            <div class="mini-label" id="feature1Label">Organisation</div>
+            <h3 id="feature1Title">Saubere Leitung</h3>
+            <p id="feature1Text">Klare Ansprechpartner, feste Abläufe und starke Koordination innerhalb der Familie.</p>
+          </div>
+          <div class="card feature-card reveal">
+            <div class="mini-label" id="feature2Label">Community</div>
+            <h3 id="feature2Title">Starker Zusammenhalt</h3>
+            <p id="feature2Text">Wir achten auf Loyalität, gegenseitigen Respekt und ein aktives Miteinander auf dem Server.</p>
+          </div>
+          <div class="card feature-card reveal">
+            <div class="mini-label" id="feature3Label">Roleplay</div>
+            <h3 id="feature3Title">Professioneller Auftritt</h3>
+            <p id="feature3Text">Unser Ziel ist es, im Staat bekannt zu sein und gutes sowie ernstzunehmendes RP zu liefern.</p>
+          </div>
+          <div class="card feature-card reveal">
+            <div class="mini-label" id="feature4Label">Recruitment</div>
+            <h3 id="feature4Title">Gezieltes Wachstum</h3>
+            <p id="feature4Text">Neue Bewerber werden sauber geprüft, damit nur passende Member in die Familie kommen.</p>
           </div>
         </div>
       </div>
@@ -1105,12 +1361,13 @@
       <div class="dashboard" id="dashboard">
         <div class="box reveal">
           <h2>Admin Dashboard</h2>
-          <p>Hier kannst du live Texte, Recruitment, Leader, Discord-Link, Logo, Footer und weitere Inhalte ändern. Die Memberzahl wird automatisch aus Discord geladen und kann hier bewusst nicht geändert werden.</p>
+          <p>Hier kannst du live Texte, Recruitment, Leader, Discord-Link, Logo, Footer, News und weitere Inhalte ändern. Die Memberzahl wird automatisch aus Discord geladen und kann hier bewusst nicht geändert werden.</p>
 
           <div class="dashboard-tabs">
             <button class="active" onclick="openDashboardTab('dashboard-overview', this)">Übersicht</button>
             <button onclick="openDashboardTab('dashboard-edit-main', this)">Hauptbereich</button>
             <button onclick="openDashboardTab('dashboard-edit-texts', this)">Texte</button>
+            <button onclick="openDashboardTab('dashboard-edit-news', this)">News & Features</button>
             <button onclick="openDashboardTab('dashboard-edit-links', this)">Links & Medien</button>
             <button onclick="openDashboardTab('dashboard-help', this)">Hilfe</button>
           </div>
@@ -1139,6 +1396,7 @@
               <div class="admin-item"><h4>Familienstatus</h4><input id="adminFamilyStatus" type="text" placeholder="Aktiv"></div>
               <div class="admin-item"><h4>Update Hinweis</h4><input id="adminHint" type="text" placeholder="Neue Member gesucht"></div>
               <div class="admin-item"><h4>Letztes Update</h4><input id="adminLastUpdate" type="text" placeholder="10.03.2026"></div>
+              <div class="admin-item"><h4>Server Label</h4><input id="adminServerLabel" type="text" placeholder="Grand RP DE01"></div>
               <div class="admin-item">
                 <h4>Memberzahl</h4>
                 <div class="read-only-box">Wird automatisch aus Discord übernommen und kann hier nicht bearbeitet werden.</div>
@@ -1153,45 +1411,71 @@
 
           <div class="dashboard-view" id="dashboard-edit-texts">
             <div class="admin-grid">
-              <div class="admin-item"><h4>Start Titel</h4><input id="adminHomeTitle" type="text" placeholder="Willkommen bei The District"></div>
-              <div class="admin-item"><h4>Start Text</h4><textarea id="adminHomeText" placeholder="Text Startseite"></textarea></div>
-              <div class="admin-item"><h4>Start Karten Titel</h4><input id="adminHomeCardsTitle" type="text" placeholder="Was für Grand RP wichtig ist"></div>
-
+              <div class="admin-item"><h4>Start Titel</h4><input id="adminHomeTitle" type="text"></div>
+              <div class="admin-item"><h4>Start Text</h4><textarea id="adminHomeText"></textarea></div>
+              <div class="admin-item"><h4>Start Karten Titel</h4><input id="adminHomeCardsTitle" type="text"></div>
               <div class="admin-item"><h4>Karte 1 Titel</h4><input id="adminHomeCard1Title" type="text"></div>
               <div class="admin-item"><h4>Karte 1 Text</h4><textarea id="adminHomeCard1Text"></textarea></div>
-
               <div class="admin-item"><h4>Karte 2 Titel</h4><input id="adminHomeCard2Title" type="text"></div>
               <div class="admin-item"><h4>Karte 2 Text</h4><textarea id="adminHomeCard2Text"></textarea></div>
-
               <div class="admin-item"><h4>Karte 3 Titel</h4><input id="adminHomeCard3Title" type="text"></div>
               <div class="admin-item"><h4>Karte 3 Text</h4><textarea id="adminHomeCard3Text"></textarea></div>
-
               <div class="admin-item"><h4>Karte 4 Titel</h4><input id="adminHomeCard4Title" type="text"></div>
               <div class="admin-item"><h4>Karte 4 Text</h4><textarea id="adminHomeCard4Text"></textarea></div>
-
               <div class="admin-item"><h4>Über uns Titel</h4><input id="adminAboutTitle" type="text"></div>
               <div class="admin-item"><h4>Über uns Text</h4><textarea id="adminAboutText"></textarea></div>
-
               <div class="admin-item"><h4>Discord Titel</h4><input id="adminDiscordTitle" type="text"></div>
               <div class="admin-item"><h4>Discord Text</h4><textarea id="adminDiscordText"></textarea></div>
-
               <div class="admin-item"><h4>Leitung Titel</h4><input id="adminLeadersTitle" type="text"></div>
               <div class="admin-item"><h4>Leitung Text</h4><textarea id="adminLeadersText"></textarea></div>
-
               <div class="admin-item"><h4>Struktur Titel</h4><input id="adminMembersStructureTitle" type="text"></div>
               <div class="admin-item"><h4>Struktur Text</h4><textarea id="adminMembersStructureText"></textarea></div>
-
               <div class="admin-item"><h4>Mitgliederzahl Titel</h4><input id="adminMembersCountTitle" type="text"></div>
               <div class="admin-item"><h4>Status Titel</h4><input id="adminStatusTitle" type="text"></div>
-
               <div class="admin-item"><h4>Status Text</h4><textarea id="adminStatusText"></textarea></div>
               <div class="admin-item"><h4>Kontakt Titel</h4><input id="adminContactTitle" type="text"></div>
               <div class="admin-item"><h4>Kontakt Text</h4><textarea id="adminContactText"></textarea></div>
+              <div class="admin-item"><h4>Button Text Bewerbung</h4><input id="adminHeroButtonText" type="text"></div>
+              <div class="admin-item"><h4>Kontakt Button Text</h4><input id="adminContactButtonText" type="text"></div>
+              <div class="admin-item"><h4>Footer Text</h4><input id="adminFooterText" type="text"></div>
+              <div class="admin-item"><h4>News Bereich Titel</h4><input id="adminNewsSectionTitle" type="text"></div>
+              <div class="admin-item"><h4>Features Bereich Titel</h4><input id="adminFeaturesTitle" type="text"></div>
+            </div>
 
-              <div class="admin-item"><h4>Button Text Bewerbung</h4><input id="adminHeroButtonText" type="text" placeholder="Jetzt bewerben"></div>
-              <div class="admin-item"><h4>Kontakt Button Text</h4><input id="adminContactButtonText" type="text" placeholder="Absenden"></div>
-              <div class="admin-item"><h4>Footer Text</h4><input id="adminFooterText" type="text" placeholder="The District – Grand RP DE01"></div>
-              <div class="admin-item"><h4>Server Label oben</h4><input id="adminServerLabel" type="text" placeholder="Grand RP DE01"></div>
+            <div class="admin-actions">
+              <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
+            </div>
+          </div>
+
+          <div class="dashboard-view" id="dashboard-edit-news">
+            <div class="admin-grid">
+              <div class="admin-item"><h4>News 1 Tag</h4><input id="adminNews1Tag" type="text"></div>
+              <div class="admin-item"><h4>News 1 Titel</h4><input id="adminNews1Title" type="text"></div>
+              <div class="admin-item"><h4>News 1 Text</h4><textarea id="adminNews1Text"></textarea></div>
+
+              <div class="admin-item"><h4>News 2 Tag</h4><input id="adminNews2Tag" type="text"></div>
+              <div class="admin-item"><h4>News 2 Titel</h4><input id="adminNews2Title" type="text"></div>
+              <div class="admin-item"><h4>News 2 Text</h4><textarea id="adminNews2Text"></textarea></div>
+
+              <div class="admin-item"><h4>News 3 Tag</h4><input id="adminNews3Tag" type="text"></div>
+              <div class="admin-item"><h4>News 3 Titel</h4><input id="adminNews3Title" type="text"></div>
+              <div class="admin-item"><h4>News 3 Text</h4><textarea id="adminNews3Text"></textarea></div>
+
+              <div class="admin-item"><h4>Feature 1 Label</h4><input id="adminFeature1Label" type="text"></div>
+              <div class="admin-item"><h4>Feature 1 Titel</h4><input id="adminFeature1Title" type="text"></div>
+              <div class="admin-item"><h4>Feature 1 Text</h4><textarea id="adminFeature1Text"></textarea></div>
+
+              <div class="admin-item"><h4>Feature 2 Label</h4><input id="adminFeature2Label" type="text"></div>
+              <div class="admin-item"><h4>Feature 2 Titel</h4><input id="adminFeature2Title" type="text"></div>
+              <div class="admin-item"><h4>Feature 2 Text</h4><textarea id="adminFeature2Text"></textarea></div>
+
+              <div class="admin-item"><h4>Feature 3 Label</h4><input id="adminFeature3Label" type="text"></div>
+              <div class="admin-item"><h4>Feature 3 Titel</h4><input id="adminFeature3Title" type="text"></div>
+              <div class="admin-item"><h4>Feature 3 Text</h4><textarea id="adminFeature3Text"></textarea></div>
+
+              <div class="admin-item"><h4>Feature 4 Label</h4><input id="adminFeature4Label" type="text"></div>
+              <div class="admin-item"><h4>Feature 4 Titel</h4><input id="adminFeature4Title" type="text"></div>
+              <div class="admin-item"><h4>Feature 4 Text</h4><textarea id="adminFeature4Text"></textarea></div>
             </div>
 
             <div class="admin-actions">
@@ -1216,6 +1500,7 @@
             <div class="hint">Die Memberzahl und die Online-Zahl werden automatisch über Discord geladen.</div>
             <div class="hint">Wenn du ein neues Logo oder Hintergrundbild willst, lade das Bild in GitHub hoch und trage den Dateinamen oder Link ein.</div>
             <div class="hint">Wenn du CLOSED auswählst, ändert sich der Recruitment-Badge automatisch rot.</div>
+            <div class="hint">Die News oben wechseln automatisch alle paar Sekunden. Mit den Pfeilen kannst du sie auch manuell steuern.</div>
           </div>
 
           <div class="success" id="adminSuccess"></div>
@@ -1293,7 +1578,30 @@
       heroButtonText: 'Jetzt bewerben',
       contactButtonText: 'Absenden',
       footerText: 'The District – Grand RP DE01',
-      serverLabel: 'Grand RP DE01'
+      serverLabel: 'Grand RP DE01',
+      newsSectionTitle: 'Aktuelle Family News',
+      news1Tag: 'Update',
+      news1Title: 'Recruitment geöffnet',
+      news1Text: 'Unsere Familie sucht wieder aktive und loyale Member für Grand RP DE01. Bewerbungen sind ab sofort geöffnet.',
+      news2Tag: 'Discord',
+      news2Title: 'Discord wird ausgebaut',
+      news2Text: 'Neue Channels, bessere Organisation und schnellere Kommunikation sorgen dafür, dass alle Member immer auf dem neuesten Stand bleiben.',
+      news3Tag: 'Family',
+      news3Title: 'Interne Struktur verbessert',
+      news3Text: 'Unsere Familie setzt auf klare Zuständigkeiten, starke Leitung und saubere Abläufe, damit wir im Staat professionell auftreten.',
+      featuresTitle: 'Was The District ausmacht',
+      feature1Label: 'Organisation',
+      feature1Title: 'Saubere Leitung',
+      feature1Text: 'Klare Ansprechpartner, feste Abläufe und starke Koordination innerhalb der Familie.',
+      feature2Label: 'Community',
+      feature2Title: 'Starker Zusammenhalt',
+      feature2Text: 'Wir achten auf Loyalität, gegenseitigen Respekt und ein aktives Miteinander auf dem Server.',
+      feature3Label: 'Roleplay',
+      feature3Title: 'Professioneller Auftritt',
+      feature3Text: 'Unser Ziel ist es, im Staat bekannt zu sein und gutes sowie ernstzunehmendes RP zu liefern.',
+      feature4Label: 'Recruitment',
+      feature4Title: 'Gezieltes Wachstum',
+      feature4Text: 'Neue Bewerber werden sauber geprüft, damit nur passende Member in die Familie kommen.'
     };
 
     const dataRef = doc(db, 'district', 'main');
@@ -1301,6 +1609,9 @@
     let currentUser = null;
     let visitorMarked = false;
     let lastDiscordStats = { online: '-', total: '-' };
+
+    let currentSlide = 0;
+    let sliderInterval = null;
 
     function setText(id, value) {
       const el = document.getElementById(id);
@@ -1329,6 +1640,38 @@
       `;
     }
 
+    function updateSlider() {
+      const slides = document.getElementById('slides');
+      if (!slides) return;
+      slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % 3;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + 3) % 3;
+      updateSlider();
+    }
+
+    function startSliderAuto() {
+      if (sliderInterval) clearInterval(sliderInterval);
+      sliderInterval = setInterval(() => {
+        nextSlide();
+      }, 5000);
+    }
+
     function renderSite(data, discordStats = null) {
       document.title = `${data.title} – Grand RP DE01`;
 
@@ -1339,6 +1682,11 @@
       setText('statRecruitmentDesc', data.recruitmentDesc);
       setText('statLeader', data.leader);
       setText('statLeaderDesc', data.leaderDesc);
+
+      setText('liveServer', data.serverLabel);
+      setText('liveFamilyStatus', data.familyStatus);
+      setText('liveLastUpdate', data.lastUpdate);
+      setText('liveDiscordLabel', 'Aktiv verbunden');
 
       const heroLogo = document.getElementById('heroLogo');
       if (heroLogo) heroLogo.src = data.logo;
@@ -1387,6 +1735,31 @@
       setText('serverPill', data.serverLabel);
       setText('heroButtonPrimary', data.heroButtonText);
       setText('contactButtonText', data.contactButtonText);
+
+      setText('newsSectionTitle', data.newsSectionTitle);
+      setText('news1Tag', data.news1Tag);
+      setText('news1Title', data.news1Title);
+      setText('news1Text', data.news1Text);
+      setText('news2Tag', data.news2Tag);
+      setText('news2Title', data.news2Title);
+      setText('news2Text', data.news2Text);
+      setText('news3Tag', data.news3Tag);
+      setText('news3Title', data.news3Title);
+      setText('news3Text', data.news3Text);
+
+      setText('featuresTitle', data.featuresTitle);
+      setText('feature1Label', data.feature1Label);
+      setText('feature1Title', data.feature1Title);
+      setText('feature1Text', data.feature1Text);
+      setText('feature2Label', data.feature2Label);
+      setText('feature2Title', data.feature2Title);
+      setText('feature2Text', data.feature2Text);
+      setText('feature3Label', data.feature3Label);
+      setText('feature3Title', data.feature3Title);
+      setText('feature3Text', data.feature3Text);
+      setText('feature4Label', data.feature4Label);
+      setText('feature4Title', data.feature4Title);
+      setText('feature4Text', data.feature4Text);
 
       const discordBtn = document.getElementById('discordLinkButton');
       const discordSection = document.getElementById('discordLinkSection');
@@ -1454,6 +1827,31 @@
       setValue('adminContactButtonText', data.contactButtonText);
       setValue('adminFooterText', data.footerText);
       setValue('adminServerLabel', data.serverLabel);
+
+      setValue('adminNewsSectionTitle', data.newsSectionTitle);
+      setValue('adminNews1Tag', data.news1Tag);
+      setValue('adminNews1Title', data.news1Title);
+      setValue('adminNews1Text', data.news1Text);
+      setValue('adminNews2Tag', data.news2Tag);
+      setValue('adminNews2Title', data.news2Title);
+      setValue('adminNews2Text', data.news2Text);
+      setValue('adminNews3Tag', data.news3Tag);
+      setValue('adminNews3Title', data.news3Title);
+      setValue('adminNews3Text', data.news3Text);
+
+      setValue('adminFeaturesTitle', data.featuresTitle);
+      setValue('adminFeature1Label', data.feature1Label);
+      setValue('adminFeature1Title', data.feature1Title);
+      setValue('adminFeature1Text', data.feature1Text);
+      setValue('adminFeature2Label', data.feature2Label);
+      setValue('adminFeature2Title', data.feature2Title);
+      setValue('adminFeature2Text', data.feature2Text);
+      setValue('adminFeature3Label', data.feature3Label);
+      setValue('adminFeature3Title', data.feature3Title);
+      setValue('adminFeature3Text', data.feature3Text);
+      setValue('adminFeature4Label', data.feature4Label);
+      setValue('adminFeature4Title', data.feature4Title);
+      setValue('adminFeature4Text', data.feature4Text);
     }
 
     async function loadDiscordOnline() {
@@ -1567,7 +1965,32 @@
         heroButtonText: document.getElementById('adminHeroButtonText').value || defaultData.heroButtonText,
         contactButtonText: document.getElementById('adminContactButtonText').value || defaultData.contactButtonText,
         footerText: document.getElementById('adminFooterText').value || defaultData.footerText,
-        serverLabel: document.getElementById('adminServerLabel').value || defaultData.serverLabel
+        serverLabel: document.getElementById('adminServerLabel').value || defaultData.serverLabel,
+
+        newsSectionTitle: document.getElementById('adminNewsSectionTitle').value || defaultData.newsSectionTitle,
+        news1Tag: document.getElementById('adminNews1Tag').value || defaultData.news1Tag,
+        news1Title: document.getElementById('adminNews1Title').value || defaultData.news1Title,
+        news1Text: document.getElementById('adminNews1Text').value || defaultData.news1Text,
+        news2Tag: document.getElementById('adminNews2Tag').value || defaultData.news2Tag,
+        news2Title: document.getElementById('adminNews2Title').value || defaultData.news2Title,
+        news2Text: document.getElementById('adminNews2Text').value || defaultData.news2Text,
+        news3Tag: document.getElementById('adminNews3Tag').value || defaultData.news3Tag,
+        news3Title: document.getElementById('adminNews3Title').value || defaultData.news3Title,
+        news3Text: document.getElementById('adminNews3Text').value || defaultData.news3Text,
+
+        featuresTitle: document.getElementById('adminFeaturesTitle').value || defaultData.featuresTitle,
+        feature1Label: document.getElementById('adminFeature1Label').value || defaultData.feature1Label,
+        feature1Title: document.getElementById('adminFeature1Title').value || defaultData.feature1Title,
+        feature1Text: document.getElementById('adminFeature1Text').value || defaultData.feature1Text,
+        feature2Label: document.getElementById('adminFeature2Label').value || defaultData.feature2Label,
+        feature2Title: document.getElementById('adminFeature2Title').value || defaultData.feature2Title,
+        feature2Text: document.getElementById('adminFeature2Text').value || defaultData.feature2Text,
+        feature3Label: document.getElementById('adminFeature3Label').value || defaultData.feature3Label,
+        feature3Title: document.getElementById('adminFeature3Title').value || defaultData.feature3Title,
+        feature3Text: document.getElementById('adminFeature3Text').value || defaultData.feature3Text,
+        feature4Label: document.getElementById('adminFeature4Label').value || defaultData.feature4Label,
+        feature4Title: document.getElementById('adminFeature4Title').value || defaultData.feature4Title,
+        feature4Text: document.getElementById('adminFeature4Text').value || defaultData.feature4Text
       };
     }
 
@@ -1675,12 +2098,17 @@
     window.loadSiteData = loadSiteData;
     window.openDashboardTab = openDashboardTab;
     window.showDashboard = showDashboard;
+    window.nextSlide = nextSlide;
+    window.prevSlide = prevSlide;
+    window.goToSlide = goToSlide;
 
     watchVisitorCount();
     increaseVisitorCount();
     await loadSiteData();
     await loadDiscordOnline();
     setupReveal();
+    updateSlider();
+    startSliderAuto();
     setInterval(loadDiscordOnline, 60000);
   </script>
 </body>
