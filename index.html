@@ -6,17 +6,22 @@
   <title>The District – Grand RP DE01</title>
   <style>
     :root {
-      --bg: #0a0d14;
-      --panel: rgba(18, 24, 38, 0.96);
-      --panel2: rgba(24, 32, 51, 0.98);
-      --line: rgba(255, 255, 255, 0.08);
-      --text: #eef3ff;
-      --muted: #9eabc4;
-      --accent: #7c3aed;
-      --accent2: #22c55e;
-      --warning: #f59e0b;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
-      --max: 1380px;
+      --bg: #070707;
+      --bg2: #111111;
+      --panel: rgba(14, 14, 14, 0.95);
+      --panel2: rgba(22, 22, 22, 0.98);
+      --line: rgba(214, 162, 74, 0.18);
+      --line-soft: rgba(255, 255, 255, 0.06);
+      --text: #f5efe4;
+      --muted: #b6a88f;
+      --accent: #d6a24a;
+      --accent2: #f3c56a;
+      --accent-dark: #8b6425;
+      --success: #85d49b;
+      --warning: #f0b24a;
+      --danger: #f08b8b;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      --max: 1440px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,9 +30,10 @@
     body {
       font-family: Inter, Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at 20% 10%, rgba(124, 58, 237, 0.20), transparent 30%),
-        radial-gradient(circle at 80% 10%, rgba(56, 189, 248, 0.15), transparent 30%),
-        linear-gradient(180deg, #090c13, #0d1220 45%, #0a0d14);
+        linear-gradient(180deg, rgba(0,0,0,.72), rgba(0,0,0,.86)),
+        radial-gradient(circle at 18% 10%, rgba(214,162,74,.16), transparent 30%),
+        radial-gradient(circle at 82% 12%, rgba(214,162,74,.08), transparent 24%),
+        linear-gradient(180deg, #090909, #111111 40%, #0a0a0a 100%);
       color: var(--text);
       overflow-x: hidden;
     }
@@ -36,13 +42,13 @@
       content: "";
       position: fixed;
       inset: 0;
-      background:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-      background-size: 34px 34px;
-      mask-image: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0.03));
       pointer-events: none;
       z-index: 0;
+      background:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, rgba(255,255,255,.25), rgba(255,255,255,.03));
     }
 
     .page {
@@ -50,114 +56,161 @@
       z-index: 1;
       width: min(var(--max), calc(100% - 24px));
       margin: 0 auto;
-      padding-bottom: 32px;
+      padding-bottom: 40px;
     }
 
     .hero {
-      min-height: 700px;
+      min-height: 780px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 42px 20px;
+      padding: 64px 24px;
       position: relative;
       overflow: hidden;
       background:
-        radial-gradient(circle at 18% 20%, rgba(124,58,237,0.26), transparent 40%),
-        radial-gradient(circle at 82% 18%, rgba(56,189,248,0.22), transparent 40%),
-        linear-gradient(180deg, #0a0d14, #111827);
+        linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,.78)),
+        radial-gradient(circle at 50% 0%, rgba(214,162,74,.14), transparent 34%),
+        url("familien_pb.jpg") center center / cover no-repeat;
       border-radius: 0 0 28px 28px;
       box-shadow: var(--shadow);
       margin-bottom: 16px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.82));
     }
 
     .hero::after {
       content: "";
       position: absolute;
       inset: 16px;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 24px;
+      border: 1px solid rgba(214,162,74,.16);
+      border-radius: 22px;
       pointer-events: none;
     }
 
-    .logo-wrap {
-      width: 210px;
-      height: 210px;
-      border-radius: 36px;
-      padding: 10px;
-      background: linear-gradient(135deg, rgba(124,58,237,.7), rgba(56,189,248,.65));
-      box-shadow: 0 28px 70px rgba(0,0,0,.4), 0 0 80px rgba(124,58,237,.16);
-      margin-bottom: 24px;
+    .hero-content,
+    .logo-wrap,
+    .hero h1,
+    .hero p,
+    .hero-stats,
+    .hero-actions {
       position: relative;
       z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(214,162,74,.10);
+      border: 1px solid rgba(214,162,74,.22);
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .hero-kicker::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 0 0 6px rgba(243,197,106,.12);
+    }
+
+    .logo-wrap {
+      width: 170px;
+      height: 170px;
+      border-radius: 26px;
+      padding: 8px;
+      background: linear-gradient(135deg, rgba(214,162,74,.88), rgba(126,92,32,.88));
+      box-shadow: 0 20px 55px rgba(0,0,0,.45), 0 0 70px rgba(214,162,74,.12);
+      margin-bottom: 26px;
     }
 
     .logo-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 28px;
+      border-radius: 18px;
       display: block;
-      border: 2px solid rgba(255,255,255,0.08);
-      background: #0f172a;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .hero h1 {
-      font-size: 92px;
-      letter-spacing: 4px;
-      margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
+      font-size: 86px;
+      line-height: 1;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      text-shadow: 0 8px 30px rgba(0,0,0,.55);
     }
 
     .hero p {
-      color: var(--muted);
+      color: #dfd4c0;
       font-size: 20px;
-      max-width: 950px;
-      line-height: 1.85;
-      position: relative;
-      z-index: 1;
+      max-width: 980px;
+      line-height: 1.9;
     }
 
     .hero-stats {
-      width: min(1100px, 100%);
+      width: min(1200px, 100%);
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
-      margin-top: 28px;
-      position: relative;
-      z-index: 1;
+      margin-top: 30px;
     }
 
     .hero-stat {
-      background: rgba(18,24,38,.82);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 18px;
+      background: rgba(12, 12, 12, 0.78);
+      border: 1px solid rgba(214,162,74,.14);
+      border-radius: 18px;
+      padding: 20px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.16);
+      text-align: left;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.22);
     }
 
     .hero-stat span {
       display: block;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: .12em;
+      letter-spacing: .16em;
       margin-bottom: 8px;
     }
 
     .hero-stat strong {
       display: block;
-      font-size: 20px;
-      margin-bottom: 5px;
+      font-size: 24px;
+      margin-bottom: 6px;
+      color: #fff3dd;
     }
 
     .hero-stat small {
-      color: var(--muted);
-      line-height: 1.5;
+      color: #c8bca5;
+      line-height: 1.55;
       display: block;
+      font-size: 14px;
     }
 
     .hero-actions {
@@ -165,9 +218,7 @@
       gap: 14px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 24px;
-      position: relative;
-      z-index: 1;
+      margin-top: 28px;
     }
 
     .hero-actions a,
@@ -183,16 +234,26 @@
     .hero-actions a,
     .hero-actions button {
       text-decoration: none;
-      padding: 14px 22px;
+      padding: 15px 24px;
       border-radius: 12px;
       font: inherit;
-      font-weight: 700;
+      font-weight: 800;
       border: none;
       cursor: pointer;
+      min-width: 220px;
     }
 
-    .hero-actions .primary { background: var(--accent); color: #fff; }
-    .hero-actions .secondary { background: #1f2937; color: #fff; border: 1px solid var(--line); }
+    .hero-actions .primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #101010;
+      box-shadow: 0 14px 30px rgba(214,162,74,.24);
+    }
+
+    .hero-actions .secondary {
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      border: 1px solid rgba(214,162,74,.16);
+    }
 
     .hero-actions a:hover,
     .hero-actions button:hover,
@@ -211,10 +272,10 @@
       gap: 12px;
       flex-wrap: wrap;
       padding: 14px 18px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--line-soft);
       border-radius: 18px;
-      background: rgba(10, 13, 20, 0.86);
-      backdrop-filter: blur(10px);
+      background: rgba(9, 9, 9, 0.88);
+      backdrop-filter: blur(12px);
       position: sticky;
       top: 10px;
       z-index: 20;
@@ -236,9 +297,9 @@
       gap: 8px;
       padding: 10px 14px;
       border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
+      border: 1px solid rgba(214,162,74,.14);
+      background: rgba(255,255,255,0.03);
+      color: #dbc9a9;
       font-size: 14px;
     }
 
@@ -248,36 +309,41 @@
       height: 10px;
       border-radius: 50%;
       background: var(--accent2);
-      box-shadow: 0 0 0 6px rgba(34,197,94,0.10);
+      box-shadow: 0 0 0 6px rgba(243,197,106,0.12);
     }
 
     .nav {
       display: flex;
       justify-content: center;
       gap: 12px;
-      padding: 22px;
+      padding: 18px;
       flex-wrap: wrap;
       position: sticky;
       top: 82px;
-      background: rgba(10,13,20,0.78);
+      background: rgba(9,9,9,0.84);
       backdrop-filter: blur(10px);
       z-index: 15;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(214,162,74,.10);
       border-radius: 18px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .nav button {
       padding: 14px 22px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      color: white;
-      border-radius: 30px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(214,162,74,.12);
+      color: #f3eadb;
+      border-radius: 999px;
       cursor: pointer;
       font-size: 15px;
+      font-weight: 700;
     }
 
-    .nav button.active { background: var(--accent); }
+    .nav button.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #141414;
+      border-color: transparent;
+    }
 
     .section {
       display: none;
@@ -289,22 +355,23 @@
     .section.active { display: block; }
 
     .box {
-      background: var(--panel);
+      background: linear-gradient(180deg, rgba(18,18,18,.98), rgba(13,13,13,.96));
       padding: 34px;
-      border-radius: 16px;
+      border-radius: 18px;
       margin-bottom: 24px;
-      border: 1px solid var(--line);
-      box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+      border: 1px solid rgba(214,162,74,.12);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.22);
     }
 
     .box h2 {
       margin-bottom: 12px;
-      font-size: 32px;
+      font-size: 34px;
+      color: #fff2dc;
     }
 
     .box p {
-      color: var(--muted);
-      line-height: 1.8;
+      color: #cdbfa7;
+      line-height: 1.9;
       font-size: 17px;
     }
 
@@ -316,20 +383,22 @@
     }
 
     .card {
-      background: var(--panel2);
+      background: linear-gradient(180deg, rgba(24,24,24,.98), rgba(17,17,17,.98));
       padding: 24px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
+      border-radius: 16px;
+      border: 1px solid rgba(214,162,74,.11);
       text-align: center;
+      box-shadow: 0 10px 24px rgba(0,0,0,.18);
     }
 
     .card h3 {
       margin-bottom: 8px;
       font-size: 22px;
+      color: #fff0d4;
     }
 
     .card p {
-      color: var(--muted);
+      color: #ccbda3;
       font-size: 16px;
       line-height: 1.7;
     }
@@ -339,20 +408,20 @@
       padding: 8px 14px;
       border-radius: 999px;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 800;
       margin-top: 10px;
     }
 
     .badge.open {
-      background: rgba(34,197,94,0.15);
-      color: #86efac;
-      border: 1px solid rgba(34,197,94,0.25);
+      background: rgba(127,212,141,0.10);
+      color: #a6e8b1;
+      border: 1px solid rgba(127,212,141,0.24);
     }
 
     .badge.closed {
-      background: rgba(239,68,68,0.15);
-      color: #fca5a5;
-      border: 1px solid rgba(239,68,68,0.25);
+      background: rgba(240,139,139,0.10);
+      color: #ffb3b3;
+      border: 1px solid rgba(240,139,139,0.24);
     }
 
     form {
@@ -366,29 +435,29 @@
 
     input, textarea, select {
       padding: 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: #0e1420;
+      border-radius: 12px;
+      border: 1px solid rgba(214,162,74,.10);
+      background: #0d0d0d;
       color: white;
       font-size: 15px;
       width: 100%;
     }
 
     input:focus, textarea:focus, select:focus {
-      outline: 2px solid rgba(124,58,237,0.35);
-      border-color: rgba(124,58,237,0.4);
+      outline: 2px solid rgba(214,162,74,.24);
+      border-color: rgba(214,162,74,.34);
     }
 
     .send {
       grid-column: span 2;
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
       border: none;
-      padding: 14px;
-      color: white;
+      padding: 15px;
+      color: #111;
       font-size: 16px;
       cursor: pointer;
-      border-radius: 10px;
-      font-weight: 700;
+      border-radius: 12px;
+      font-weight: 800;
     }
 
     .discord-button {
@@ -398,16 +467,16 @@
       margin-top: 16px;
       padding: 14px 22px;
       border-radius: 12px;
-      background: #5865F2;
-      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #111;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .login-box {
       display: grid;
       gap: 14px;
-      max-width: 640px;
+      max-width: 700px;
     }
 
     .login-actions,
@@ -424,15 +493,31 @@
     .topbar button {
       border: none;
       padding: 12px 18px;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
     }
 
-    .btn-primary { background: var(--accent); color: white; }
-    .btn-success { background: var(--accent2); color: #08111b; }
-    .btn-dark { background: #1f2937; color: white; }
-    .btn-warn { background: var(--warning); color: #08111b; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #111;
+    }
+
+    .btn-success {
+      background: #75c28d;
+      color: #09110c;
+    }
+
+    .btn-dark {
+      background: #1d1d1d;
+      color: white;
+      border: 1px solid rgba(214,162,74,.10);
+    }
+
+    .btn-warn {
+      background: var(--warning);
+      color: #111;
+    }
 
     .dashboard {
       display: none;
@@ -451,13 +536,15 @@
     }
 
     .dashboard-tabs button {
-      background: #1f2937;
+      background: #1b1b1b;
       color: white;
-      border: 1px solid var(--line);
+      border: 1px solid rgba(214,162,74,.12);
     }
 
     .dashboard-tabs button.active {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #111;
+      border-color: transparent;
     }
 
     .dashboard-view {
@@ -476,9 +563,9 @@
     }
 
     .metric {
-      background: var(--panel2);
-      border: 1px solid var(--line);
-      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(24,24,24,.98), rgba(16,16,16,.98));
+      border: 1px solid rgba(214,162,74,.10);
+      border-radius: 16px;
       padding: 18px;
     }
 
@@ -487,7 +574,7 @@
       color: var(--muted);
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: .1em;
+      letter-spacing: .12em;
       margin-bottom: 8px;
     }
 
@@ -495,30 +582,42 @@
       display: block;
       font-size: 24px;
       margin-bottom: 4px;
+      color: #fff0d4;
     }
 
     .metric small {
-      color: var(--muted);
+      color: #c7b698;
       line-height: 1.5;
     }
 
     .admin-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
       margin-top: 10px;
     }
 
     .admin-item {
-      background: #1a2333;
+      background: #171717;
       padding: 18px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      border: 1px solid rgba(214,162,74,.08);
     }
 
     .admin-item h4 {
       margin-bottom: 10px;
       font-size: 16px;
+      color: #fff0d3;
+    }
+
+    .read-only-box {
+      background: #111;
+      border: 1px solid rgba(214,162,74,.10);
+      border-radius: 12px;
+      padding: 14px;
+      color: #cfbea1;
+      line-height: 1.7;
+      font-size: 15px;
     }
 
     .hint,
@@ -529,24 +628,25 @@
       line-height: 1.7;
     }
 
-    .hint { color: var(--muted); }
-    .error { color: #fca5a5; }
-    .success { color: #86efac; }
+    .hint { color: #cdbd9d; }
+    .error { color: #ffb2b2; }
+    .success { color: #9ce2b0; }
 
     .footer {
       text-align: center;
-      padding: 40px 0 10px;
-      color: var(--muted);
+      padding: 42px 0 12px;
+      color: #b9a98b;
       font-size: 16px;
     }
 
     @media (max-width: 1100px) {
       .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero h1 { font-size: 64px; }
     }
 
     @media (max-width: 900px) {
-      .hero { min-height: auto; padding: 72px 16px; }
-      .hero h1 { font-size: 46px; letter-spacing: 2px; }
+      .hero { min-height: auto; padding: 74px 16px; }
+      .hero h1 { font-size: 44px; letter-spacing: 2px; }
       .hero p { font-size: 16px; }
       .section { padding: 8px 0 14px; }
       .box { padding: 20px; }
@@ -563,8 +663,8 @@
 
     @media (max-width: 600px) {
       .hero-stats { grid-template-columns: 1fr; }
-      .logo-wrap { width: 124px; height: 124px; border-radius: 24px; }
-      .logo-wrap img { border-radius: 18px; }
+      .logo-wrap { width: 124px; height: 124px; border-radius: 20px; }
+      .logo-wrap img { border-radius: 14px; }
       .page { width: calc(100% - 10px); }
       .topbar, .nav { border-radius: 12px; }
       .nav { position: static; }
@@ -581,29 +681,58 @@
 </head>
 <body>
   <div class="page">
-    <div class="hero">
-      <div class="logo-wrap">
-        <img id="heroLogo" src="familien_pb.jpg" alt="The District Logo" />
-      </div>
-      <h1 id="heroTitle">THE DISTRICT</h1>
-      <p id="heroSubtitle">Offizielle Familienseite auf Grand RP DE01. Organisation, Loyalität und Stärke. Hier finden Spieler alle wichtigen Infos über The District, die Leitung, den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.</p>
+    <div class="hero" id="heroSection">
+      <div class="hero-content">
+        <div class="hero-kicker" id="heroKicker">Grand RP DE01 Family</div>
 
-      <div class="hero-stats">
-        <div class="hero-stat"><span>Recruitment</span><strong id="statRecruitment">OPEN</strong><small>Bewerbungsphase aktuell geöffnet.</small></div>
-        <div class="hero-stat"><span>Member gesamt</span><strong id="statMembers">24</strong><small>Gesamtgröße der Familie.</small></div>
-        <div class="hero-stat"><span>Aktive Member</span><strong id="statActive">-</strong><small>Discord Online-Mitglieder</small></div>
-        <div class="hero-stat"><span>Leader</span><strong id="statLeader">Dave Shade</strong><small>Familienleitung von The District.</small></div>
-      </div>
+        <div class="logo-wrap">
+          <img id="heroLogo" src="familien_pb.jpg" alt="The District Logo" />
+        </div>
 
-      <div class="hero-actions">
-        <button class="primary" onclick="openSection('kontaktmenu', document.querySelector('[data-target=kontaktmenu]'))">Jetzt bewerben</button>
-        <a class="secondary" id="discordLinkButton" href="https://discord.gg/tY7Ea34QuY" target="_blank" rel="noopener noreferrer">Discord ansehen</a>
+        <h1 id="heroTitle">THE DISTRICT</h1>
+        <p id="heroSubtitle">
+          Offizielle Familienseite auf Grand RP DE01. Organisation, Loyalität und Stärke.
+          Hier finden Spieler alle wichtigen Infos über The District, die Leitung,
+          den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span>Recruitment</span>
+            <strong id="statRecruitment">OPEN</strong>
+            <small id="statRecruitmentDesc">Bewerbungsphase aktuell geöffnet.</small>
+          </div>
+          <div class="hero-stat">
+            <span>Member gesamt</span>
+            <strong id="statMembers">24</strong>
+            <small>Wird automatisch über Discord geladen.</small>
+          </div>
+          <div class="hero-stat">
+            <span>Aktive Member</span>
+            <strong id="statActive">-</strong>
+            <small>Discord Online-Mitglieder</small>
+          </div>
+          <div class="hero-stat">
+            <span>Leader</span>
+            <strong id="statLeader">Dave Shade</strong>
+            <small id="statLeaderDesc">Familienleitung von The District.</small>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button class="primary" id="heroButtonPrimary" onclick="openSection('kontaktmenu', document.querySelector('[data-target=kontaktmenu]'))">
+            Jetzt bewerben
+          </button>
+          <a class="secondary" id="discordLinkButton" href="https://discord.gg/tY7Ea34QuY" target="_blank" rel="noopener noreferrer">
+            Discord ansehen
+          </a>
+        </div>
       </div>
     </div>
 
     <div class="topbar">
       <div class="topbar-left">
-        <div class="pill">Grand RP DE01</div>
+        <div class="pill" id="serverPill">Grand RP DE01</div>
         <div class="pill">Besucher gesamt: <span id="visitorCount">0</span></div>
       </div>
       <div class="topbar-right">
@@ -624,36 +753,63 @@
 
     <div class="section active" id="home">
       <div class="box">
-        <h2>Willkommen bei The District</h2>
-        <p>The District ist eine organisierte Familie auf Grand RP DE01. Unsere Familie steht für Loyalität, Organisation, Zusammenhalt und starkes Roleplay. Wir bauen gemeinsam ein stabiles Netzwerk auf und wollen als Familie im Staat bekannt und respektiert sein.</p>
+        <h2 id="homeTitle">Willkommen bei The District</h2>
+        <p id="homeText">
+          The District ist eine organisierte Familie auf Grand RP DE01. Unsere Familie steht für Loyalität,
+          Organisation, Zusammenhalt und starkes Roleplay. Wir bauen gemeinsam ein stabiles Netzwerk auf
+          und wollen als Familie im Staat bekannt und respektiert sein.
+        </p>
       </div>
+
       <div class="box">
-        <h2>Was für Grand RP wichtig ist</h2>
+        <h2 id="homeCardsTitle">Was für Grand RP wichtig ist</h2>
         <div class="grid">
-          <div class="card"><h3>Aktivität</h3><p>Aktive Mitglieder sorgen dafür, dass eure Familie im Staat präsent bleibt und bei Events, Konflikten und Alltags-RP sichtbar ist.</p></div>
-          <div class="card"><h3>Struktur</h3><p>Klare Rangverteilung und Ansprechpartner helfen dabei, Ordnung und Professionalität in der Familie zu zeigen.</p></div>
-          <div class="card"><h3>Recruitment</h3><p>Eine gepflegte Bewerbungsphase macht es einfacher, starke neue Member zu finden und eure Familie wachsen zu lassen.</p></div>
-          <div class="card"><h3>Außenwirkung</h3><p>Eine starke Website, ein klarer Discord und ein seriöser Auftritt machen eure Familie interessanter für neue Bewerber.</p></div>
+          <div class="card">
+            <h3 id="homeCard1Title">Aktivität</h3>
+            <p id="homeCard1Text">Aktive Mitglieder sorgen dafür, dass eure Familie im Staat präsent bleibt und bei Events, Konflikten und Alltags-RP sichtbar ist.</p>
+          </div>
+          <div class="card">
+            <h3 id="homeCard2Title">Struktur</h3>
+            <p id="homeCard2Text">Klare Rangverteilung und Ansprechpartner helfen dabei, Ordnung und Professionalität in der Familie zu zeigen.</p>
+          </div>
+          <div class="card">
+            <h3 id="homeCard3Title">Recruitment</h3>
+            <p id="homeCard3Text">Eine gepflegte Bewerbungsphase macht es einfacher, starke neue Member zu finden und eure Familie wachsen zu lassen.</p>
+          </div>
+          <div class="card">
+            <h3 id="homeCard4Title">Außenwirkung</h3>
+            <p id="homeCard4Text">Eine starke Website, ein klarer Discord und ein seriöser Auftritt machen eure Familie interessanter für neue Bewerber.</p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="section" id="about">
       <div class="box">
-        <h2>Über The District</h2>
-        <p>The District wurde gegründet, um eine starke Gemeinschaft innerhalb von Grand RP DE01 aufzubauen. Unser Ziel ist es, gemeinsam erfolgreich zu sein, Spaß am Roleplay zu haben und eine der bekanntesten Familien auf dem Server zu werden. Wir legen großen Wert auf Loyalität, Respekt, Aktivität und klare Strukturen.</p>
+        <h2 id="aboutTitle">Über The District</h2>
+        <p id="aboutText">
+          The District wurde gegründet, um eine starke Gemeinschaft innerhalb von Grand RP DE01 aufzubauen.
+          Unser Ziel ist es, gemeinsam erfolgreich zu sein, Spaß am Roleplay zu haben und eine der bekanntesten
+          Familien auf dem Server zu werden. Wir legen großen Wert auf Loyalität, Respekt, Aktivität und klare Strukturen.
+        </p>
       </div>
+
       <div class="box">
-        <h2>Discord & Kommunikation</h2>
-        <p>Für eine Grand RP Familie ist ein aktiver Discord extrem wichtig. Dort können Events geplant, Member informiert und Bewerbungen schneller bearbeitet werden.</p>
-        <a class="discord-button" id="discordLinkSection" href="https://discord.gg/tY7Ea34QuY" target="_blank" rel="noopener noreferrer">Discord beitreten</a>
+        <h2 id="discordTitle">Discord & Kommunikation</h2>
+        <p id="discordText">
+          Für eine Grand RP Familie ist ein aktiver Discord extrem wichtig. Dort können Events geplant, Member informiert
+          und Bewerbungen schneller bearbeitet werden.
+        </p>
+        <a class="discord-button" id="discordLinkSection" href="https://discord.gg/tY7Ea34QuY" target="_blank" rel="noopener noreferrer">
+          Discord beitreten
+        </a>
       </div>
     </div>
 
     <div class="section" id="leaders">
       <div class="box">
-        <h2>Leitung von The District</h2>
-        <p>Hier sieht man direkt, wer die Familie führt und wer die wichtigsten Ansprechpartner sind.</p>
+        <h2 id="leadersTitle">Leitung von The District</h2>
+        <p id="leadersText">Hier sieht man direkt, wer die Familie führt und wer die wichtigsten Ansprechpartner sind.</p>
         <div class="grid">
           <div class="card"><h3>Leader</h3><p id="leaderNameCard">Dave Shade</p></div>
           <div class="card"><h3>Rechte Hand</h3><p id="rightHandOneCard">Mark Carletto</p></div>
@@ -665,8 +821,8 @@
 
     <div class="section" id="members">
       <div class="box">
-        <h2>Familienstruktur</h2>
-        <p>Hier könnt ihr eure Rangstruktur und gleichzeitig die aktuelle Größe der Familie präsentieren.</p>
+        <h2 id="membersStructureTitle">Familienstruktur</h2>
+        <p id="membersStructureText">Hier könnt ihr eure Rangstruktur und gleichzeitig die aktuelle Größe der Familie präsentieren.</p>
         <div class="grid">
           <div class="card"><h3>Leader</h3><p>Familienleitung</p></div>
           <div class="card"><h3>Rechte Hand</h3><p>Direkte Unterstützung der Leitung</p></div>
@@ -676,8 +832,9 @@
           <div class="card"><h3>Trial</h3><p>Neue Mitglieder in der Probezeit</p></div>
         </div>
       </div>
+
       <div class="box">
-        <h2>Aktuelle Mitgliederzahl</h2>
+        <h2 id="membersCountTitle">Aktuelle Mitgliederzahl</h2>
         <div class="grid">
           <div class="card"><h3>Mitglieder gesamt</h3><p id="membersTotalCard">24 Member</p></div>
           <div class="card"><h3>Aktive Member</h3><p id="membersActiveCard">- aktiv</p></div>
@@ -689,8 +846,11 @@
 
     <div class="section" id="status">
       <div class="box">
-        <h2>Status & Updates</h2>
-        <p>Hier sieht man den aktuellen Familienstatus live aus Firebase. Wenn du als Admin eingeloggt bist, kannst du die Werte direkt auf der Website ändern und alle Besucher sehen das sofort.</p>
+        <h2 id="statusTitle">Status & Updates</h2>
+        <p id="statusText">
+          Hier sieht man den aktuellen Familienstatus live aus Firebase. Wenn du als Admin eingeloggt bist,
+          kannst du die Werte direkt auf der Website ändern und alle Besucher sehen das sofort.
+        </p>
         <div class="grid">
           <div class="card"><h3>Familienstatus</h3><p id="familyStatusCard">Aktiv</p></div>
           <div class="card"><h3>Recruitment Status</h3><p id="recruitmentTextCard">OPEN</p><span class="badge open" id="recruitBadge">OPEN</span></div>
@@ -702,9 +862,9 @@
 
     <div class="section" id="kontaktmenu">
       <div class="box">
-        <h2>Kontakt, Bewerbung oder Frage</h2>
-        <p>Hier kann man auswählen, worum es geht. Es werden nur IC Daten abgefragt.</p>
-        <form action="https://formspree.io/f/xjgagqrg" method="POST">
+        <h2 id="contactTitle">Kontakt, Bewerbung oder Frage</h2>
+        <p id="contactText">Hier kann man auswählen, worum es geht. Es werden nur IC Daten abgefragt.</p>
+        <form id="contactForm" action="https://formspree.io/f/xjgagqrg" method="POST">
           <input type="text" name="ic_name" placeholder="IC Name" required>
           <input type="text" name="ic_telefon" placeholder="IC Telefonnummer" required>
           <select name="anfrageart" required>
@@ -715,7 +875,7 @@
           </select>
           <div></div>
           <textarea name="message" placeholder="Deine Nachricht oder Bewerbung..." required></textarea>
-          <button class="send" type="submit">Absenden</button>
+          <button class="send" type="submit" id="contactButtonText">Absenden</button>
         </form>
       </div>
     </div>
@@ -738,10 +898,13 @@
       <div class="dashboard" id="dashboard">
         <div class="box">
           <h2>Admin Dashboard</h2>
-          <p>Hier kannst du live Recruitment, Leader, Memberzahl, Discord-Link und andere Inhalte ändern. Alles wird direkt in Firebase gespeichert und ist danach für alle sichtbar.</p>
+          <p>Hier kannst du live Texte, Recruitment, Leader, Discord-Link, Logo, Footer und weitere Inhalte ändern. Die Memberzahl wird automatisch aus Discord geladen und kann hier bewusst nicht geändert werden.</p>
+
           <div class="dashboard-tabs">
             <button class="active" onclick="openDashboardTab('dashboard-overview', this)">Übersicht</button>
-            <button onclick="openDashboardTab('dashboard-edit', this)">Bearbeiten</button>
+            <button onclick="openDashboardTab('dashboard-edit-main', this)">Hauptbereich</button>
+            <button onclick="openDashboardTab('dashboard-edit-texts', this)">Texte</button>
+            <button onclick="openDashboardTab('dashboard-edit-links', this)">Links & Medien</button>
             <button onclick="openDashboardTab('dashboard-help', this)">Hilfe</button>
           </div>
 
@@ -749,42 +912,112 @@
             <div class="dashboard-metrics">
               <div class="metric"><span>Leader</span><strong id="dashLeader">Dave Shade</strong><small>Aktuelle Familienleitung</small></div>
               <div class="metric"><span>Recruitment</span><strong id="dashRecruitment">OPEN</strong><small>Offen oder geschlossen</small></div>
-              <div class="metric"><span>Member</span><strong id="dashMembers">24</strong><small>Gesamtzahl der Familie</small></div>
+              <div class="metric"><span>Member</span><strong id="dashMembers">24</strong><small>Automatisch aus Discord</small></div>
               <div class="metric"><span>Discord Online</span><strong id="dashActive">-</strong><small>Aktive Discord-Mitglieder</small></div>
             </div>
           </div>
 
-          <div class="dashboard-view" id="dashboard-edit">
+          <div class="dashboard-view" id="dashboard-edit-main">
             <div class="admin-grid">
+              <div class="admin-item"><h4>Hero Kicker</h4><input id="adminHeroKicker" type="text" placeholder="Grand RP DE01 Family"></div>
+              <div class="admin-item"><h4>Seitentitel / Hero Titel</h4><input id="adminTitle" type="text" placeholder="THE DISTRICT"></div>
+              <div class="admin-item"><h4>Hero Untertitel</h4><textarea id="adminSubtitle" placeholder="Hero Text"></textarea></div>
               <div class="admin-item"><h4>Leader</h4><input id="adminLeader" type="text" placeholder="Leader Name"></div>
               <div class="admin-item"><h4>Rechte Hand 1</h4><input id="adminRightHandOne" type="text" placeholder="Name"></div>
               <div class="admin-item"><h4>Rechte Hand 2</h4><input id="adminRightHandTwo" type="text" placeholder="Name"></div>
               <div class="admin-item"><h4>Rechte Hand 3</h4><input id="adminRightHandThree" type="text" placeholder="Name"></div>
-              <div class="admin-item"><h4>Mitglieder gesamt</h4><input id="adminMembers" type="number" placeholder="24"></div>
               <div class="admin-item"><h4>Recruitment Status</h4><select id="adminRecruitment"><option value="OPEN">OPEN</option><option value="CLOSED">CLOSED</option></select></div>
+              <div class="admin-item"><h4>Recruitment Beschreibung</h4><input id="adminRecruitmentDesc" type="text" placeholder="Bewerbungsphase aktuell geöffnet."></div>
+              <div class="admin-item"><h4>Leader Beschreibung</h4><input id="adminLeaderDesc" type="text" placeholder="Familienleitung von The District."></div>
               <div class="admin-item"><h4>Familienstatus</h4><input id="adminFamilyStatus" type="text" placeholder="Aktiv"></div>
               <div class="admin-item"><h4>Update Hinweis</h4><input id="adminHint" type="text" placeholder="Neue Member gesucht"></div>
               <div class="admin-item"><h4>Letztes Update</h4><input id="adminLastUpdate" type="text" placeholder="10.03.2026"></div>
-              <div class="admin-item"><h4>Discord Link</h4><input id="adminDiscord" type="text" placeholder="https://discord.gg/...\"></div>
-              <div class="admin-item"><h4>Logo/Bild Pfad</h4><input id="adminLogo" type="text" placeholder="familien_pb.jpg"></div>
+              <div class="admin-item">
+                <h4>Memberzahl</h4>
+                <div class="read-only-box">Wird automatisch aus Discord übernommen und kann hier nicht bearbeitet werden.</div>
+              </div>
             </div>
+
             <div class="admin-actions">
               <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
               <button class="btn-warn" onclick="loadSiteData(true)">Neu laden</button>
             </div>
-            <div class="success" id="adminSuccess"></div>
-            <div class="error" id="adminError"></div>
+          </div>
+
+          <div class="dashboard-view" id="dashboard-edit-texts">
+            <div class="admin-grid">
+              <div class="admin-item"><h4>Start Titel</h4><input id="adminHomeTitle" type="text" placeholder="Willkommen bei The District"></div>
+              <div class="admin-item"><h4>Start Text</h4><textarea id="adminHomeText" placeholder="Text Startseite"></textarea></div>
+              <div class="admin-item"><h4>Start Karten Titel</h4><input id="adminHomeCardsTitle" type="text" placeholder="Was für Grand RP wichtig ist"></div>
+
+              <div class="admin-item"><h4>Karte 1 Titel</h4><input id="adminHomeCard1Title" type="text"></div>
+              <div class="admin-item"><h4>Karte 1 Text</h4><textarea id="adminHomeCard1Text"></textarea></div>
+
+              <div class="admin-item"><h4>Karte 2 Titel</h4><input id="adminHomeCard2Title" type="text"></div>
+              <div class="admin-item"><h4>Karte 2 Text</h4><textarea id="adminHomeCard2Text"></textarea></div>
+
+              <div class="admin-item"><h4>Karte 3 Titel</h4><input id="adminHomeCard3Title" type="text"></div>
+              <div class="admin-item"><h4>Karte 3 Text</h4><textarea id="adminHomeCard3Text"></textarea></div>
+
+              <div class="admin-item"><h4>Karte 4 Titel</h4><input id="adminHomeCard4Title" type="text"></div>
+              <div class="admin-item"><h4>Karte 4 Text</h4><textarea id="adminHomeCard4Text"></textarea></div>
+
+              <div class="admin-item"><h4>Über uns Titel</h4><input id="adminAboutTitle" type="text"></div>
+              <div class="admin-item"><h4>Über uns Text</h4><textarea id="adminAboutText"></textarea></div>
+
+              <div class="admin-item"><h4>Discord Titel</h4><input id="adminDiscordTitle" type="text"></div>
+              <div class="admin-item"><h4>Discord Text</h4><textarea id="adminDiscordText"></textarea></div>
+
+              <div class="admin-item"><h4>Leitung Titel</h4><input id="adminLeadersTitle" type="text"></div>
+              <div class="admin-item"><h4>Leitung Text</h4><textarea id="adminLeadersText"></textarea></div>
+
+              <div class="admin-item"><h4>Struktur Titel</h4><input id="adminMembersStructureTitle" type="text"></div>
+              <div class="admin-item"><h4>Struktur Text</h4><textarea id="adminMembersStructureText"></textarea></div>
+
+              <div class="admin-item"><h4>Mitgliederzahl Titel</h4><input id="adminMembersCountTitle" type="text"></div>
+              <div class="admin-item"><h4>Status Titel</h4><input id="adminStatusTitle" type="text"></div>
+
+              <div class="admin-item"><h4>Status Text</h4><textarea id="adminStatusText"></textarea></div>
+              <div class="admin-item"><h4>Kontakt Titel</h4><input id="adminContactTitle" type="text"></div>
+              <div class="admin-item"><h4>Kontakt Text</h4><textarea id="adminContactText"></textarea></div>
+
+              <div class="admin-item"><h4>Button Text Bewerbung</h4><input id="adminHeroButtonText" type="text" placeholder="Jetzt bewerben"></div>
+              <div class="admin-item"><h4>Kontakt Button Text</h4><input id="adminContactButtonText" type="text" placeholder="Absenden"></div>
+              <div class="admin-item"><h4>Footer Text</h4><input id="adminFooterText" type="text" placeholder="The District – Grand RP DE01"></div>
+              <div class="admin-item"><h4>Server Label oben</h4><input id="adminServerLabel" type="text" placeholder="Grand RP DE01"></div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
+            </div>
+          </div>
+
+          <div class="dashboard-view" id="dashboard-edit-links">
+            <div class="admin-grid">
+              <div class="admin-item"><h4>Discord Link</h4><input id="adminDiscord" type="text" placeholder="https://discord.gg/..."></div>
+              <div class="admin-item"><h4>Logo / Bild Pfad</h4><input id="adminLogo" type="text" placeholder="familien_pb.jpg"></div>
+              <div class="admin-item"><h4>Hero Hintergrundbild</h4><input id="adminHeroBackground" type="text" placeholder="familien_pb.jpg"></div>
+              <div class="admin-item"><h4>Formspree Action Link</h4><input id="adminFormAction" type="text" placeholder="https://formspree.io/f/..."></div>
+            </div>
+
+            <div class="admin-actions">
+              <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
+            </div>
           </div>
 
           <div class="dashboard-view" id="dashboard-help">
-            <div class="hint">Für die Discord-Online-Anzeige muss das Discord Server-Widget aktiviert sein. Sonst bleibt der Wert leer.</div>
-            <div class="hint">Wenn du ein neues Logo willst, lade das Bild in GitHub hoch und trage den Dateinamen unter <strong>Logo/Bild Pfad</strong> ein.</div>
+            <div class="hint">Die Memberzahl und die Online-Zahl werden automatisch über Discord geladen.</div>
+            <div class="hint">Wenn du ein neues Logo oder Hintergrundbild willst, lade das Bild in GitHub hoch und trage den Dateinamen oder Link ein.</div>
+            <div class="hint">Wenn du CLOSED auswählst, ändert sich der Recruitment-Badge automatisch rot.</div>
           </div>
+
+          <div class="success" id="adminSuccess"></div>
+          <div class="error" id="adminError"></div>
         </div>
       </div>
     </div>
 
-    <div class="footer">The District – Grand RP DE01</div>
+    <div class="footer" id="footerText">The District – Grand RP DE01</div>
   </div>
 
   <script type="module">
@@ -802,26 +1035,58 @@
       measurementId: 'G-2FXFCC6RZT'
     };
 
-    const DISCORD_GUILD_ID = '1480593728883130601';
+    const ADMIN_EMAIL = 'spastdummer9@gmail.com';
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
     const defaultData = {
+      heroKicker: 'Grand RP DE01 Family',
       title: 'THE DISTRICT',
       subtitle: 'Offizielle Familienseite auf Grand RP DE01. Organisation, Loyalität und Stärke. Hier finden Spieler alle wichtigen Infos über The District, die Leitung, den aktuellen Recruitment-Status und ein Formular für Bewerbung, Frage oder Kontaktanfrage.',
       logo: 'familien_pb.jpg',
+      heroBackground: 'familien_pb.jpg',
       recruitment: 'OPEN',
-      members: 24,
+      recruitmentDesc: 'Bewerbungsphase aktuell geöffnet.',
       leader: 'Dave Shade',
+      leaderDesc: 'Familienleitung von The District.',
       rightHand1: 'Mark Carletto',
       rightHand2: 'Thorsten Rambo',
       rightHand3: 'John Rambo',
       familyStatus: 'Aktiv',
       hint: 'Neue Member gesucht.',
       lastUpdate: '10.03.2026',
-      discord: 'https://discord.gg/tY7Ea34QuY'
+      discord: 'https://discord.gg/tY7Ea34QuY',
+      formAction: 'https://formspree.io/f/xjgagqrg',
+      homeTitle: 'Willkommen bei The District',
+      homeText: 'The District ist eine organisierte Familie auf Grand RP DE01. Unsere Familie steht für Loyalität, Organisation, Zusammenhalt und starkes Roleplay. Wir bauen gemeinsam ein stabiles Netzwerk auf und wollen als Familie im Staat bekannt und respektiert sein.',
+      homeCardsTitle: 'Was für Grand RP wichtig ist',
+      homeCard1Title: 'Aktivität',
+      homeCard1Text: 'Aktive Mitglieder sorgen dafür, dass eure Familie im Staat präsent bleibt und bei Events, Konflikten und Alltags-RP sichtbar ist.',
+      homeCard2Title: 'Struktur',
+      homeCard2Text: 'Klare Rangverteilung und Ansprechpartner helfen dabei, Ordnung und Professionalität in der Familie zu zeigen.',
+      homeCard3Title: 'Recruitment',
+      homeCard3Text: 'Eine gepflegte Bewerbungsphase macht es einfacher, starke neue Member zu finden und eure Familie wachsen zu lassen.',
+      homeCard4Title: 'Außenwirkung',
+      homeCard4Text: 'Eine starke Website, ein klarer Discord und ein seriöser Auftritt machen eure Familie interessanter für neue Bewerber.',
+      aboutTitle: 'Über The District',
+      aboutText: 'The District wurde gegründet, um eine starke Gemeinschaft innerhalb von Grand RP DE01 aufzubauen. Unser Ziel ist es, gemeinsam erfolgreich zu sein, Spaß am Roleplay zu haben und eine der bekanntesten Familien auf dem Server zu werden. Wir legen großen Wert auf Loyalität, Respekt, Aktivität und klare Strukturen.',
+      discordTitle: 'Discord & Kommunikation',
+      discordText: 'Für eine Grand RP Familie ist ein aktiver Discord extrem wichtig. Dort können Events geplant, Member informiert und Bewerbungen schneller bearbeitet werden.',
+      leadersTitle: 'Leitung von The District',
+      leadersText: 'Hier sieht man direkt, wer die Familie führt und wer die wichtigsten Ansprechpartner sind.',
+      membersStructureTitle: 'Familienstruktur',
+      membersStructureText: 'Hier könnt ihr eure Rangstruktur und gleichzeitig die aktuelle Größe der Familie präsentieren.',
+      membersCountTitle: 'Aktuelle Mitgliederzahl',
+      statusTitle: 'Status & Updates',
+      statusText: 'Hier sieht man den aktuellen Familienstatus live aus Firebase. Wenn du als Admin eingeloggt bist, kannst du die Werte direkt auf der Website ändern und alle Besucher sehen das sofort.',
+      contactTitle: 'Kontakt, Bewerbung oder Frage',
+      contactText: 'Hier kann man auswählen, worum es geht. Es werden nur IC Daten abgefragt.',
+      heroButtonText: 'Jetzt bewerben',
+      contactButtonText: 'Absenden',
+      footerText: 'The District – Grand RP DE01',
+      serverLabel: 'Grand RP DE01'
     };
 
     const dataRef = doc(db, 'district', 'main');
@@ -841,92 +1106,179 @@
 
     function setBadge(status) {
       const badge = document.getElementById('recruitBadge');
+      if (!badge) return;
       badge.textContent = status;
       badge.className = 'badge ' + (status === 'OPEN' ? 'open' : 'closed');
     }
 
-    function renderSite(data) {
-      document.getElementById('heroTitle').textContent = data.title;
-      document.getElementById('heroSubtitle').textContent = data.subtitle;
-      document.getElementById('heroLogo').src = data.logo;
+    function setHeroBackground(path) {
+      const hero = document.getElementById('heroSection');
+      if (!hero) return;
+      hero.style.background = `
+        linear-gradient(180deg, rgba(0,0,0,.34), rgba(0,0,0,.78)),
+        radial-gradient(circle at 50% 0%, rgba(214,162,74,.14), transparent 34%),
+        url("${path}") center center / cover no-repeat
+      `;
+    }
 
+    function renderSite(data, discordStats = null) {
+      document.title = `${data.title} – Grand RP DE01`;
+
+      setText('heroKicker', data.heroKicker);
+      setText('heroTitle', data.title);
+      setText('heroSubtitle', data.subtitle);
       setText('statRecruitment', data.recruitment);
-      setText('statMembers', data.members);
+      setText('statRecruitmentDesc', data.recruitmentDesc);
       setText('statLeader', data.leader);
+      setText('statLeaderDesc', data.leaderDesc);
+
+      const heroLogo = document.getElementById('heroLogo');
+      if (heroLogo) heroLogo.src = data.logo;
+      setHeroBackground(data.heroBackground || data.logo);
 
       setText('leaderNameCard', data.leader);
       setText('rightHandOneCard', data.rightHand1);
       setText('rightHandTwoCard', data.rightHand2);
       setText('rightHandThreeCard', data.rightHand3);
 
-      setText('membersTotalCard', `${data.members} Member`);
+      setText('familyStatusCard', data.familyStatus);
+      setText('recruitmentTextCard', data.recruitment);
+      setText('updateHintCard', data.hint);
       setText('membersRecruitCard', data.recruitment);
       setText('lastUpdateCard', data.lastUpdate);
 
-      setText('familyStatusCard', data.familyStatus);
-      setText('recruitmentTextCard', data.recruitment);
-      setText('membersNumberCard', `${data.members} Member`);
-      setText('updateHintCard', data.hint);
-      setBadge(data.recruitment);
-
       setText('dashLeader', data.leader);
       setText('dashRecruitment', data.recruitment);
-      setText('dashMembers', data.members);
 
-      document.getElementById('discordLinkButton').href = data.discord;
-      document.getElementById('discordLinkSection').href = data.discord;
+      setText('homeTitle', data.homeTitle);
+      setText('homeText', data.homeText);
+      setText('homeCardsTitle', data.homeCardsTitle);
+      setText('homeCard1Title', data.homeCard1Title);
+      setText('homeCard1Text', data.homeCard1Text);
+      setText('homeCard2Title', data.homeCard2Title);
+      setText('homeCard2Text', data.homeCard2Text);
+      setText('homeCard3Title', data.homeCard3Title);
+      setText('homeCard3Text', data.homeCard3Text);
+      setText('homeCard4Title', data.homeCard4Title);
+      setText('homeCard4Text', data.homeCard4Text);
 
+      setText('aboutTitle', data.aboutTitle);
+      setText('aboutText', data.aboutText);
+      setText('discordTitle', data.discordTitle);
+      setText('discordText', data.discordText);
+      setText('leadersTitle', data.leadersTitle);
+      setText('leadersText', data.leadersText);
+      setText('membersStructureTitle', data.membersStructureTitle);
+      setText('membersStructureText', data.membersStructureText);
+      setText('membersCountTitle', data.membersCountTitle);
+      setText('statusTitle', data.statusTitle);
+      setText('statusText', data.statusText);
+      setText('contactTitle', data.contactTitle);
+      setText('contactText', data.contactText);
+      setText('footerText', data.footerText);
+      setText('serverPill', data.serverLabel);
+      setText('heroButtonPrimary', data.heroButtonText);
+      setText('contactButtonText', data.contactButtonText);
+
+      const discordBtn = document.getElementById('discordLinkButton');
+      const discordSection = document.getElementById('discordLinkSection');
+      const contactForm = document.getElementById('contactForm');
+
+      if (discordBtn) discordBtn.href = data.discord;
+      if (discordSection) discordSection.href = data.discord;
+      if (contactForm) contactForm.action = data.formAction;
+
+      setBadge(data.recruitment);
+
+      const totalMembers = discordStats?.total ?? '-';
+      const onlineMembers = discordStats?.online ?? '-';
+
+      setText('statMembers', totalMembers);
+      setText('statActive', onlineMembers);
+      setText('membersTotalCard', `${totalMembers} Member`);
+      setText('membersActiveCard', `${onlineMembers} aktiv`);
+      setText('membersNumberCard', `${totalMembers} Member`);
+      setText('dashMembers', totalMembers);
+      setText('dashActive', onlineMembers);
+
+      setValue('adminHeroKicker', data.heroKicker);
+      setValue('adminTitle', data.title);
+      setValue('adminSubtitle', data.subtitle);
       setValue('adminLeader', data.leader);
       setValue('adminRightHandOne', data.rightHand1);
       setValue('adminRightHandTwo', data.rightHand2);
       setValue('adminRightHandThree', data.rightHand3);
-      setValue('adminMembers', data.members);
       setValue('adminRecruitment', data.recruitment);
+      setValue('adminRecruitmentDesc', data.recruitmentDesc);
+      setValue('adminLeaderDesc', data.leaderDesc);
       setValue('adminFamilyStatus', data.familyStatus);
       setValue('adminHint', data.hint);
       setValue('adminLastUpdate', data.lastUpdate);
       setValue('adminDiscord', data.discord);
       setValue('adminLogo', data.logo);
+      setValue('adminHeroBackground', data.heroBackground);
+      setValue('adminFormAction', data.formAction);
+      setValue('adminHomeTitle', data.homeTitle);
+      setValue('adminHomeText', data.homeText);
+      setValue('adminHomeCardsTitle', data.homeCardsTitle);
+      setValue('adminHomeCard1Title', data.homeCard1Title);
+      setValue('adminHomeCard1Text', data.homeCard1Text);
+      setValue('adminHomeCard2Title', data.homeCard2Title);
+      setValue('adminHomeCard2Text', data.homeCard2Text);
+      setValue('adminHomeCard3Title', data.homeCard3Title);
+      setValue('adminHomeCard3Text', data.homeCard3Text);
+      setValue('adminHomeCard4Title', data.homeCard4Title);
+      setValue('adminHomeCard4Text', data.homeCard4Text);
+      setValue('adminAboutTitle', data.aboutTitle);
+      setValue('adminAboutText', data.aboutText);
+      setValue('adminDiscordTitle', data.discordTitle);
+      setValue('adminDiscordText', data.discordText);
+      setValue('adminLeadersTitle', data.leadersTitle);
+      setValue('adminLeadersText', data.leadersText);
+      setValue('adminMembersStructureTitle', data.membersStructureTitle);
+      setValue('adminMembersStructureText', data.membersStructureText);
+      setValue('adminMembersCountTitle', data.membersCountTitle);
+      setValue('adminStatusTitle', data.statusTitle);
+      setValue('adminStatusText', data.statusText);
+      setValue('adminContactTitle', data.contactTitle);
+      setValue('adminContactText', data.contactText);
+      setValue('adminHeroButtonText', data.heroButtonText);
+      setValue('adminContactButtonText', data.contactButtonText);
+      setValue('adminFooterText', data.footerText);
+      setValue('adminServerLabel', data.serverLabel);
     }
 
-async function loadDiscordOnline() {
+    let lastDiscordStats = { online: '-', total: '-' };
 
-  try {
+    async function loadDiscordOnline() {
+      try {
+        const res = await fetch("https://discord.com/api/v9/invites/tY7Ea34QuY?with_counts=true");
+        const data = await res.json();
 
-    const res = await fetch(
-      "https://discord.com/api/v9/invites/tY7Ea34QuY?with_counts=true"
-    );
+        lastDiscordStats = {
+          online: data.approximate_presence_count ?? '-',
+          total: data.approximate_member_count ?? '-'
+        };
 
-    const data = await res.json();
+        const snap = await getDoc(dataRef);
+        const siteData = snap.exists() ? { ...defaultData, ...snap.data() } : defaultData;
+        renderSite(siteData, lastDiscordStats);
+      } catch (err) {
+        console.log("Discord API Fehler:", err);
+        lastDiscordStats = { online: '-', total: '-' };
 
-    const online = data.approximate_presence_count ?? "-";
-    const total = data.approximate_member_count ?? "-";
-
-    setText('statActive', online);
-    setText('membersActiveCard', online + " aktiv");
-    setText('dashActive', online);
-
-    setText('statMembers', total);
-    setText('membersTotalCard', total + " Member");
-    setText('membersNumberCard', total + " Member");
-
-  } catch (err) {
-
-    console.log("Discord API Fehler:", err);
-
-    setText('statActive', "-");
-    setText('membersActiveCard', "- aktiv");
-    setText('dashActive', "-");
-
-  }
-
-}
+        const snap = await getDoc(dataRef);
+        const siteData = snap.exists() ? { ...defaultData, ...snap.data() } : defaultData;
+        renderSite(siteData, lastDiscordStats);
+      }
+    }
 
     async function loadSiteData(showMessage = false) {
       try {
         const snap = await getDoc(dataRef);
         const data = snap.exists() ? { ...defaultData, ...snap.data() } : defaultData;
-        renderSite(data);
+        renderSite(data, lastDiscordStats);
+
         if (showMessage) {
           document.getElementById('adminSuccess').textContent = 'Daten neu geladen.';
           document.getElementById('adminError').textContent = '';
@@ -963,32 +1315,70 @@ async function loadDiscordOnline() {
       });
     }
 
-    async function saveSiteData() {
-      document.getElementById('adminSuccess').textContent = '';
-      document.getElementById('adminError').textContent = '';
-      if (!currentUser || currentUser.email !== 'spastdummer9@gmail.com') {
-        document.getElementById('adminError').textContent = 'Du bist nicht als berechtigter Admin eingeloggt.';
-        return;
-      }
-
-      const data = {
-        ...defaultData,
+    function collectFormData() {
+      return {
+        heroKicker: document.getElementById('adminHeroKicker').value || defaultData.heroKicker,
+        title: document.getElementById('adminTitle').value || defaultData.title,
+        subtitle: document.getElementById('adminSubtitle').value || defaultData.subtitle,
         leader: document.getElementById('adminLeader').value || defaultData.leader,
         rightHand1: document.getElementById('adminRightHandOne').value || defaultData.rightHand1,
         rightHand2: document.getElementById('adminRightHandTwo').value || defaultData.rightHand2,
         rightHand3: document.getElementById('adminRightHandThree').value || defaultData.rightHand3,
-        members: Number(document.getElementById('adminMembers').value || defaultData.members),
         recruitment: document.getElementById('adminRecruitment').value || defaultData.recruitment,
+        recruitmentDesc: document.getElementById('adminRecruitmentDesc').value || defaultData.recruitmentDesc,
+        leaderDesc: document.getElementById('adminLeaderDesc').value || defaultData.leaderDesc,
         familyStatus: document.getElementById('adminFamilyStatus').value || defaultData.familyStatus,
         hint: document.getElementById('adminHint').value || defaultData.hint,
         lastUpdate: document.getElementById('adminLastUpdate').value || defaultData.lastUpdate,
         discord: document.getElementById('adminDiscord').value || defaultData.discord,
-        logo: document.getElementById('adminLogo').value || defaultData.logo
+        logo: document.getElementById('adminLogo').value || defaultData.logo,
+        heroBackground: document.getElementById('adminHeroBackground').value || document.getElementById('adminLogo').value || defaultData.heroBackground,
+        formAction: document.getElementById('adminFormAction').value || defaultData.formAction,
+        homeTitle: document.getElementById('adminHomeTitle').value || defaultData.homeTitle,
+        homeText: document.getElementById('adminHomeText').value || defaultData.homeText,
+        homeCardsTitle: document.getElementById('adminHomeCardsTitle').value || defaultData.homeCardsTitle,
+        homeCard1Title: document.getElementById('adminHomeCard1Title').value || defaultData.homeCard1Title,
+        homeCard1Text: document.getElementById('adminHomeCard1Text').value || defaultData.homeCard1Text,
+        homeCard2Title: document.getElementById('adminHomeCard2Title').value || defaultData.homeCard2Title,
+        homeCard2Text: document.getElementById('adminHomeCard2Text').value || defaultData.homeCard2Text,
+        homeCard3Title: document.getElementById('adminHomeCard3Title').value || defaultData.homeCard3Title,
+        homeCard3Text: document.getElementById('adminHomeCard3Text').value || defaultData.homeCard3Text,
+        homeCard4Title: document.getElementById('adminHomeCard4Title').value || defaultData.homeCard4Title,
+        homeCard4Text: document.getElementById('adminHomeCard4Text').value || defaultData.homeCard4Text,
+        aboutTitle: document.getElementById('adminAboutTitle').value || defaultData.aboutTitle,
+        aboutText: document.getElementById('adminAboutText').value || defaultData.aboutText,
+        discordTitle: document.getElementById('adminDiscordTitle').value || defaultData.discordTitle,
+        discordText: document.getElementById('adminDiscordText').value || defaultData.discordText,
+        leadersTitle: document.getElementById('adminLeadersTitle').value || defaultData.leadersTitle,
+        leadersText: document.getElementById('adminLeadersText').value || defaultData.leadersText,
+        membersStructureTitle: document.getElementById('adminMembersStructureTitle').value || defaultData.membersStructureTitle,
+        membersStructureText: document.getElementById('adminMembersStructureText').value || defaultData.membersStructureText,
+        membersCountTitle: document.getElementById('adminMembersCountTitle').value || defaultData.membersCountTitle,
+        statusTitle: document.getElementById('adminStatusTitle').value || defaultData.statusTitle,
+        statusText: document.getElementById('adminStatusText').value || defaultData.statusText,
+        contactTitle: document.getElementById('adminContactTitle').value || defaultData.contactTitle,
+        contactText: document.getElementById('adminContactText').value || defaultData.contactText,
+        heroButtonText: document.getElementById('adminHeroButtonText').value || defaultData.heroButtonText,
+        contactButtonText: document.getElementById('adminContactButtonText').value || defaultData.contactButtonText,
+        footerText: document.getElementById('adminFooterText').value || defaultData.footerText,
+        serverLabel: document.getElementById('adminServerLabel').value || defaultData.serverLabel
       };
+    }
+
+    async function saveSiteData() {
+      document.getElementById('adminSuccess').textContent = '';
+      document.getElementById('adminError').textContent = '';
+
+      if (!currentUser || currentUser.email !== ADMIN_EMAIL) {
+        document.getElementById('adminError').textContent = 'Du bist nicht als berechtigter Admin eingeloggt.';
+        return;
+      }
+
+      const data = collectFormData();
 
       try {
         await setDoc(dataRef, data, { merge: true });
-        renderSite(data);
+        renderSite(data, lastDiscordStats);
         document.getElementById('adminSuccess').textContent = 'Änderungen wurden für alle Besucher gespeichert.';
       } catch (err) {
         document.getElementById('adminError').textContent = 'Speichern fehlgeschlagen: ' + err.message;
@@ -998,8 +1388,10 @@ async function loadDiscordOnline() {
     async function loginAdmin() {
       document.getElementById('loginError').textContent = '';
       document.getElementById('loginSuccess').textContent = '';
+
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
+
       try {
         await signInWithEmailAndPassword(auth, email, password);
         document.getElementById('loginSuccess').textContent = 'Erfolgreich eingeloggt.';
@@ -1017,7 +1409,8 @@ async function loadDiscordOnline() {
       const dashboard = document.getElementById('dashboard');
       const dashboardButton = document.getElementById('dashboardButton');
       const logoutBtn = document.getElementById('logoutButton');
-      if (user && user.email === 'spastdummer9@gmail.com') {
+
+      if (user && user.email === ADMIN_EMAIL) {
         dashboardButton.style.display = 'inline-block';
         logoutBtn.style.display = 'inline-block';
       } else {
@@ -1035,7 +1428,7 @@ async function loadDiscordOnline() {
     }
 
     function showDashboard() {
-      if (currentUser && currentUser.email === 'spastdummer9@gmail.com') {
+      if (currentUser && currentUser.email === ADMIN_EMAIL) {
         document.getElementById('dashboard').classList.add('visible');
       }
     }
@@ -1062,8 +1455,8 @@ async function loadDiscordOnline() {
 
     watchVisitorCount();
     increaseVisitorCount();
-    loadSiteData();
-    loadDiscordOnline();
+    await loadSiteData();
+    await loadDiscordOnline();
     setInterval(loadDiscordOnline, 60000);
   </script>
 </body>
