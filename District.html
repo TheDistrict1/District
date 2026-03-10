@@ -498,14 +498,35 @@
     }
 
     @media (max-width: 900px) {
-      .hero { min-height: auto; padding: 80px 20px; }
-      .hero h1 { font-size: 52px; }
-      .hero p { font-size: 17px; }
+      .hero { min-height: auto; padding: 72px 16px; }
+      .hero h1 { font-size: 46px; letter-spacing: 2px; }
+      .hero p { font-size: 16px; }
       .section { padding: 8px 0 14px; }
-      .box { padding: 22px; }
+      .box { padding: 20px; }
+      .topbar { padding: 12px; border-radius: 14px; }
+      .topbar-left, .topbar-right { width: 100%; }
+      .nav { top: 74px; padding: 14px; gap: 8px; justify-content: stretch; }
+      .nav button { flex: 1 1 calc(50% - 8px); min-width: 140px; }
       form { grid-template-columns: 1fr; }
       textarea, .send { grid-column: span 1; }
-      .nav { top: 76px; }
+      .admin-grid { grid-template-columns: 1fr; }
+      .hero-actions { width: 100%; }
+      .hero-actions a, .hero-actions button { width: 100%; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-stats { grid-template-columns: 1fr; }
+      .logo-wrap { width: 124px; height: 124px; border-radius: 24px; }
+      .logo-wrap img { border-radius: 18px; }
+      .page { width: calc(100% - 10px); }
+      .topbar, .nav { border-radius: 12px; }
+      .nav { position: static; }
+      .nav button { flex: 1 1 100%; min-width: 100%; }
+      .hero h1 { font-size: 34px; }
+      .box h2 { font-size: 24px; }
+      .card h3 { font-size: 18px; }
+      .hero-stat strong { font-size: 18px; }
+      input, textarea, select, .send, .login-actions button, .admin-actions button, .admin-toggle { font-size: 16px; }
     }
 
     @media (max-width: 600px) {
@@ -556,7 +577,7 @@
       <button data-target="members" onclick="openSection('members',this)">Mitglieder</button>
       <button data-target="status" onclick="openSection('status',this)">Status</button>
       <button data-target="kontaktmenu" onclick="openSection('kontaktmenu',this)">Kontakt & Bewerbung</button>
-      <button data-target="admin" onclick="openSection('admin',this)">Admin</button>
+      <button data-target="admin" id="adminNavButton" style="display:none;" onclick="openSection('admin',this)">Admin</button>
     </div>
 
     <div class="section active" id="home">
@@ -662,7 +683,7 @@
         <h2>Admin Login</h2>
         <p>Nur dein Firebase-Account kann die Daten bearbeiten. Nach dem Login erscheint das Bearbeitungsfeld.</p>
         <div class="login-box">
-          <input id="loginEmail" type="email" placeholder="Admin E-Mail" value="spastdummer9@gmail.com">
+          <input id="loginEmail" type="email" placeholder="Admin E-Mail eingeben">
           <input id="loginPassword" type="password" placeholder="Passwort">
           <div class="login-actions">
             <button class="btn-primary" onclick="loginAdmin()">Einloggen</button>
@@ -913,16 +934,22 @@
       const adminPanel = document.getElementById('adminPanel');
       const toggleBtn = document.getElementById('adminToggleButton');
       const logoutBtn = document.getElementById('logoutButton');
+      const adminNavButton = document.getElementById('adminNavButton');
 
       if (user && user.email === 'spastdummer9@gmail.com') {
         pill.textContent = 'Admin eingeloggt';
         toggleBtn.style.display = 'inline-block';
         logoutBtn.style.display = 'inline-block';
+        adminNavButton.style.display = 'inline-block';
       } else {
         pill.textContent = 'Nicht eingeloggt';
         toggleBtn.style.display = 'none';
         logoutBtn.style.display = 'none';
+        adminNavButton.style.display = 'none';
         adminPanel.classList.remove('active');
+        if (document.getElementById('admin').classList.contains('active')) {
+          openSection('home', document.querySelector('[data-target="home"]'));
+        }
       }
     }
 
