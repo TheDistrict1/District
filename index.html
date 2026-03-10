@@ -349,7 +349,8 @@
     .admin-actions button,
     .topbar button,
     .discord-button,
-    .slider-nav button {
+    .slider-nav button,
+    .forum-action-btn {
       transition: var(--transition);
     }
 
@@ -751,7 +752,11 @@
       margin-top: 18px;
     }
 
-    textarea { grid-column: span 2; min-height: 150px; resize: vertical; }
+    textarea {
+      grid-column: span 2;
+      min-height: 150px;
+      resize: vertical;
+    }
 
     input, textarea, select {
       padding: 14px;
@@ -762,6 +767,10 @@
       font-size: 15px;
       width: 100%;
       transition: var(--transition);
+    }
+
+    input[type="file"] {
+      padding: 12px;
     }
 
     input:focus, textarea:focus, select:focus {
@@ -809,6 +818,162 @@
     .discord-button:hover {
       transform: translateY(-2px);
       box-shadow: 0 18px 34px rgba(214,162,74,.24), var(--glow);
+    }
+
+    .forum-post-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .forum-post {
+      background: linear-gradient(180deg, rgba(24,24,24,.98), rgba(16,16,16,.98));
+      border: 1px solid rgba(214,162,74,.10);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .forum-post:hover {
+      transform: translateY(-5px);
+      border-color: rgba(214,162,74,.22);
+      box-shadow: 0 16px 34px rgba(0,0,0,.24), var(--glow);
+    }
+
+    .forum-post img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #111;
+      border-bottom: 1px solid rgba(214,162,74,.08);
+    }
+
+    .forum-post-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+    }
+
+    .forum-post-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .forum-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(214,162,74,.14);
+      background: rgba(214,162,74,.08);
+      color: var(--accent2);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .forum-post h3 {
+      color: #fff0d4;
+      font-size: 22px;
+      margin: 0;
+    }
+
+    .forum-post p {
+      color: #ccbda3;
+      font-size: 15px;
+      line-height: 1.75;
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    .forum-empty {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed rgba(214,162,74,.12);
+      border-radius: 14px;
+      margin-top: 18px;
+    }
+
+    .forum-status-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .forum-submit-note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 10px;
+      line-height: 1.7;
+    }
+
+    .forum-moderation-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .forum-moderation-item {
+      background: #171717;
+      border: 1px solid rgba(214,162,74,.08);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .forum-moderation-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .forum-moderation-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .forum-action-btn {
+      border: none;
+      padding: 11px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .forum-action-btn.approve {
+      background: #75c28d;
+      color: #09110c;
+    }
+
+    .forum-action-btn.reject {
+      background: #ef8f8f;
+      color: #140909;
+    }
+
+    .forum-action-btn.delete {
+      background: #2a2a2a;
+      color: #fff;
+      border: 1px solid rgba(214,162,74,.12);
     }
 
     .login-box {
@@ -1036,6 +1201,7 @@
       .hero-actions a, .hero-actions button { width: 100%; }
       .slide { padding: 24px; }
       .slide h3 { font-size: 24px; }
+      .forum-post-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 600px) {
@@ -1052,6 +1218,9 @@
       .hero-stat strong { font-size: 18px; }
       input, textarea, select, .send, .login-actions button, .admin-actions button, .dashboard-tabs button, .topbar button {
         font-size: 16px;
+      }
+      .forum-post img {
+        height: 190px;
       }
     }
   </style>
@@ -1143,6 +1312,7 @@
       <button data-target="leaders" onclick="openSection('leaders',this)">Leitung</button>
       <button data-target="members" onclick="openSection('members',this)">Mitglieder</button>
       <button data-target="status" onclick="openSection('status',this)">Status</button>
+      <button data-target="forum" onclick="openSection('forum',this)">Forum</button>
       <button data-target="kontaktmenu" onclick="openSection('kontaktmenu',this)">Kontakt & Bewerbung</button>
       <button data-target="admin" onclick="openSection('admin',this)">Admin</button>
     </div>
@@ -1323,6 +1493,41 @@
       </div>
     </div>
 
+    <div class="section" id="forum">
+      <div class="box reveal">
+        <h2>Community Forum</h2>
+        <p>Hier können Member eigene Beiträge mit Bild einreichen. Jeder Beitrag wird erst nach Prüfung durch die Leitung freigeschaltet.</p>
+
+        <form id="forumForm">
+          <input id="forumAuthor" type="text" placeholder="IC Name" required>
+          <input id="forumTitle" type="text" placeholder="Titel des Beitrags" required>
+          <select id="forumCategory" required>
+            <option value="">Kategorie auswählen</option>
+            <option value="Events">Events</option>
+            <option value="Ankündigung">Ankündigung</option>
+            <option value="Screenshots">Screenshots</option>
+            <option value="Community">Community</option>
+            <option value="Intern">Intern</option>
+          </select>
+          <input id="forumImage" type="file" accept="image/*">
+          <textarea id="forumText" placeholder="Dein Beitrag..." required></textarea>
+          <button class="send" type="submit">Beitrag einreichen</button>
+        </form>
+
+        <div class="forum-submit-note">
+          Nach dem Absenden landet dein Beitrag zuerst bei der Administration und wird danach freigegeben oder abgelehnt.
+        </div>
+        <div class="success" id="forumSuccess"></div>
+        <div class="error" id="forumError"></div>
+      </div>
+
+      <div class="box reveal">
+        <h2>Freigegebene Beiträge</h2>
+        <div class="forum-post-grid" id="publicForumPosts"></div>
+        <div class="forum-empty" id="publicForumEmpty">Noch keine freigegebenen Beiträge vorhanden.</div>
+      </div>
+    </div>
+
     <div class="section" id="kontaktmenu">
       <div class="box reveal">
         <h2 id="contactTitle">Kontakt, Bewerbung oder Frage</h2>
@@ -1361,7 +1566,7 @@
       <div class="dashboard" id="dashboard">
         <div class="box reveal">
           <h2>Admin Dashboard</h2>
-          <p>Hier kannst du live Texte, Recruitment, Leader, Discord-Link, Logo, Footer, News und weitere Inhalte ändern. Die Memberzahl wird automatisch aus Discord geladen und kann hier bewusst nicht geändert werden.</p>
+          <p>Hier kannst du live Texte, Recruitment, Leader, Discord-Link, Logo, Footer, News und Forum-Beiträge ändern. Die Memberzahl wird automatisch aus Discord geladen und kann hier bewusst nicht geändert werden.</p>
 
           <div class="dashboard-tabs">
             <button class="active" onclick="openDashboardTab('dashboard-overview', this)">Übersicht</button>
@@ -1369,6 +1574,7 @@
             <button onclick="openDashboardTab('dashboard-edit-texts', this)">Texte</button>
             <button onclick="openDashboardTab('dashboard-edit-news', this)">News & Features</button>
             <button onclick="openDashboardTab('dashboard-edit-links', this)">Links & Medien</button>
+            <button onclick="openDashboardTab('dashboard-forum', this)">Forum Prüfung</button>
             <button onclick="openDashboardTab('dashboard-help', this)">Hilfe</button>
           </div>
 
@@ -1496,11 +1702,22 @@
             </div>
           </div>
 
+          <div class="dashboard-view" id="dashboard-forum">
+            <h3 style="margin-bottom:12px; color:#fff0d4;">Wartende Beiträge</h3>
+            <div class="forum-moderation-list" id="pendingForumList"></div>
+            <div class="forum-empty" id="pendingForumEmpty">Keine wartenden Beiträge vorhanden.</div>
+
+            <h3 style="margin:28px 0 12px; color:#fff0d4;">Freigegebene Beiträge</h3>
+            <div class="forum-moderation-list" id="approvedForumList"></div>
+            <div class="forum-empty" id="approvedForumEmpty">Keine freigegebenen Beiträge vorhanden.</div>
+          </div>
+
           <div class="dashboard-view" id="dashboard-help">
             <div class="hint">Die Memberzahl und die Online-Zahl werden automatisch über Discord geladen.</div>
             <div class="hint">Wenn du ein neues Logo oder Hintergrundbild willst, lade das Bild in GitHub hoch und trage den Dateinamen oder Link ein.</div>
             <div class="hint">Wenn du CLOSED auswählst, ändert sich der Recruitment-Badge automatisch rot.</div>
             <div class="hint">Die News oben wechseln automatisch alle paar Sekunden. Mit den Pfeilen kannst du sie auch manuell steuern.</div>
+            <div class="hint">Für das Forum mit Bild-Upload muss Firebase Storage aktiviert sein.</div>
           </div>
 
           <div class="success" id="adminSuccess"></div>
@@ -1515,7 +1732,8 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, onSnapshot, collection, addDoc, query, where, orderBy, serverTimestamp, deleteDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
 
     const firebaseConfig = {
       apiKey: 'AIzaSyACOG4_M4hhukkgzVj4EKHmvAlWEF4ipRg',
@@ -1532,6 +1750,7 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app);
 
     const defaultData = {
       heroKicker: 'Grand RP DE01 Family',
@@ -1606,10 +1825,11 @@
 
     const dataRef = doc(db, 'district', 'main');
     const visitorRef = doc(db, 'district', 'visitors');
+    const forumCollectionRef = collection(db, 'forum_posts');
+
     let currentUser = null;
     let visitorMarked = false;
     let lastDiscordStats = { online: '-', total: '-' };
-
     let currentSlide = 0;
     let sliderInterval = null;
 
@@ -1621,6 +1841,25 @@
     function setValue(id, value) {
       const el = document.getElementById(id);
       if (el) el.value = value ?? '';
+    }
+
+    function escapeHtml(value = '') {
+      return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function formatDate(timestamp) {
+      if (!timestamp) return 'Kein Datum';
+      try {
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        return date.toLocaleString('de-DE');
+      } catch {
+        return 'Unbekannt';
+      }
     }
 
     function setBadge(status) {
@@ -1644,7 +1883,6 @@
       const slides = document.getElementById('slides');
       if (!slides) return;
       slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-
       document.querySelectorAll('.dot').forEach((dot, index) => {
         dot.classList.toggle('active', index === currentSlide);
       });
@@ -1682,7 +1920,6 @@
       setText('statRecruitmentDesc', data.recruitmentDesc);
       setText('statLeader', data.leader);
       setText('statLeaderDesc', data.leaderDesc);
-
       setText('liveServer', data.serverLabel);
       setText('liveFamilyStatus', data.familyStatus);
       setText('liveLastUpdate', data.lastUpdate);
@@ -1854,6 +2091,200 @@
       setValue('adminFeature4Text', data.feature4Text);
     }
 
+    function renderPublicForum(posts) {
+      const container = document.getElementById('publicForumPosts');
+      const empty = document.getElementById('publicForumEmpty');
+      if (!container || !empty) return;
+
+      if (!posts.length) {
+        container.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      container.innerHTML = posts.map(post => {
+        const title = escapeHtml(post.title || 'Ohne Titel');
+        const text = escapeHtml(post.text || '');
+        const author = escapeHtml(post.authorName || 'Unbekannt');
+        const category = escapeHtml(post.category || 'Allgemein');
+        const date = escapeHtml(formatDate(post.createdAt));
+        const image = post.imageUrl
+          ? `<img src="${escapeHtml(post.imageUrl)}" alt="${title}">`
+          : '';
+
+        return `
+          <article class="forum-post">
+            ${image}
+            <div class="forum-post-body">
+              <div class="forum-chip">${category}</div>
+              <h3>${title}</h3>
+              <div class="forum-post-meta">
+                <span>Von: ${author}</span>
+                <span>•</span>
+                <span>${date}</span>
+              </div>
+              <p>${text}</p>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderModerationList(posts, containerId, emptyId, isApproved = false) {
+      const container = document.getElementById(containerId);
+      const empty = document.getElementById(emptyId);
+      if (!container || !empty) return;
+
+      if (!posts.length) {
+        container.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      container.innerHTML = posts.map(post => {
+        const title = escapeHtml(post.title || 'Ohne Titel');
+        const text = escapeHtml(post.text || '');
+        const author = escapeHtml(post.authorName || 'Unbekannt');
+        const category = escapeHtml(post.category || 'Allgemein');
+        const image = post.imageUrl
+          ? `<div style="margin:12px 0;"><img src="${escapeHtml(post.imageUrl)}" alt="${title}" style="max-width:240px; width:100%; border-radius:12px; border:1px solid rgba(214,162,74,.10);"></div>`
+          : '';
+        const created = escapeHtml(formatDate(post.createdAt));
+        const approvedBy = post.approvedBy ? escapeHtml(post.approvedBy) : '-';
+
+        return `
+          <div class="forum-moderation-item">
+            <div class="forum-moderation-header">
+              <div>
+                <div class="forum-chip">${category}</div>
+                <h3 style="margin-top:10px; color:#fff0d4;">${title}</h3>
+              </div>
+              <div style="text-align:right; color:#b8aa90; font-size:14px;">
+                <div>Autor: ${author}</div>
+                <div>Erstellt: ${created}</div>
+                ${isApproved ? `<div>Freigegeben von: ${approvedBy}</div>` : ''}
+              </div>
+            </div>
+            ${image}
+            <p style="white-space:pre-wrap;">${text}</p>
+            <div class="forum-moderation-actions">
+              ${!isApproved ? `<button class="forum-action-btn approve" onclick="approveForumPost('${post.id}')">Freigeben</button>` : ''}
+              ${!isApproved ? `<button class="forum-action-btn reject" onclick="rejectForumPost('${post.id}')">Ablehnen</button>` : ''}
+              <button class="forum-action-btn delete" onclick="deleteForumPost('${post.id}')">Löschen</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function uploadForumImage(file) {
+      if (!file) return '';
+      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const storageRef = ref(storage, `forum_images/${Date.now()}_${cleanName}`);
+      await uploadBytes(storageRef, file);
+      return await getDownloadURL(storageRef);
+    }
+
+    async function submitForumPost(event) {
+      event.preventDefault();
+      const successEl = document.getElementById('forumSuccess');
+      const errorEl = document.getElementById('forumError');
+      successEl.textContent = '';
+      errorEl.textContent = '';
+
+      const authorName = document.getElementById('forumAuthor').value.trim();
+      const title = document.getElementById('forumTitle').value.trim();
+      const category = document.getElementById('forumCategory').value;
+      const text = document.getElementById('forumText').value.trim();
+      const imageFile = document.getElementById('forumImage').files[0] || null;
+
+      if (!authorName || !title || !category || !text) {
+        errorEl.textContent = 'Bitte fülle alle Pflichtfelder aus.';
+        return;
+      }
+
+      try {
+        let imageUrl = '';
+        if (imageFile) {
+          imageUrl = await uploadForumImage(imageFile);
+        }
+
+        await addDoc(forumCollectionRef, {
+          title,
+          text,
+          authorName,
+          category,
+          imageUrl,
+          status: 'pending',
+          createdAt: serverTimestamp(),
+          approvedAt: null,
+          approvedBy: ''
+        });
+
+        document.getElementById('forumForm').reset();
+        successEl.textContent = 'Dein Beitrag wurde eingereicht und wartet nun auf Prüfung.';
+      } catch (err) {
+        errorEl.textContent = 'Beitrag konnte nicht gespeichert werden: ' + err.message;
+      }
+    }
+
+    async function approveForumPost(postId) {
+      if (!currentUser || currentUser.email !== ADMIN_EMAIL) return;
+      try {
+        await updateDoc(doc(db, 'forum_posts', postId), {
+          status: 'approved',
+          approvedAt: serverTimestamp(),
+          approvedBy: currentUser.email
+        });
+      } catch (err) {
+        document.getElementById('adminError').textContent = 'Freigabe fehlgeschlagen: ' + err.message;
+      }
+    }
+
+    async function rejectForumPost(postId) {
+      if (!currentUser || currentUser.email !== ADMIN_EMAIL) return;
+      try {
+        await updateDoc(doc(db, 'forum_posts', postId), {
+          status: 'rejected',
+          approvedAt: serverTimestamp(),
+          approvedBy: currentUser.email
+        });
+      } catch (err) {
+        document.getElementById('adminError').textContent = 'Ablehnung fehlgeschlagen: ' + err.message;
+      }
+    }
+
+    async function deleteForumPost(postId) {
+      if (!currentUser || currentUser.email !== ADMIN_EMAIL) return;
+      if (!confirm('Diesen Beitrag wirklich löschen?')) return;
+      try {
+        await deleteDoc(doc(db, 'forum_posts', postId));
+      } catch (err) {
+        document.getElementById('adminError').textContent = 'Löschen fehlgeschlagen: ' + err.message;
+      }
+    }
+
+    function watchPublicForum() {
+      const approvedQuery = query(forumCollectionRef, where('status', '==', 'approved'), orderBy('createdAt', 'desc'));
+      onSnapshot(approvedQuery, (snapshot) => {
+        const posts = snapshot.docs.map(docItem => ({ id: docItem.id, ...docItem.data() }));
+        renderPublicForum(posts);
+        renderModerationList(posts, 'approvedForumList', 'approvedForumEmpty', true);
+      }, (err) => {
+        console.log('Approved forum load error:', err.message);
+      });
+
+      const pendingQuery = query(forumCollectionRef, where('status', '==', 'pending'), orderBy('createdAt', 'desc'));
+      onSnapshot(pendingQuery, (snapshot) => {
+        const posts = snapshot.docs.map(docItem => ({ id: docItem.id, ...docItem.data() }));
+        renderModerationList(posts, 'pendingForumList', 'pendingForumEmpty', false);
+      }, (err) => {
+        console.log('Pending forum load error:', err.message);
+      });
+    }
+
     async function loadDiscordOnline() {
       try {
         const res = await fetch("https://discord.com/api/v9/invites/tY7Ea34QuY?with_counts=true");
@@ -1966,7 +2397,6 @@
         contactButtonText: document.getElementById('adminContactButtonText').value || defaultData.contactButtonText,
         footerText: document.getElementById('adminFooterText').value || defaultData.footerText,
         serverLabel: document.getElementById('adminServerLabel').value || defaultData.serverLabel,
-
         newsSectionTitle: document.getElementById('adminNewsSectionTitle').value || defaultData.newsSectionTitle,
         news1Tag: document.getElementById('adminNews1Tag').value || defaultData.news1Tag,
         news1Title: document.getElementById('adminNews1Title').value || defaultData.news1Title,
@@ -1977,7 +2407,6 @@
         news3Tag: document.getElementById('adminNews3Tag').value || defaultData.news3Tag,
         news3Title: document.getElementById('adminNews3Title').value || defaultData.news3Title,
         news3Text: document.getElementById('adminNews3Text').value || defaultData.news3Text,
-
         featuresTitle: document.getElementById('adminFeaturesTitle').value || defaultData.featuresTitle,
         feature1Label: document.getElementById('adminFeature1Label').value || defaultData.feature1Label,
         feature1Title: document.getElementById('adminFeature1Title').value || defaultData.feature1Title,
@@ -2101,8 +2530,14 @@
     window.nextSlide = nextSlide;
     window.prevSlide = prevSlide;
     window.goToSlide = goToSlide;
+    window.approveForumPost = approveForumPost;
+    window.rejectForumPost = rejectForumPost;
+    window.deleteForumPost = deleteForumPost;
+
+    document.getElementById('forumForm').addEventListener('submit', submitForumPost);
 
     watchVisitorCount();
+    watchPublicForum();
     increaseVisitorCount();
     await loadSiteData();
     await loadDiscordOnline();
