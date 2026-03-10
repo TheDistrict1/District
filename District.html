@@ -7,7 +7,6 @@
   <style>
     :root {
       --bg: #0a0d14;
-      --bg2: #111827;
       --panel: rgba(18, 24, 38, 0.96);
       --panel2: rgba(24, 32, 51, 0.98);
       --line: rgba(255, 255, 255, 0.08);
@@ -15,11 +14,9 @@
       --muted: #9eabc4;
       --accent: #7c3aed;
       --accent2: #22c55e;
-      --accent3: #38bdf8;
       --danger: #ef4444;
       --warning: #f59e0b;
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
-      --radius: 18px;
       --max: 1380px;
     }
 
@@ -176,12 +173,11 @@
 
     .hero-actions a,
     .hero-actions button,
+    .nav button,
+    .send,
     .dashboard-tabs button,
     .admin-actions button,
-    .send,
-    .nav button,
-    .admin-toggle,
-    .quick-login button {
+    .topbar button {
       transition: .2s ease;
     }
 
@@ -198,14 +194,16 @@
 
     .hero-actions .primary { background: var(--accent); color: #fff; }
     .hero-actions .secondary { background: #1f2937; color: #fff; border: 1px solid var(--line); }
+
     .hero-actions a:hover,
     .hero-actions button:hover,
+    .nav button:hover,
+    .send:hover,
     .dashboard-tabs button:hover,
     .admin-actions button:hover,
-    .send:hover,
-    .nav button:hover,
-    .admin-toggle:hover,
-    .quick-login button:hover { transform: translateY(-1px); }
+    .topbar button:hover {
+      transform: translateY(-1px);
+    }
 
     .topbar {
       display: flex;
@@ -413,23 +411,6 @@
       max-width: 640px;
     }
 
-    .quick-login {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-    }
-
-    .quick-login button {
-      border: 1px solid var(--line);
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: 700;
-      background: #1f2937;
-      color: white;
-    }
-
     .login-actions,
     .admin-actions {
       display: flex;
@@ -440,8 +421,8 @@
 
     .login-actions button,
     .admin-actions button,
-    .admin-toggle,
-    .dashboard-tabs button {
+    .dashboard-tabs button,
+    .topbar button {
       border: none;
       padding: 12px 18px;
       border-radius: 10px;
@@ -451,65 +432,12 @@
 
     .btn-primary { background: var(--accent); color: white; }
     .btn-success { background: var(--accent2); color: #08111b; }
-    .btn-danger { background: var(--danger); color: white; }
     .btn-dark { background: #1f2937; color: white; }
     .btn-warn { background: var(--warning); color: #08111b; }
 
-    .admin-panel {
-      display: none;
-      margin-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 18px;
-    }
-
-    .admin-panel.active { display: block; }
-
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .admin-item {
-      background: #1a2333;
-      padding: 18px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .admin-item h4 {
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-
-    .admin-toggle {
-      background: var(--accent3);
-      color: #08111b;
-    }
-
-    .status-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 14px;
-    }
-
-    .hint,
-    .error,
-    .success {
-      margin-top: 12px;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .hint { color: var(--muted); }
-    .error { color: #fca5a5; }
-    .success { color: #86efac; }
-
     .dashboard {
       display: none;
+      margin-top: 24px;
     }
 
     .dashboard.visible {
@@ -575,6 +503,37 @@
       line-height: 1.5;
     }
 
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .admin-item {
+      background: #1a2333;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .admin-item h4 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .hint,
+    .error,
+    .success {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .hint { color: var(--muted); }
+    .error { color: #fca5a5; }
+    .success { color: #86efac; }
+
     .footer {
       text-align: center;
       padding: 40px 0 10px;
@@ -615,7 +574,9 @@
       .box h2 { font-size: 24px; }
       .card h3 { font-size: 18px; }
       .hero-stat strong { font-size: 18px; }
-      input, textarea, select, .send, .login-actions button, .admin-actions button, .admin-toggle, .dashboard-tabs button { font-size: 16px; }
+      input, textarea, select, .send, .login-actions button, .admin-actions button, .dashboard-tabs button, .topbar button {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -644,10 +605,10 @@
     <div class="topbar">
       <div class="topbar-left">
         <div class="pill">Grand RP DE01</div>
-        <div class="pill" id="authStatePill">Besucher online: <span id="visitorCount">1</span></div>
+        <div class="pill">Besucher gesamt: <span id="visitorCount">0</span></div>
       </div>
       <div class="topbar-right">
-        <button class="admin-toggle" id="dashboardButton" style="display:none;" onclick="openSection('admin', document.querySelector('[data-target=admin]')); showDashboard();">Dashboard öffnen</button>
+        <button class="btn-primary" id="dashboardButton" style="display:none;" onclick="openSection('admin', document.querySelector('[data-target=admin]')); showDashboard();">Dashboard öffnen</button>
         <button class="btn-dark" id="logoutButton" style="display:none;" onclick="logoutAdmin()">Logout</button>
       </div>
     </div>
@@ -683,7 +644,7 @@
         <h2>Über The District</h2>
         <p>The District wurde gegründet, um eine starke Gemeinschaft innerhalb von Grand RP DE01 aufzubauen. Unser Ziel ist es, gemeinsam erfolgreich zu sein, Spaß am Roleplay zu haben und eine der bekanntesten Familien auf dem Server zu werden. Wir legen großen Wert auf Loyalität, Respekt, Aktivität und klare Strukturen.</p>
       </div>
-      <div class="box" id="discord">
+      <div class="box">
         <h2>Discord & Kommunikation</h2>
         <p>Für eine Grand RP Familie ist ein aktiver Discord extrem wichtig. Dort können Events geplant, Member informiert und Bewerbungen schneller bearbeitet werden.</p>
         <a class="discord-button" id="discordLinkSection" href="https://discord.gg/tY7Ea34QuY" target="_blank" rel="noopener noreferrer">Discord beitreten</a>
@@ -743,18 +704,22 @@
     <div class="section" id="kontaktmenu">
       <div class="box">
         <h2>Kontakt, Bewerbung oder Frage</h2>
-        <p>Hier kann man direkt auswählen, ob es sich um eine Bewerbung, eine Frage oder eine allgemeine Kontaktanfrage handelt. Alles geht an denselben Formspree-Endpoint.</p>
+        <p>Hier kann man auswählen, worum es geht. Es werden nur IC Daten abgefragt.</p>
+
         <form action="https://formspree.io/f/xjgagqrg" method="POST">
-          <input type="text" name="name" placeholder="Dein Name" required>
-          <input type="text" name="ingame" placeholder="Ingame Name">
-          <input type="email" name="email" placeholder="Deine Email">
+          <input type="text" name="ic_name" placeholder="IC Name" required>
+          <input type="text" name="ic_telefon" placeholder="IC Telefonnummer" required>
+
           <select name="anfrageart" required>
             <option value="">Bitte auswählen</option>
             <option value="Bewerbung">Bewerbung</option>
             <option value="Frage">Frage</option>
             <option value="Kontaktanfrage">Kontaktanfrage</option>
           </select>
-          <textarea name="message" placeholder="Deine Nachricht oder Bewerbung..."></textarea>
+
+          <div></div>
+
+          <textarea name="message" placeholder="Deine Nachricht oder Bewerbung..." required></textarea>
           <button class="send" type="submit">Absenden</button>
         </form>
       </div>
@@ -767,9 +732,6 @@
         <div class="login-box">
           <input id="loginEmail" type="email" placeholder="Admin E-Mail eingeben">
           <input id="loginPassword" type="password" placeholder="Passwort eingeben">
-          <div class="quick-login">
-            <button type="button" onclick="fillAdminEmail()">Meine Admin-Mail einsetzen</button>
-          </div>
           <div class="login-actions">
             <button class="btn-primary" onclick="loginAdmin()">Einloggen</button>
           </div>
@@ -799,73 +761,71 @@
           </div>
 
           <div class="dashboard-view" id="dashboard-edit">
-            <div class="admin-panel active" id="adminPanel">
-              <div class="admin-grid">
-                <div class="admin-item">
-                  <h4>Leader</h4>
-                  <input id="adminLeader" type="text" placeholder="Leader Name">
-                </div>
-                <div class="admin-item">
-                  <h4>Rechte Hand 1</h4>
-                  <input id="adminRightHandOne" type="text" placeholder="Name">
-                </div>
-                <div class="admin-item">
-                  <h4>Rechte Hand 2</h4>
-                  <input id="adminRightHandTwo" type="text" placeholder="Name">
-                </div>
-                <div class="admin-item">
-                  <h4>Rechte Hand 3</h4>
-                  <input id="adminRightHandThree" type="text" placeholder="Name">
-                </div>
-                <div class="admin-item">
-                  <h4>Mitglieder gesamt</h4>
-                  <input id="adminMembers" type="number" placeholder="24">
-                </div>
-                <div class="admin-item">
-                  <h4>Aktive Member</h4>
-                  <input id="adminActive" type="number" placeholder="18">
-                </div>
-                <div class="admin-item">
-                  <h4>Recruitment Status</h4>
-                  <select id="adminRecruitment">
-                    <option value="OPEN">OPEN</option>
-                    <option value="CLOSED">CLOSED</option>
-                  </select>
-                </div>
-                <div class="admin-item">
-                  <h4>Familienstatus</h4>
-                  <input id="adminFamilyStatus" type="text" placeholder="Aktiv">
-                </div>
-                <div class="admin-item">
-                  <h4>Update Hinweis</h4>
-                  <input id="adminHint" type="text" placeholder="Neue Member gesucht">
-                </div>
-                <div class="admin-item">
-                  <h4>Letztes Update</h4>
-                  <input id="adminLastUpdate" type="text" placeholder="10.03.2026">
-                </div>
-                <div class="admin-item">
-                  <h4>Discord Link</h4>
-                  <input id="adminDiscord" type="text" placeholder="https://discord.gg/...">
-                </div>
-                <div class="admin-item">
-                  <h4>Logo/Bild Pfad</h4>
-                  <input id="adminLogo" type="text" placeholder="familien_pb.jpg">
-                </div>
+            <div class="admin-grid">
+              <div class="admin-item">
+                <h4>Leader</h4>
+                <input id="adminLeader" type="text" placeholder="Leader Name">
               </div>
-
-              <div class="admin-actions">
-                <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
-                <button class="btn-warn" onclick="loadSiteData(true)">Neu laden</button>
+              <div class="admin-item">
+                <h4>Rechte Hand 1</h4>
+                <input id="adminRightHandOne" type="text" placeholder="Name">
               </div>
-              <div class="success" id="adminSuccess"></div>
-              <div class="error" id="adminError"></div>
+              <div class="admin-item">
+                <h4>Rechte Hand 2</h4>
+                <input id="adminRightHandTwo" type="text" placeholder="Name">
+              </div>
+              <div class="admin-item">
+                <h4>Rechte Hand 3</h4>
+                <input id="adminRightHandThree" type="text" placeholder="Name">
+              </div>
+              <div class="admin-item">
+                <h4>Mitglieder gesamt</h4>
+                <input id="adminMembers" type="number" placeholder="24">
+              </div>
+              <div class="admin-item">
+                <h4>Aktive Member</h4>
+                <input id="adminActive" type="number" placeholder="18">
+              </div>
+              <div class="admin-item">
+                <h4>Recruitment Status</h4>
+                <select id="adminRecruitment">
+                  <option value="OPEN">OPEN</option>
+                  <option value="CLOSED">CLOSED</option>
+                </select>
+              </div>
+              <div class="admin-item">
+                <h4>Familienstatus</h4>
+                <input id="adminFamilyStatus" type="text" placeholder="Aktiv">
+              </div>
+              <div class="admin-item">
+                <h4>Update Hinweis</h4>
+                <input id="adminHint" type="text" placeholder="Neue Member gesucht">
+              </div>
+              <div class="admin-item">
+                <h4>Letztes Update</h4>
+                <input id="adminLastUpdate" type="text" placeholder="10.03.2026">
+              </div>
+              <div class="admin-item">
+                <h4>Discord Link</h4>
+                <input id="adminDiscord" type="text" placeholder="https://discord.gg/...">
+              </div>
+              <div class="admin-item">
+                <h4>Logo/Bild Pfad</h4>
+                <input id="adminLogo" type="text" placeholder="familien_pb.jpg">
+              </div>
             </div>
+
+            <div class="admin-actions">
+              <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
+              <button class="btn-warn" onclick="loadSiteData(true)">Neu laden</button>
+            </div>
+            <div class="success" id="adminSuccess"></div>
+            <div class="error" id="adminError"></div>
           </div>
 
           <div class="dashboard-view" id="dashboard-help">
-            <div class="hint">Wenn das Login nicht funktioniert, prüfe zuerst dein Firebase Passwort. Wenn Speichern nicht klappt, prüfe in Firestore die Regeln. Für diese Seite müssen die Regeln so gesetzt sein, dass jeder lesen darf, aber nur <strong>spastdummer9@gmail.com</strong> schreiben darf.</div>
-            <div class="hint">Wenn du ein neues Logo möchtest, lade das Bild in dein GitHub-Repository hoch und trage dann den Dateinamen in das Feld <strong>Logo/Bild Pfad</strong> ein, z. B. <strong>familien_pb.jpg</strong>.</div>
+            <div class="hint">Wenn das Login nicht funktioniert, prüfe zuerst dein Firebase Passwort. Wenn Speichern nicht klappt, prüfe in Firestore die Regeln.</div>
+            <div class="hint">Wenn du ein neues Logo willst, lade das Bild in GitHub hoch und trage den Dateinamen unter <strong>Logo/Bild Pfad</strong> ein.</div>
           </div>
         </div>
       </div>
@@ -877,7 +837,15 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-    import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      updateDoc,
+      increment,
+      onSnapshot
+    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: 'AIzaSyACOG4_M4hhukkgzVj4EKHmvAlWEF4ipRg',
@@ -911,7 +879,9 @@
     };
 
     const dataRef = doc(db, 'district', 'main');
+    const visitorRef = doc(db, 'district', 'visitors');
     let currentUser = null;
+    let visitorMarked = false;
 
     function setText(id, value) {
       const el = document.getElementById(id);
@@ -991,13 +961,42 @@
       }
     }
 
+    async function ensureVisitorDoc() {
+      const snap = await getDoc(visitorRef);
+      if (!snap.exists()) {
+        await setDoc(visitorRef, { count: 0 });
+      }
+    }
+
+    async function increaseVisitorCount() {
+      if (visitorMarked) return;
+      visitorMarked = true;
+      try {
+        await ensureVisitorDoc();
+        await updateDoc(visitorRef, { count: increment(1) });
+      } catch (err) {
+        console.log('Visitor count error:', err.message);
+      }
+    }
+
+    function watchVisitorCount() {
+      onSnapshot(visitorRef, (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          setText('visitorCount', data.count ?? 0);
+        }
+      });
+    }
+
     async function saveSiteData() {
       document.getElementById('adminSuccess').textContent = '';
       document.getElementById('adminError').textContent = '';
+
       if (!currentUser || currentUser.email !== 'spastdummer9@gmail.com') {
         document.getElementById('adminError').textContent = 'Du bist nicht als berechtigter Admin eingeloggt.';
         return;
       }
+
       const data = {
         ...defaultData,
         leader: document.getElementById('adminLeader').value || defaultData.leader,
@@ -1028,6 +1027,7 @@
       document.getElementById('loginSuccess').textContent = '';
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
+
       try {
         await signInWithEmailAndPassword(auth, email, password);
         document.getElementById('loginSuccess').textContent = 'Erfolgreich eingeloggt.';
@@ -1042,22 +1042,16 @@
     }
 
     function updateAuthUI(user) {
-      const pill = document.getElementById('authStatePill');
       const dashboard = document.getElementById('dashboard');
       const dashboardButton = document.getElementById('dashboardButton');
       const logoutBtn = document.getElementById('logoutButton');
-      const adminNavButton = document.querySelector('[data-target="admin"]');
 
       if (user && user.email === 'spastdummer9@gmail.com') {
-        pill.textContent = 'Admin eingeloggt';
         dashboardButton.style.display = 'inline-block';
         logoutBtn.style.display = 'inline-block';
-        adminNavButton.style.display = 'inline-block';
       } else {
-        pill.textContent = 'Nicht eingeloggt';
         dashboardButton.style.display = 'none';
         logoutBtn.style.display = 'none';
-        adminNavButton.style.display = 'inline-block';
         dashboard.classList.remove('visible');
       }
     }
@@ -1073,10 +1067,6 @@
       if (currentUser && currentUser.email === 'spastdummer9@gmail.com') {
         document.getElementById('dashboard').classList.add('visible');
       }
-    }
-
-    function fillAdminEmail() {
-      document.getElementById('loginEmail').value = 'spastdummer9@gmail.com';
     }
 
     onAuthStateChanged(auth, (user) => {
@@ -1098,26 +1088,9 @@
     window.loadSiteData = loadSiteData;
     window.openDashboardTab = openDashboardTab;
     window.showDashboard = showDashboard;
-    window.fillAdminEmail = fillAdminEmail;
 
-    // einfacher Website-Besucherzähler
-    const visitorRef = doc(db, 'district', 'visitors');
-
-    async function increaseVisitors() {
-      try {
-        const snap = await getDoc(visitorRef);
-        let count = 0;
-        if (snap.exists()) count = snap.data().count || 0;
-        count++;
-        await setDoc(visitorRef, { count: count }, { merge: true });
-        document.getElementById('visitorCount').textContent = count;
-      } catch (e) {
-        console.log('Visitor counter error', e);
-      }
-    }
-
-    increaseVisitors();
-
+    watchVisitorCount();
+    increaseVisitorCount();
     loadSiteData();
   </script>
 </body>
