@@ -176,10 +176,12 @@
 
     .hero-actions a,
     .hero-actions button,
+    .dashboard-tabs button,
     .admin-actions button,
     .send,
     .nav button,
-    .admin-toggle {
+    .admin-toggle,
+    .quick-login button {
       transition: .2s ease;
     }
 
@@ -198,10 +200,12 @@
     .hero-actions .secondary { background: #1f2937; color: #fff; border: 1px solid var(--line); }
     .hero-actions a:hover,
     .hero-actions button:hover,
+    .dashboard-tabs button:hover,
     .admin-actions button:hover,
     .send:hover,
     .nav button:hover,
-    .admin-toggle:hover { transform: translateY(-1px); }
+    .admin-toggle:hover,
+    .quick-login button:hover { transform: translateY(-1px); }
 
     .topbar {
       display: flex;
@@ -406,7 +410,24 @@
     .login-box {
       display: grid;
       gap: 14px;
-      max-width: 520px;
+      max-width: 640px;
+    }
+
+    .quick-login {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .quick-login button {
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      background: #1f2937;
+      color: white;
     }
 
     .login-actions,
@@ -419,7 +440,8 @@
 
     .login-actions button,
     .admin-actions button,
-    .admin-toggle {
+    .admin-toggle,
+    .dashboard-tabs button {
       border: none;
       padding: 12px 18px;
       border-radius: 10px;
@@ -486,6 +508,73 @@
     .error { color: #fca5a5; }
     .success { color: #86efac; }
 
+    .dashboard {
+      display: none;
+    }
+
+    .dashboard.visible {
+      display: block;
+    }
+
+    .dashboard-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0 18px;
+    }
+
+    .dashboard-tabs button {
+      background: #1f2937;
+      color: white;
+      border: 1px solid var(--line);
+    }
+
+    .dashboard-tabs button.active {
+      background: var(--accent);
+    }
+
+    .dashboard-view {
+      display: none;
+    }
+
+    .dashboard-view.active {
+      display: block;
+    }
+
+    .dashboard-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      background: var(--panel2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .metric small {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     .footer {
       text-align: center;
       padding: 40px 0 10px;
@@ -526,14 +615,7 @@
       .box h2 { font-size: 24px; }
       .card h3 { font-size: 18px; }
       .hero-stat strong { font-size: 18px; }
-      input, textarea, select, .send, .login-actions button, .admin-actions button, .admin-toggle { font-size: 16px; }
-    }
-
-    @media (max-width: 600px) {
-      .hero-stats { grid-template-columns: 1fr; }
-      .logo-wrap { width: 140px; height: 140px; }
-      .page { width: calc(100% - 12px); }
-      .topbar, .nav { border-radius: 14px; }
+      input, textarea, select, .send, .login-actions button, .admin-actions button, .admin-toggle, .dashboard-tabs button { font-size: 16px; }
     }
   </style>
 </head>
@@ -565,7 +647,7 @@
         <div class="pill" id="authStatePill">Nicht eingeloggt</div>
       </div>
       <div class="topbar-right">
-        <button class="admin-toggle" id="adminToggleButton" style="display:none;" onclick="toggleAdminPanel()">Admin bearbeiten</button>
+        <button class="admin-toggle" id="dashboardButton" style="display:none;" onclick="openSection('admin', document.querySelector('[data-target=admin]')); showDashboard();">Dashboard öffnen</button>
         <button class="btn-dark" id="logoutButton" style="display:none;" onclick="logoutAdmin()">Logout</button>
       </div>
     </div>
@@ -577,7 +659,7 @@
       <button data-target="members" onclick="openSection('members',this)">Mitglieder</button>
       <button data-target="status" onclick="openSection('status',this)">Status</button>
       <button data-target="kontaktmenu" onclick="openSection('kontaktmenu',this)">Kontakt & Bewerbung</button>
-      <button data-target="admin" id="adminNavButton" style="display:none;" onclick="openSection('admin',this)">Admin</button>
+      <button data-target="admin" onclick="openSection('admin',this)">Admin</button>
     </div>
 
     <div class="section active" id="home">
@@ -680,11 +762,14 @@
 
     <div class="section" id="admin">
       <div class="box">
-        <h2>Admin Login</h2>
-        <p>Nur dein Firebase-Account kann die Daten bearbeiten. Nach dem Login erscheint das Bearbeitungsfeld.</p>
+        <h2>Admin Bereich</h2>
+        <p>Hier loggst du dich ein. Nach erfolgreichem Login erscheint darunter dein Dashboard mit Live-Bearbeitung.</p>
         <div class="login-box">
           <input id="loginEmail" type="email" placeholder="Admin E-Mail eingeben">
-          <input id="loginPassword" type="password" placeholder="Passwort">
+          <input id="loginPassword" type="password" placeholder="Passwort eingeben">
+          <div class="quick-login">
+            <button type="button" onclick="fillAdminEmail()">Meine Admin-Mail einsetzen</button>
+          </div>
           <div class="login-actions">
             <button class="btn-primary" onclick="loginAdmin()">Einloggen</button>
           </div>
@@ -693,75 +778,96 @@
         </div>
       </div>
 
-      <div class="box admin-panel" id="adminPanel">
-        <div class="status-row">
-          <div>
-            <h2>Live Bearbeiten</h2>
-            <p>Diese Änderungen werden in Firebase gespeichert und sind danach für alle Besucher sichtbar.</p>
-          </div>
-        </div>
+      <div class="dashboard" id="dashboard">
+        <div class="box">
+          <h2>Admin Dashboard</h2>
+          <p>Hier kannst du live Recruitment, Leader, Memberzahl, Discord-Link und andere Inhalte ändern. Alles wird direkt in Firebase gespeichert und ist danach für alle sichtbar.</p>
 
-        <div class="admin-grid">
-          <div class="admin-item">
-            <h4>Leader</h4>
-            <input id="adminLeader" type="text" placeholder="Leader Name">
+          <div class="dashboard-tabs">
+            <button class="active" onclick="openDashboardTab('dashboard-overview', this)">Übersicht</button>
+            <button onclick="openDashboardTab('dashboard-edit', this)">Bearbeiten</button>
+            <button onclick="openDashboardTab('dashboard-help', this)">Hilfe</button>
           </div>
-          <div class="admin-item">
-            <h4>Rechte Hand 1</h4>
-            <input id="adminRightHandOne" type="text" placeholder="Name">
-          </div>
-          <div class="admin-item">
-            <h4>Rechte Hand 2</h4>
-            <input id="adminRightHandTwo" type="text" placeholder="Name">
-          </div>
-          <div class="admin-item">
-            <h4>Rechte Hand 3</h4>
-            <input id="adminRightHandThree" type="text" placeholder="Name">
-          </div>
-          <div class="admin-item">
-            <h4>Mitglieder gesamt</h4>
-            <input id="adminMembers" type="number" placeholder="24">
-          </div>
-          <div class="admin-item">
-            <h4>Aktive Member</h4>
-            <input id="adminActive" type="number" placeholder="18">
-          </div>
-          <div class="admin-item">
-            <h4>Recruitment Status</h4>
-            <select id="adminRecruitment">
-              <option value="OPEN">OPEN</option>
-              <option value="CLOSED">CLOSED</option>
-            </select>
-          </div>
-          <div class="admin-item">
-            <h4>Familienstatus</h4>
-            <input id="adminFamilyStatus" type="text" placeholder="Aktiv">
-          </div>
-          <div class="admin-item">
-            <h4>Update Hinweis</h4>
-            <input id="adminHint" type="text" placeholder="Neue Member gesucht">
-          </div>
-          <div class="admin-item">
-            <h4>Letztes Update</h4>
-            <input id="adminLastUpdate" type="text" placeholder="10.03.2026">
-          </div>
-          <div class="admin-item">
-            <h4>Discord Link</h4>
-            <input id="adminDiscord" type="text" placeholder="https://discord.gg/...">
-          </div>
-          <div class="admin-item">
-            <h4>Logo/Bild Pfad</h4>
-            <input id="adminLogo" type="text" placeholder="familien_pb.jpg">
-          </div>
-        </div>
 
-        <div class="admin-actions">
-          <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
-          <button class="btn-warn" onclick="loadSiteData(true)">Neu laden</button>
+          <div class="dashboard-view active" id="dashboard-overview">
+            <div class="dashboard-metrics">
+              <div class="metric"><span>Leader</span><strong id="dashLeader">Dave Shade</strong><small>Aktuelle Familienleitung</small></div>
+              <div class="metric"><span>Recruitment</span><strong id="dashRecruitment">OPEN</strong><small>Offen oder geschlossen</small></div>
+              <div class="metric"><span>Member</span><strong id="dashMembers">24</strong><small>Gesamtzahl der Familie</small></div>
+              <div class="metric"><span>Aktive</span><strong id="dashActive">18</strong><small>Aktive Member im Staat</small></div>
+            </div>
+          </div>
+
+          <div class="dashboard-view" id="dashboard-edit">
+            <div class="admin-panel active" id="adminPanel">
+              <div class="admin-grid">
+                <div class="admin-item">
+                  <h4>Leader</h4>
+                  <input id="adminLeader" type="text" placeholder="Leader Name">
+                </div>
+                <div class="admin-item">
+                  <h4>Rechte Hand 1</h4>
+                  <input id="adminRightHandOne" type="text" placeholder="Name">
+                </div>
+                <div class="admin-item">
+                  <h4>Rechte Hand 2</h4>
+                  <input id="adminRightHandTwo" type="text" placeholder="Name">
+                </div>
+                <div class="admin-item">
+                  <h4>Rechte Hand 3</h4>
+                  <input id="adminRightHandThree" type="text" placeholder="Name">
+                </div>
+                <div class="admin-item">
+                  <h4>Mitglieder gesamt</h4>
+                  <input id="adminMembers" type="number" placeholder="24">
+                </div>
+                <div class="admin-item">
+                  <h4>Aktive Member</h4>
+                  <input id="adminActive" type="number" placeholder="18">
+                </div>
+                <div class="admin-item">
+                  <h4>Recruitment Status</h4>
+                  <select id="adminRecruitment">
+                    <option value="OPEN">OPEN</option>
+                    <option value="CLOSED">CLOSED</option>
+                  </select>
+                </div>
+                <div class="admin-item">
+                  <h4>Familienstatus</h4>
+                  <input id="adminFamilyStatus" type="text" placeholder="Aktiv">
+                </div>
+                <div class="admin-item">
+                  <h4>Update Hinweis</h4>
+                  <input id="adminHint" type="text" placeholder="Neue Member gesucht">
+                </div>
+                <div class="admin-item">
+                  <h4>Letztes Update</h4>
+                  <input id="adminLastUpdate" type="text" placeholder="10.03.2026">
+                </div>
+                <div class="admin-item">
+                  <h4>Discord Link</h4>
+                  <input id="adminDiscord" type="text" placeholder="https://discord.gg/...">
+                </div>
+                <div class="admin-item">
+                  <h4>Logo/Bild Pfad</h4>
+                  <input id="adminLogo" type="text" placeholder="familien_pb.jpg">
+                </div>
+              </div>
+
+              <div class="admin-actions">
+                <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
+                <button class="btn-warn" onclick="loadSiteData(true)">Neu laden</button>
+              </div>
+              <div class="success" id="adminSuccess"></div>
+              <div class="error" id="adminError"></div>
+            </div>
+          </div>
+
+          <div class="dashboard-view" id="dashboard-help">
+            <div class="hint">Wenn das Login nicht funktioniert, prüfe zuerst dein Firebase Passwort. Wenn Speichern nicht klappt, prüfe in Firestore die Regeln. Für diese Seite müssen die Regeln so gesetzt sein, dass jeder lesen darf, aber nur <strong>spastdummer9@gmail.com</strong> schreiben darf.</div>
+            <div class="hint">Wenn du ein neues Logo möchtest, lade das Bild in dein GitHub-Repository hoch und trage dann den Dateinamen in das Feld <strong>Logo/Bild Pfad</strong> ein, z. B. <strong>familien_pb.jpg</strong>.</div>
+          </div>
         </div>
-        <div class="success" id="adminSuccess"></div>
-        <div class="error" id="adminError"></div>
-        <div class="hint">Wichtig: Damit wirklich nur du schreiben darfst, musst du in Firebase gleich noch die Firestore-Regeln setzen. Die lese ich dir unten direkt mit.</div>
       </div>
     </div>
 
@@ -849,6 +955,11 @@
       setText('updateHintCard', data.hint);
       setBadge(data.recruitment);
 
+      setText('dashLeader', data.leader);
+      setText('dashRecruitment', data.recruitment);
+      setText('dashMembers', data.members);
+      setText('dashActive', data.active);
+
       document.getElementById('discordLinkButton').href = data.discord;
       document.getElementById('discordLinkSection').href = data.discord;
 
@@ -920,6 +1031,7 @@
       try {
         await signInWithEmailAndPassword(auth, email, password);
         document.getElementById('loginSuccess').textContent = 'Erfolgreich eingeloggt.';
+        showDashboard();
       } catch (err) {
         document.getElementById('loginError').textContent = 'Login fehlgeschlagen: ' + err.message;
       }
@@ -931,26 +1043,40 @@
 
     function updateAuthUI(user) {
       const pill = document.getElementById('authStatePill');
-      const adminPanel = document.getElementById('adminPanel');
-      const toggleBtn = document.getElementById('adminToggleButton');
+      const dashboard = document.getElementById('dashboard');
+      const dashboardButton = document.getElementById('dashboardButton');
       const logoutBtn = document.getElementById('logoutButton');
-      const adminNavButton = document.getElementById('adminNavButton');
+      const adminNavButton = document.querySelector('[data-target="admin"]');
 
       if (user && user.email === 'spastdummer9@gmail.com') {
         pill.textContent = 'Admin eingeloggt';
-        toggleBtn.style.display = 'inline-block';
+        dashboardButton.style.display = 'inline-block';
         logoutBtn.style.display = 'inline-block';
         adminNavButton.style.display = 'inline-block';
       } else {
         pill.textContent = 'Nicht eingeloggt';
-        toggleBtn.style.display = 'none';
+        dashboardButton.style.display = 'none';
         logoutBtn.style.display = 'none';
-        adminNavButton.style.display = 'none';
-        adminPanel.classList.remove('active');
-        if (document.getElementById('admin').classList.contains('active')) {
-          openSection('home', document.querySelector('[data-target="home"]'));
-        }
+        adminNavButton.style.display = 'inline-block';
+        dashboard.classList.remove('visible');
       }
+    }
+
+    function openDashboardTab(id, btn) {
+      document.querySelectorAll('.dashboard-view').forEach((v) => v.classList.remove('active'));
+      document.querySelectorAll('.dashboard-tabs button').forEach((b) => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    function showDashboard() {
+      if (currentUser && currentUser.email === 'spastdummer9@gmail.com') {
+        document.getElementById('dashboard').classList.add('visible');
+      }
+    }
+
+    function fillAdminEmail() {
+      document.getElementById('loginEmail').value = 'spastdummer9@gmail.com';
     }
 
     onAuthStateChanged(auth, (user) => {
@@ -966,17 +1092,15 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.toggleAdminPanel = function() {
-      document.getElementById('adminPanel').classList.toggle('active');
-    };
-
     window.loginAdmin = loginAdmin;
     window.logoutAdmin = logoutAdmin;
     window.saveSiteData = saveSiteData;
     window.loadSiteData = loadSiteData;
+    window.openDashboardTab = openDashboardTab;
+    window.showDashboard = showDashboard;
+    window.fillAdminEmail = fillAdminEmail;
 
     loadSiteData();
   </script>
 </body>
 </html>
-
