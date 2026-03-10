@@ -14,7 +14,6 @@
       --muted: #9eabc4;
       --accent: #7c3aed;
       --accent2: #22c55e;
-      --danger: #ef4444;
       --warning: #f59e0b;
       --shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
       --max: 1380px;
@@ -592,7 +591,7 @@
       <div class="hero-stats">
         <div class="hero-stat"><span>Recruitment</span><strong id="statRecruitment">OPEN</strong><small>Bewerbungsphase aktuell geöffnet.</small></div>
         <div class="hero-stat"><span>Member gesamt</span><strong id="statMembers">24</strong><small>Gesamtgröße der Familie.</small></div>
-        <div class="hero-stat"><span>Aktive Member</span><strong id="statActive">18</strong><small>Aktive Mitglieder im Staat.</small></div>
+        <div class="hero-stat"><span>Aktive Member</span><strong id="statActive">-</strong><small>Discord Online-Mitglieder</small></div>
         <div class="hero-stat"><span>Leader</span><strong id="statLeader">Dave Shade</strong><small>Familienleitung von The District.</small></div>
       </div>
 
@@ -681,7 +680,7 @@
         <h2>Aktuelle Mitgliederzahl</h2>
         <div class="grid">
           <div class="card"><h3>Mitglieder gesamt</h3><p id="membersTotalCard">24 Member</p></div>
-          <div class="card"><h3>Aktive Member</h3><p id="membersActiveCard">18 aktiv</p></div>
+          <div class="card"><h3>Aktive Member</h3><p id="membersActiveCard">- aktiv</p></div>
           <div class="card"><h3>Recruitment</h3><p id="membersRecruitCard">OPEN</p></div>
           <div class="card"><h3>Letztes Update</h3><p id="lastUpdateCard">Noch kein Update eingetragen</p></div>
         </div>
@@ -705,20 +704,16 @@
       <div class="box">
         <h2>Kontakt, Bewerbung oder Frage</h2>
         <p>Hier kann man auswählen, worum es geht. Es werden nur IC Daten abgefragt.</p>
-
         <form action="https://formspree.io/f/xjgagqrg" method="POST">
           <input type="text" name="ic_name" placeholder="IC Name" required>
           <input type="text" name="ic_telefon" placeholder="IC Telefonnummer" required>
-
           <select name="anfrageart" required>
             <option value="">Bitte auswählen</option>
             <option value="Bewerbung">Bewerbung</option>
             <option value="Frage">Frage</option>
             <option value="Kontaktanfrage">Kontaktanfrage</option>
           </select>
-
           <div></div>
-
           <textarea name="message" placeholder="Deine Nachricht oder Bewerbung..." required></textarea>
           <button class="send" type="submit">Absenden</button>
         </form>
@@ -744,7 +739,6 @@
         <div class="box">
           <h2>Admin Dashboard</h2>
           <p>Hier kannst du live Recruitment, Leader, Memberzahl, Discord-Link und andere Inhalte ändern. Alles wird direkt in Firebase gespeichert und ist danach für alle sichtbar.</p>
-
           <div class="dashboard-tabs">
             <button class="active" onclick="openDashboardTab('dashboard-overview', this)">Übersicht</button>
             <button onclick="openDashboardTab('dashboard-edit', this)">Bearbeiten</button>
@@ -756,65 +750,24 @@
               <div class="metric"><span>Leader</span><strong id="dashLeader">Dave Shade</strong><small>Aktuelle Familienleitung</small></div>
               <div class="metric"><span>Recruitment</span><strong id="dashRecruitment">OPEN</strong><small>Offen oder geschlossen</small></div>
               <div class="metric"><span>Member</span><strong id="dashMembers">24</strong><small>Gesamtzahl der Familie</small></div>
-              <div class="metric"><span>Aktive</span><strong id="dashActive">18</strong><small>Aktive Member im Staat</small></div>
+              <div class="metric"><span>Discord Online</span><strong id="dashActive">-</strong><small>Aktive Discord-Mitglieder</small></div>
             </div>
           </div>
 
           <div class="dashboard-view" id="dashboard-edit">
             <div class="admin-grid">
-              <div class="admin-item">
-                <h4>Leader</h4>
-                <input id="adminLeader" type="text" placeholder="Leader Name">
-              </div>
-              <div class="admin-item">
-                <h4>Rechte Hand 1</h4>
-                <input id="adminRightHandOne" type="text" placeholder="Name">
-              </div>
-              <div class="admin-item">
-                <h4>Rechte Hand 2</h4>
-                <input id="adminRightHandTwo" type="text" placeholder="Name">
-              </div>
-              <div class="admin-item">
-                <h4>Rechte Hand 3</h4>
-                <input id="adminRightHandThree" type="text" placeholder="Name">
-              </div>
-              <div class="admin-item">
-                <h4>Mitglieder gesamt</h4>
-                <input id="adminMembers" type="number" placeholder="24">
-              </div>
-              <div class="admin-item">
-                <h4>Aktive Member</h4>
-                <input id="adminActive" type="number" placeholder="18">
-              </div>
-              <div class="admin-item">
-                <h4>Recruitment Status</h4>
-                <select id="adminRecruitment">
-                  <option value="OPEN">OPEN</option>
-                  <option value="CLOSED">CLOSED</option>
-                </select>
-              </div>
-              <div class="admin-item">
-                <h4>Familienstatus</h4>
-                <input id="adminFamilyStatus" type="text" placeholder="Aktiv">
-              </div>
-              <div class="admin-item">
-                <h4>Update Hinweis</h4>
-                <input id="adminHint" type="text" placeholder="Neue Member gesucht">
-              </div>
-              <div class="admin-item">
-                <h4>Letztes Update</h4>
-                <input id="adminLastUpdate" type="text" placeholder="10.03.2026">
-              </div>
-              <div class="admin-item">
-                <h4>Discord Link</h4>
-                <input id="adminDiscord" type="text" placeholder="https://discord.gg/...">
-              </div>
-              <div class="admin-item">
-                <h4>Logo/Bild Pfad</h4>
-                <input id="adminLogo" type="text" placeholder="familien_pb.jpg">
-              </div>
+              <div class="admin-item"><h4>Leader</h4><input id="adminLeader" type="text" placeholder="Leader Name"></div>
+              <div class="admin-item"><h4>Rechte Hand 1</h4><input id="adminRightHandOne" type="text" placeholder="Name"></div>
+              <div class="admin-item"><h4>Rechte Hand 2</h4><input id="adminRightHandTwo" type="text" placeholder="Name"></div>
+              <div class="admin-item"><h4>Rechte Hand 3</h4><input id="adminRightHandThree" type="text" placeholder="Name"></div>
+              <div class="admin-item"><h4>Mitglieder gesamt</h4><input id="adminMembers" type="number" placeholder="24"></div>
+              <div class="admin-item"><h4>Recruitment Status</h4><select id="adminRecruitment"><option value="OPEN">OPEN</option><option value="CLOSED">CLOSED</option></select></div>
+              <div class="admin-item"><h4>Familienstatus</h4><input id="adminFamilyStatus" type="text" placeholder="Aktiv"></div>
+              <div class="admin-item"><h4>Update Hinweis</h4><input id="adminHint" type="text" placeholder="Neue Member gesucht"></div>
+              <div class="admin-item"><h4>Letztes Update</h4><input id="adminLastUpdate" type="text" placeholder="10.03.2026"></div>
+              <div class="admin-item"><h4>Discord Link</h4><input id="adminDiscord" type="text" placeholder="https://discord.gg/...\"></div>
+              <div class="admin-item"><h4>Logo/Bild Pfad</h4><input id="adminLogo" type="text" placeholder="familien_pb.jpg"></div>
             </div>
-
             <div class="admin-actions">
               <button class="btn-success" onclick="saveSiteData()">Für alle speichern</button>
               <button class="btn-warn" onclick="loadSiteData(true)">Neu laden</button>
@@ -824,7 +777,7 @@
           </div>
 
           <div class="dashboard-view" id="dashboard-help">
-            <div class="hint">Wenn das Login nicht funktioniert, prüfe zuerst dein Firebase Passwort. Wenn Speichern nicht klappt, prüfe in Firestore die Regeln.</div>
+            <div class="hint">Für die Discord-Online-Anzeige muss das Discord Server-Widget aktiviert sein. Sonst bleibt der Wert leer.</div>
             <div class="hint">Wenn du ein neues Logo willst, lade das Bild in GitHub hoch und trage den Dateinamen unter <strong>Logo/Bild Pfad</strong> ein.</div>
           </div>
         </div>
@@ -837,15 +790,7 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-    import {
-      getFirestore,
-      doc,
-      getDoc,
-      setDoc,
-      updateDoc,
-      increment,
-      onSnapshot
-    } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
     const firebaseConfig = {
       apiKey: 'AIzaSyACOG4_M4hhukkgzVj4EKHmvAlWEF4ipRg',
@@ -857,6 +802,8 @@
       measurementId: 'G-2FXFCC6RZT'
     };
 
+    const DISCORD_GUILD_ID = '1480593728883130601';
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -867,7 +814,6 @@
       logo: 'familien_pb.jpg',
       recruitment: 'OPEN',
       members: 24,
-      active: 18,
       leader: 'Dave Shade',
       rightHand1: 'Mark Carletto',
       rightHand2: 'Thorsten Rambo',
@@ -906,7 +852,6 @@
 
       setText('statRecruitment', data.recruitment);
       setText('statMembers', data.members);
-      setText('statActive', data.active);
       setText('statLeader', data.leader);
 
       setText('leaderNameCard', data.leader);
@@ -915,7 +860,6 @@
       setText('rightHandThreeCard', data.rightHand3);
 
       setText('membersTotalCard', `${data.members} Member`);
-      setText('membersActiveCard', `${data.active} aktiv`);
       setText('membersRecruitCard', data.recruitment);
       setText('lastUpdateCard', data.lastUpdate);
 
@@ -928,7 +872,6 @@
       setText('dashLeader', data.leader);
       setText('dashRecruitment', data.recruitment);
       setText('dashMembers', data.members);
-      setText('dashActive', data.active);
 
       document.getElementById('discordLinkButton').href = data.discord;
       document.getElementById('discordLinkSection').href = data.discord;
@@ -938,13 +881,28 @@
       setValue('adminRightHandTwo', data.rightHand2);
       setValue('adminRightHandThree', data.rightHand3);
       setValue('adminMembers', data.members);
-      setValue('adminActive', data.active);
       setValue('adminRecruitment', data.recruitment);
       setValue('adminFamilyStatus', data.familyStatus);
       setValue('adminHint', data.hint);
       setValue('adminLastUpdate', data.lastUpdate);
       setValue('adminDiscord', data.discord);
       setValue('adminLogo', data.logo);
+    }
+
+    async function loadDiscordOnline() {
+      try {
+        const res = await fetch(`https://discord.com/api/guilds/${DISCORD_GUILD_ID}/widget.json`);
+        const data = await res.json();
+        const online = typeof data.presence_count === 'number' ? data.presence_count : '-';
+        setText('statActive', online);
+        setText('membersActiveCard', `${online} aktiv`);
+        setText('dashActive', online);
+      } catch (err) {
+        console.log('Discord Widget Fehler:', err.message);
+        setText('statActive', '-');
+        setText('membersActiveCard', '- aktiv');
+        setText('dashActive', '-');
+      }
     }
 
     async function loadSiteData(showMessage = false) {
@@ -991,7 +949,6 @@
     async function saveSiteData() {
       document.getElementById('adminSuccess').textContent = '';
       document.getElementById('adminError').textContent = '';
-
       if (!currentUser || currentUser.email !== 'spastdummer9@gmail.com') {
         document.getElementById('adminError').textContent = 'Du bist nicht als berechtigter Admin eingeloggt.';
         return;
@@ -1004,7 +961,6 @@
         rightHand2: document.getElementById('adminRightHandTwo').value || defaultData.rightHand2,
         rightHand3: document.getElementById('adminRightHandThree').value || defaultData.rightHand3,
         members: Number(document.getElementById('adminMembers').value || defaultData.members),
-        active: Number(document.getElementById('adminActive').value || defaultData.active),
         recruitment: document.getElementById('adminRecruitment').value || defaultData.recruitment,
         familyStatus: document.getElementById('adminFamilyStatus').value || defaultData.familyStatus,
         hint: document.getElementById('adminHint').value || defaultData.hint,
@@ -1027,7 +983,6 @@
       document.getElementById('loginSuccess').textContent = '';
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
-
       try {
         await signInWithEmailAndPassword(auth, email, password);
         document.getElementById('loginSuccess').textContent = 'Erfolgreich eingeloggt.';
@@ -1045,7 +1000,6 @@
       const dashboard = document.getElementById('dashboard');
       const dashboardButton = document.getElementById('dashboardButton');
       const logoutBtn = document.getElementById('logoutButton');
-
       if (user && user.email === 'spastdummer9@gmail.com') {
         dashboardButton.style.display = 'inline-block';
         logoutBtn.style.display = 'inline-block';
@@ -1092,6 +1046,8 @@
     watchVisitorCount();
     increaseVisitorCount();
     loadSiteData();
+    loadDiscordOnline();
+    setInterval(loadDiscordOnline, 60000);
   </script>
 </body>
 </html>
