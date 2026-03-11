@@ -681,6 +681,11 @@
       font-weight: 800;
     }
 
+    .send:disabled {
+      opacity: .7;
+      cursor: not-allowed;
+    }
+
     .forum-post {
       overflow: hidden;
       display: flex;
@@ -689,8 +694,9 @@
 
     .forum-post img {
       width: 100%;
-      height: 220px;
-      object-fit: cover;
+      max-height: 420px;
+      height: auto;
+      object-fit: contain;
       display: block;
       background: #111;
       border-bottom: 1px solid rgba(214,162,74,.08);
@@ -908,7 +914,7 @@
       input, textarea, select, .send, .login-actions button, .admin-actions button, .dashboard-tabs button, .topbar button {
         font-size: 16px;
       }
-      .forum-post img { height: 190px; }
+      .forum-post img { max-height: 320px; }
     }
   </style>
 </head>
@@ -1194,11 +1200,11 @@
           </select>
           <input id="forumImage" type="file" accept="image/*">
           <textarea id="forumText" placeholder="Dein Beitrag..." required></textarea>
-          <button class="send" type="submit">Beitrag einreichen</button>
+          <button class="send" id="forumSubmitButton" type="submit">Beitrag einreichen</button>
         </form>
 
         <div class="forum-submit-note">
-          Nach dem Absenden landet dein Beitrag zuerst bei der Administration und wird danach freigegeben oder abgelehnt.
+          Bilder werden vor dem Upload automatisch verkleinert, damit sie komplett sichtbar bleiben und nicht zu groß sind.
         </div>
         <div class="success" id="forumSuccess"></div>
         <div class="error" id="forumError"></div>
@@ -1391,10 +1397,8 @@
 
           <div class="dashboard-view" id="dashboard-help">
             <div class="hint">Die Memberzahl und die Online-Zahl werden automatisch über Discord geladen.</div>
-            <div class="hint">Wenn du ein neues Logo oder Hintergrundbild willst, lade das Bild hoch und trage den Dateinamen oder Link ein.</div>
-            <div class="hint">Wenn du CLOSED auswählst, ändert sich der Recruitment-Badge automatisch rot.</div>
-            <div class="hint">Die News oben wechseln automatisch alle paar Sekunden. Mit den Pfeilen kannst du sie auch manuell steuern.</div>
-            <div class="hint">Wenn Bild-Uploads nicht gehen, prüfe die Firebase Storage Rules.</div>
+            <div class="hint">Wenn Bilder mit Upload nicht gehen, prüfe zuerst Storage Rules und den storageBucket.</div>
+            <div class="hint">Die Forum-Bilder werden automatisch verkleinert und als JPG hochgeladen.</div>
           </div>
 
           <div class="success" id="adminSuccess"></div>
@@ -1434,7 +1438,7 @@
       apiKey: 'AIzaSyACOG4_M4hhukkgzVj4EKHmvAlWEF4ipRg',
       authDomain: 'thedistrict-37e57.firebaseapp.com',
       projectId: 'thedistrict-37e57',
-      storageBucket: 'thedistrict-37e57.firebasestorage.app',
+      storageBucket: 'thedistrict-37e57.appspot.com',
       messagingSenderId: '819461965889',
       appId: '1:819461965889:web:079cb365d8df6256985ec0',
       measurementId: 'G-2FXFCC6RZT'
@@ -1520,7 +1524,6 @@
 
     const dataRef = doc(db, 'district', 'main');
     const visitorRef = doc(db, 'district', 'visitors');
-    const forumCollectionRef = collection(db, 'forum_posts');
 
     let currentUser = null;
     let visitorMarked = false;
@@ -1844,7 +1847,7 @@
         const author = escapeHtml(post.authorName || 'Unbekannt');
         const category = escapeHtml(post.category || 'Allgemein');
         const image = post.imageUrl
-          ? `<div style="margin:12px 0;"><img src="${escapeHtml(post.imageUrl)}" alt="${title}" style="max-width:240px; width:100%; border-radius:12px; border:1px solid rgba(214,162,74,.10);"></div>`
+          ? `<div style="margin:12px 0;"><img src="${escapeHtml(post.imageUrl)}" alt="${title}" style="max-width:260px; width:100%; max-height:340px; object-fit:contain; border-radius:12px; border:1px solid rgba(214,162,74,.10); background:#111;"></div>`
           : '';
         const created = escapeHtml(formatDate(post.createdAt));
         const approvedBy = post.approvedBy ? escapeHtml(post.approvedBy) : '-';
@@ -1874,24 +1877,90 @@
       }).join('');
     }
 
+    async function resizeImage(file, maxWidth = 1600, maxHeight = 1600, quality = 0.82) {
+      return new Promise((resolve, reject) => {
+        if (!file.type.startsWith('image/')) {
+          reject(new Error('Bitte eine Bilddatei auswählen.'));
+          return;
+        }
+
+        const img = new Image();
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+          img.onload = () => {
+            let { width, height } = img;
+
+            if (width > maxWidth || height > maxHeight) {
+              const ratio = Math.min(maxWidth / width, maxHeight / height);
+              width = Math.round(width * ratio);
+              height = Math.round(height * ratio);
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              reject(new Error('Canvas konnte nicht erstellt werden.'));
+              return;
+            }
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob(
+              (blob) => {
+                if (!blob) {
+                  reject(new Error('Bild konnte nicht verarbeitet werden.'));
+                  return;
+                }
+
+                const resizedFile = new File(
+                  [blob],
+                  file.name.replace(/\.[^/.]+$/, '') + '.jpg',
+                  { type: 'image/jpeg' }
+                );
+
+                resolve(resizedFile);
+              },
+              'image/jpeg',
+              quality
+            );
+          };
+
+          img.onerror = () => reject(new Error('Bild konnte nicht geladen werden.'));
+          img.src = event.target.result;
+        };
+
+        reader.onerror = () => reject(new Error('Datei konnte nicht gelesen werden.'));
+        reader.readAsDataURL(file);
+      });
+    }
+
     async function uploadForumImage(file) {
       if (!file) return '';
 
-      if (!file.type.startsWith('image/')) {
-        throw new Error('Bitte nur Bilddateien hochladen.');
+      if (!file.type || !file.type.startsWith('image/')) {
+        throw new Error('Bitte eine gültige Bilddatei auswählen.');
       }
 
-      const cleanName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-      const filePath = `forum_images/${Date.now()}_${cleanName}`;
-      const storageRef = ref(storage, filePath);
+      const maxSize = 8 * 1024 * 1024;
+      if (file.size > maxSize) {
+        throw new Error('Das Bild ist zu groß. Maximal 8 MB.');
+      }
+
+      const resizedFile = await resizeImage(file, 1600, 1600, 0.82);
+      const safeName = resizedFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      const imageRef = ref(storage, `forum_images/${Date.now()}_${safeName}`);
 
       try {
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        return downloadURL;
+        const snapshot = await uploadBytes(imageRef, resizedFile);
+        const url = await getDownloadURL(snapshot.ref);
+        return url;
       } catch (error) {
-        console.error('Storage Upload Fehler:', error);
-        throw new Error('Bild konnte nicht hochgeladen werden. Prüfe Firebase Storage Regeln.');
+        console.error('Bild-Upload Fehler:', error);
+        throw new Error('Bild-Upload fehlgeschlagen: ' + error.message);
       }
     }
 
@@ -1900,23 +1969,26 @@
 
       const successEl = document.getElementById('forumSuccess');
       const errorEl = document.getElementById('forumError');
+      const submitButton = document.getElementById('forumSubmitButton');
 
       successEl.textContent = '';
       errorEl.textContent = '';
 
       try {
-        const authorName = document.getElementById('forumAuthor')?.value.trim();
-        const title = document.getElementById('forumTitle')?.value.trim();
-        const category = document.getElementById('forumCategory')?.value;
-        const text = document.getElementById('forumText')?.value.trim();
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = 'Wird eingereicht...';
+        }
+
+        const authorName = document.getElementById('forumAuthor').value.trim();
+        const title = document.getElementById('forumTitle').value.trim();
+        const category = document.getElementById('forumCategory').value;
+        const text = document.getElementById('forumText').value.trim();
         const imageInput = document.getElementById('forumImage');
-        const imageFile = imageInput && imageInput.files && imageInput.files.length > 0
-          ? imageInput.files[0]
-          : null;
+        const imageFile = imageInput.files && imageInput.files.length > 0 ? imageInput.files[0] : null;
 
         if (!authorName || !title || !category || !text) {
-          errorEl.textContent = 'Bitte fülle alle Pflichtfelder aus.';
-          return;
+          throw new Error('Bitte fülle alle Pflichtfelder aus.');
         }
 
         let imageUrl = '';
@@ -1937,13 +2009,16 @@
           approvedBy: ''
         });
 
-        const form = document.getElementById('forumForm');
-        if (form) form.reset();
-
-        successEl.textContent = 'Dein Beitrag wurde eingereicht und wartet nun auf Prüfung.';
+        document.getElementById('forumForm').reset();
+        successEl.textContent = 'Dein Beitrag wurde erfolgreich eingereicht und wartet auf Prüfung.';
       } catch (err) {
         console.error('Forum Submit Fehler:', err);
         errorEl.textContent = 'Fehler beim Einreichen: ' + err.message;
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Beitrag einreichen';
+        }
       }
     }
 
@@ -1956,30 +2031,28 @@
     }
 
     function watchPublicForum() {
-      const allPostsQuery = query(collection(db, 'forum_posts'));
-
-      onSnapshot(allPostsQuery, (snapshot) => {
-        const allPosts = snapshot.docs.map(docItem => ({
-          id: docItem.id,
-          ...docItem.data()
+      onSnapshot(collection(db, 'forum_posts'), (snapshot) => {
+        const allPosts = snapshot.docs.map((docSnap) => ({
+          id: docSnap.id,
+          ...docSnap.data()
         }));
-
-        const approvedPosts = sortPostsNewestFirst(
-          allPosts.filter(post => post.status === 'approved')
-        );
 
         const pendingPosts = sortPostsNewestFirst(
           allPosts.filter(post => post.status === 'pending')
         );
 
+        const approvedPosts = sortPostsNewestFirst(
+          allPosts.filter(post => post.status === 'approved')
+        );
+
         renderPublicForum(approvedPosts);
-        renderModerationList(approvedPosts, 'approvedForumList', 'approvedForumEmpty', true);
         renderModerationList(pendingPosts, 'pendingForumList', 'pendingForumEmpty', false);
-      }, (err) => {
-        console.error('Forum Snapshot Fehler:', err);
+        renderModerationList(approvedPosts, 'approvedForumList', 'approvedForumEmpty', true);
+      }, (error) => {
+        console.error('Forum Snapshot Fehler:', error);
         const adminError = document.getElementById('adminError');
         if (adminError) {
-          adminError.textContent = 'Forum konnte nicht geladen werden: ' + err.message;
+          adminError.textContent = 'Forum konnte nicht geladen werden: ' + error.message;
         }
       });
     }
